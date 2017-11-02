@@ -1,10 +1,75 @@
 20 exigences fonctionnelles
-  1-
+
+1.	Le système doit permettre à un utilisateur de se créer un profil.  
+2.	Le système doit pouvoir effectuer une recherche dans le répertoire des taches. 
+3.	Le système doit être capable d’afficher la liste complète des taches existantes dans le système.
+4.	Le système doit permettre à l’utilisateur d’ajouter des nouvelles tâches ménagères sur un seul appareil. 
+5.	Le système doit permettre à l’utilisateur de supprimer des taches sur un seul appareil.
+6.	Le système doit empêcher l’accès a liste des taches sur un autre appareil. 
+7.	Le système doit permettre à l’utilisateur de modifier les taches sur un seul appareil.
+8.	Le système doit permettre à l’utilisateur d’ajouter un commentaire a cote d’une tache. 
+9.	Le système peut permettre à l’utilisateur d’attribuer des récompenses à d’autres utilisateurs. 
+10.	Le système doit afficher les taches correspondantes de chaque utilisateur. 
+11.	Le système doit permettre à l’utilisateur de modifier l’ordre dans lequel ses taches seront exécutées.
+12.	Le système doit permettre à un utilisateur d’effectuer une synchronisation de la liste complète des taches.
+13.	Le système peut permettre à l’utilisateur d’associer une photo à son profil.
+14.	Le système peut permettre à l’utilisateur de changer uniquement sa photo de profil.
+15.	Le système doit permettre à l’utilisateur d’entrer l’heure de commencement ou de fin d’une tache. 
+16.	Le système doit être capable d’afficher un message signalant que la fin d’une tache approche.  
+17.	Le système peut permettre à un utilisateur de se créer un mot de passe pour son profil.
+18.	L’application doit comporter un système d’authentification pour chaque profil créer.  
+19.	Le système doit empêcher l’accès à un profil non correspondant à celui qui souhaite utiliser l’application.   
+20.	Le système doit permettre à un utilisateur de pouvoir choisir une tache parmi celles disponibles. 
+21.	Le système doit rendre indisponible une tache qui a déjà été choisi par un autre utilisateur. 
+22.	Le système doit empêcher la création (duplication) d’une tache déjà existante. 
+23.	Le système doit permettre à un utilisateur de visualiser les tâches assignées aux autres membres. 
+24.	Le système doit permettre à deux utilisateurs de pouvoir s’échanger des taches. 
+
 
 
 5 exigences non fonctionnelles
-  1-
+
+1.	Le logiciel doit être en mesure de fonctionner sur la version Android Icecream Sandwich ou plus. 
+2.	Le système doit contenir une page d’aide. 
+3.	Le système doit permettre au programmeur de facilement modifier le code source de l’application. 
+4.	Le système doit exécuter une recherche de taches en moins de 10 secondes. 
+5.	Le système (l’application) doit utiliser un maximum de 150 MB de RAM.
+6.	Le système doit être capable de gérer les entrées (données) invalides. 
+7.	La synchronisation du système ne doit pas prendre plus de 10s. 
+
 
 
 3 cas d'utilisation entièrement décrits (pas besoin d'un schéma de cas d'utilisation)
-  1-
+  
+Action de l’utilisateur(AU)	Vs Action du système(AS)
+
+Cas d’utilisation #1 : Créer un profil d'utilisateur
+
+1. Cliquer le bouton « Créer un profil » (AU)	
+2. Ouvre une fenêtre nommer « Nouveau profil »(AS)
+3. Doit entrer un nom d’utilisateur(AU)	
+4. Peut ajouter une photo	(AU)
+5.Peut mettre un mot de passe pour son compte(AU)	
+6.Cliquer sur le bouton « terminer »(AU)	
+7.Le système valide les données entrées par l’utilisateur et affiche un mot de bienvenue si tout est correct.(AU) 
+
+Cas d’utilisation #2 : ajouter une nouvelle tâche ménagère  
+
+1. Cliquer le bouton « ajouter tache » (AU)	
+2. le tableau contenant la liste des taches disponibles s’ouvre et l’utilisateur peut ajouter sa nouvelle tâche à la fin du tableau.(AS) 
+3. Entre la nouvelle tache(AU) 	
+4. Clique sur le bouton OK (AU)	
+5. Le système valide les données entrées et renvoie un message de confirmation.(AS) 
+
+Cas d’utilisation #3 : Effectuer une recherche pour une tache en particulier dans l’ensemble des taches disponibles 
+
+1. Cliquer le bouton « recherche » (AU)	
+2. Ouvre un espace pour permettre à l’utilisateur d’entrer quelques mots (mots clés).(AS)  
+3.Entre quelques mots dans l’espace assigné.(AU) 	
+4. Clic sur le  bouton « OK »	(AU)
+5.Le système affiche l’ensemble des taches correspondantes aux mots clés entrées par l’utilisateur.(AS) 
+6. L’utilisateur peut cliquer parmi l’une taches qui lui sont proposées où annuler l’opération.(AU) 	
+7.Ouvre une fenêtre montrant le statut de la tâche.(AU)  
+
+
+
