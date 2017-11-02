@@ -37,7 +37,7 @@
 3.	Le système doit permettre au programmeur de facilement modifier le code source de l’application.(pas mesurable a cause de facilement)
 4.	Le système doit exécuter une recherche de taches en moins de 10 secondes. 
 5.	Le système (l’application) doit utiliser un maximum de 150 MB de RAM.
-6.	Le système doit être capable de gérer les entrées (données) invalides.==> Le doit doit empêcher 
+6.	Le système doit être capable de gérer les entrées (données) invalides.==> Le systeme doit empêcher 
  l'accès a un profil utilisateur pour 5 min apres 5 tentatives d'authentifications erronées.
 7.	La synchronisation du système ne doit pas prendre plus de 10s. 
 
