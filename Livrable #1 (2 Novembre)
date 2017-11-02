@@ -2,11 +2,10 @@
 
 1.	Le système doit permettre à un utilisateur de se créer un profil.  
 2.	Le système doit pouvoir effectuer une recherche dans le répertoire des taches. 
-3.	Le système doit être capable d’afficher la liste complète des taches existantes dans le système.
-4.	Le système doit permettre à l’utilisateur d’ajouter des nouvelles tâches ménagères sur un seul appareil. 
-5.	Le système doit permettre à l’utilisateur de supprimer des taches sur un seul appareil.
-6.	Le système doit empêcher l’accès a liste des taches sur un autre appareil. 
-7.	Le système doit permettre à l’utilisateur de modifier les taches sur un seul appareil.
+3.	Le système doit être capable d’afficher la liste complète des taches existantes.
+4.	Le système doit permettre à l’utilisateur d’ajouter des nouvelles tâches ménagères. 
+5.	Le système doit permettre à l’utilisateur de supprimer des taches.
+7.	Le système doit permettre à l’utilisateur de modifier les taches.
 8.	Le système doit permettre à l’utilisateur d’ajouter un commentaire a cote d’une tache. 
 9.	Le système peut permettre à l’utilisateur d’attribuer des récompenses à d’autres utilisateurs. 
 10.	Le système doit afficher les taches correspondantes de chaque utilisateur. 
@@ -17,24 +16,29 @@
 15.	Le système doit permettre à l’utilisateur d’entrer l’heure de commencement ou de fin d’une tache. 
 16.	Le système doit être capable d’afficher un message signalant que la fin d’une tache approche.  
 17.	Le système peut permettre à un utilisateur de se créer un mot de passe pour son profil.
-18.	L’application doit comporter un système d’authentification pour chaque profil créer.  
-19.	Le système doit empêcher l’accès à un profil non correspondant à celui qui souhaite utiliser l’application.   
+18.	Le système doit permettre à l'utilisateur de s'authentifier.  
+19.	Le système doit empêcher l’accès à un profil à travers une mauvaise authentification.   
 20.	Le système doit permettre à un utilisateur de pouvoir choisir une tache parmi celles disponibles. 
 21.	Le système doit rendre indisponible une tache qui a déjà été choisi par un autre utilisateur. 
 22.	Le système doit empêcher la création (duplication) d’une tache déjà existante. 
 23.	Le système doit permettre à un utilisateur de visualiser les tâches assignées aux autres membres. 
-24.	Le système doit permettre à deux utilisateurs de pouvoir s’échanger des taches. 
+24.	Le système doit permettre à deux utilisateurs de pouvoir s’échanger des taches.
+25. Le système doit permettre à l'utilisateur d'enlever une tâche de ses devoirs.
+26. Le système doit empêcher d'assigner plus d'une tâche commençant en même moment à un utilisateur.
 
 
 
-5 exigences non fonctionnelles
 
-1.	Le logiciel doit être en mesure de fonctionner sur la version Android Icecream Sandwich ou plus. 
-2.	Le système doit contenir une page d’aide. 
-3.	Le système doit permettre au programmeur de facilement modifier le code source de l’application. 
+5 exigences non fonctionnelles 
+>>>J'ai confiance en 1, 4, 5, 6(modifié), 7 <<<<<<
+
+1.	Le logiciel doit être en mesure de fonctionner sur la version Android Icecream Sandwich ou plus recent. 
+2.	Le système doit contenir une page d’aide. <==== Exigenges fonctionnelles à monn avis (pas mesurable) 
+3.	Le système doit permettre au programmeur de facilement modifier le code source de l’application.(pas mesurable a cause de facilement)
 4.	Le système doit exécuter une recherche de taches en moins de 10 secondes. 
 5.	Le système (l’application) doit utiliser un maximum de 150 MB de RAM.
-6.	Le système doit être capable de gérer les entrées (données) invalides. 
+6.	Le système doit être capable de gérer les entrées (données) invalides.==> Le doit doit empêcher 
+ l'accès a un profil utilisateur pour 5 min apres 5 tentatives d'authentifications erronées.
 7.	La synchronisation du système ne doit pas prendre plus de 10s. 
 
 
