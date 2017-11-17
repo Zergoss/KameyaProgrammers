@@ -1,0 +1,98 @@
+class Parents{
+  
+  
+  isA Utilisateur;
+  
+  0..2 -- * Enfants relationship;  
+    
+  1 -- 0..* Taches;
+  
+}
+class Recompenses{
+  
+ * -- 0..1 Utilisateur; 
+  
+}
+class Enfants{  
+  
+  isA Utilisateur; 
+  
+  1 -- 0..* Taches; 
+  
+}
+class Utilisateur{
+  
+  int PointsContributions;
+  int age; 
+  String name;  
+  String myTaskslist();
+  
+  
+}
+class Taches{
+  
+  
+ String nom; 
+ double StartTime; 
+ double endTime;
+ String description; 
+ 
+  
+  String status (){ // tache est disponible ou non 
+  }
+  
+  void  editTask(int index){
+    
+    
+  }
+  
+  String getTachesDispo(){
+    
+    
+  }
+  String getTachesNonDispo(){
+    
+  }
+  String getListeCompleteTaches(){
+    
+  }
+  
+  void addTask(String tache){
+    
+    
+  }
+  void removeTask(int index){
+    
+  }
+  
+}
+
+class TachesAssignees{
+  
+  isA Taches; 
+  
+  String getTachesAssignees(){
+    
+  }
+  
+  * -> 0..1 Enfants;
+  
+}
+
+association{
+ 0..1 Parents -> * TachesAssignees;
+}
+
+class Profil{
+   
+  String motDePasse; 
+    
+  0..1 -- 1 Utilisateur avoir; 
+    
+  void addPhoto(){
+    
+  }
+  0..1 -- * Profil;
+  
+  
+}
