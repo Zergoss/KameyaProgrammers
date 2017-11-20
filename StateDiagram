@@ -23,3 +23,23 @@ class Interface {
     }
   } 
 }
+
+
+Voici la présentation du diagramme d’état. Il est utilisé pour démontrer l’information d’une façon dynamique.
+1- État définie
+NotLogIn
+CreateAccount
+ViewMode
+EditTask
+Menu
+
+2- Description des états
+NotLogIn: Première activitée où l’utilisateur doit s’identifier.
+
+CreateAccount: Quand l’utilisateur n’a pas encore d’account, il doit en créer un. 
+
+ViewMode: Une fois identifiée, l’utilisateur peut voir toutes les tâches de différente façon et acceder à plusieurs états selon le besoin. 
+
+EditTask: Quand un utilisateur veut modifier, ajouter ou effacer une tâche.
+
+Option: Quand l’utilisateur veut changer les options disponibles.
