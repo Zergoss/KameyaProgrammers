@@ -1,0 +1,25 @@
+// This is a state machine for our application interface
+class Interface {
+  Interface { 
+    NotLogIn { 
+      logIn -> /{logIn();} ViewMode;
+      createAccount -> /{createdAccount();} CreateAccount; 
+    }
+    CreateAccount {
+      LogIn -> ViewMode;
+    }
+    ViewMode {
+      entry/{updateTachesAccomplies();}
+      edit -> EditTask;
+      goToOption -> Option;
+    }
+    Option {
+      logOff -> NotLogIn;
+      selectOtherOption -> Option; 
+      exitMenu -> ViewMode;
+    }
+    EditTask {
+      doneEdit -> ViewMode;
+    }
+  } 
+}
