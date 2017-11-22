@@ -1,7 +1,7 @@
 # KameyaProgrammers
-Projet de SEG2505A<return>
+Projet de SEG2505A<br/>
 Application Cohab
 
-Important:<return>
--Avant de commence à travailler toujours faire un pull.<return>
+Important:  
+-Avant de commence à travailler toujours faire un pull.<br/>
 -Si les changements effectués sont simples ou avez travail seul => faire le commit sinon faire un commit request, merci.
