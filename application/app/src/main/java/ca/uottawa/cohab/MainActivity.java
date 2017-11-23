@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_task_list) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
+        } else if (id == R.id.nav_user_list) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new UserList()).commit();
         } else if (id == R.id.nav_profil) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfilEdit()).commit();
         } else if (id == R.id.nav_switch_user) {
