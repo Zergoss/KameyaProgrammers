@@ -30,6 +30,18 @@
     <string name="log_off">Log off</string>
     <string name="user_list">User list</string>
 
-
+    <!--content_task_list -->
+    <string-array name="dropDownTask">
+        <item>All</item>
+        <item>Personal</item>
+        <item>Unassign</item>
+    </string-array>
+    <string-array name="TaskDummyList">
+        <item>Task1</item>
+        <item>Task2</item>
+        <item>Task3</item>
+        <item>Task4</item>
+        <item>Task5</item>
+    </string-array>
 
 </resources>
