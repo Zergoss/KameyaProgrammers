@@ -65,10 +65,9 @@ public class TaskList extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*To implement click to go to the task
                 Intent intent = new Intent(myView.getContext(), TaskView.class);
-                intent.putExtra("name", listView.getItemAtPosition(i).toString());
-                  startAcvtivity(intent);   */
+                //intent.putExtra("name", listView.getItemAtPosition(i).toString());
+                startActivity(intent);
             }
         });
         listView.setAdapter(mAdapter);
