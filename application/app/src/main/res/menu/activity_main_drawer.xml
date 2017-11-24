@@ -16,8 +16,8 @@
     <group android:id="@+id/groupList2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_profil"
-            android:title="@string/profil" />
+            android:id="@+id/nav_profile"
+            android:title="@string/profile" />
         <item
             android:id="@+id/nav_switch_user"
             android:title="@string/switch_user" />
