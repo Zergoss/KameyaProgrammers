@@ -27,8 +27,10 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TaskView" />
-        <activity android:name=".TaskEdit"></activity>
+        <activity android:name=".TaskView"
+            android:label="@string/task_name"/>
+        <activity android:name=".TaskEdit"
+            android:label="@string/task_edit" />
     </application>
 
 </manifest>
