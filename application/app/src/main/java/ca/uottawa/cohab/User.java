@@ -5,4 +5,7 @@ package ca.uottawa.cohab;
  */
 
 public class User {
+    public User clone(){
+        return this;
+    }
 }

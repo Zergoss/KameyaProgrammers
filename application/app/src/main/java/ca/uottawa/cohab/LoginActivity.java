@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isUserNameValid(String user) {
         Log.d(TAG,"User check");
         //TODO: Replace this with your own logic
-        return user.length() > 2;
+        return user.length() > 0;
     }
 
     private boolean isPasswordValid(String password) {
