@@ -1,4 +1,4 @@
-package ca.uottawa.cohab;
+package fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import ca.uottawa.cohab.R;
 
 /**
  * Created by Administrateur on 2017-11-22.

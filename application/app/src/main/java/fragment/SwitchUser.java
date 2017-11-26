@@ -1,4 +1,4 @@
-package ca.uottawa.cohab;
+package fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,25 +11,28 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import ca.uottawa.cohab.R;
+import activities.TaskView;
+
 /**
  * Created by Administrateur on 2017-11-22.
  */
 
-public class UserList extends Fragment {
+public class SwitchUser extends Fragment {
 
-    private View myView;
-    private ListView listView;
+    View myView;
+    ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.content_user_list,container, false);
+        myView = inflater.inflate(R.layout.content_switch_user,container, false);
         addUserList();
         return myView;
     }
 
     private void addUserList(){
-        listView = (ListView) myView.findViewById(R.id.userlist);
+        listView = (ListView) myView.findViewById(R.id.switchUserList);
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this.getActivity(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.UserDummyList));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

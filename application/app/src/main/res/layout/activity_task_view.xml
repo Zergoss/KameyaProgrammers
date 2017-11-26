@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.uottawa.cohab.TaskView">
+    tools:context="activities.TaskView">
 
     <LinearLayout
         android:layout_width="match_parent"

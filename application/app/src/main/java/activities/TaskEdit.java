@@ -1,9 +1,11 @@
-package ca.uottawa.cohab;
+package activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import ca.uottawa.cohab.R;
 
 public class TaskEdit extends AppCompatActivity {
 

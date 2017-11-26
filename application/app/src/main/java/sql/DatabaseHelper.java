@@ -10,16 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ca.uottawa.cohab.Task;
-import ca.uottawa.cohab.User;
-
-//import com.androidtutorialshub.loginregister.model.User;
-//import java.util.ArrayList;
-//import java.util.List;
-
-/**
- * Created by Administrateur on 2017-11-25.
- */
+import model.Task;
+import model.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 

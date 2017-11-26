@@ -1,6 +1,5 @@
-package ca.uottawa.cohab;
+package fragment;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import ca.uottawa.cohab.R;
+import activities.TaskView;
 
 /**
  * Created by Administrateur on 2017-11-22.

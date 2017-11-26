@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name="activities.Login"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +24,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TaskView"
+        <activity android:name="activities.Register"
+            android:label="Registration"/>
+        <activity android:name="activities.TaskView"
             android:label="@string/task_name"/>
-        <activity android:name=".TaskEdit"
+        <activity android:name="activities.TaskEdit"
             android:label="@string/task_edit" />
     </application>
 

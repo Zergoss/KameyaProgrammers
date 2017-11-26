@@ -1,4 +1,4 @@
-package ca.uottawa.cohab;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
