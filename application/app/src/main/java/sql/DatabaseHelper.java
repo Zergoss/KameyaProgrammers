@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -98,10 +99,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_USERNAME, user.getUsername());
         values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
-        values.put(COLUMN_USER_POINTS, user.getPoints());
+        values.put(COLUMN_USER_USERNAME, user.getUsername());
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
+        values.put(COLUMN_USER_POINTS, user.getPoints());
         //values.put(COLUMN_USER_TASK, user.getTask());
 
         // Inserting Row
@@ -364,6 +365,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }catch(Exception e){
             e.printStackTrace();
+
         }
 
         return false;

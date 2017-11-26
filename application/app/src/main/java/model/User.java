@@ -17,6 +17,10 @@ public class User {
 
     //Default constructor
     public User() {
+        this.points = 0;
+        this.numberTask = 0;
+        this.userName = null;
+        this.password = null;
     }
     public User(String userName, String password) {
         this.points = 0;
