@@ -7,63 +7,78 @@ import java.util.Date;
  */
 
 public class Task {
+    private int points;  //Real???
+    private boolean available;
     private String name;
     private String description;
-    private int points;  //Real???
     private Date startDate;
     private Date endDate;
     private Date dueDate;
-    private boolean available;
     private User creator;
+
     //Ressource List
     //GroupTache
 
     //Minimum Constructor
-    public Task (String name, String description, int points, Date dueDate, User creator) {
+    public Task (int points, String name, String description, Date dueDate, User creator) {
+        this.points = points;
+        this.available = false;
         this.name = name;
         this.description = description;
-        this.points = points;
         this.startDate = null;
         this.endDate = null;
         this.dueDate = dueDate;
-        this.available = false;
         this.creator = creator;
     }
     //With start/end Date
-    public Task (String name, String description, int points, Date startDate, Date endDate, Date dueDate, User creator) {
+    public Task (int points, String name, String description, Date startDate, Date endDate, Date dueDate, User creator) {
+        this.points = points;
+        this.available = false;
         this.name = name;
         this.description = description;
-        this.points = points;
         this.startDate = startDate;
         this.endDate = endDate;
         this.dueDate = dueDate;
-        this.available = false;
         this.creator = creator;
     }
     //Assign
-    public Task (String name, String description, int points, Date dueDate, boolean status, User creator) {
+    public Task (int points, boolean available, String name, String description, Date dueDate, User creator) {
+        this.points = points;
+        this.available = available;
         this.name = name;
         this.description = description;
-        this.points = points;
         this.startDate = null;
         this.endDate = null;
         this.dueDate = dueDate;
-        this.available = status;
         this.creator = creator;
     }
     //With start/end Date & assign
-    public Task (String name, String description, int points, Date startDate, Date endDate, Date dueDate, boolean status, User creator) {
+    public Task (int points, boolean available, String name, String description, Date startDate, Date endDate, Date dueDate, User creator) {
+        this.points = points;
+        this.available = available;
         this.name = name;
         this.description = description;
-        this.points = points;
         this.startDate = startDate;
         this.endDate = endDate;
         this.dueDate = dueDate;
-        this.available = status;
         this.creator = creator;
     }
 
     //getters & setters
+    public int getPoints(){
+        return this.points;
+    }
+    public void setPoints(int points){
+        this.points = points;
+    }
+
+    public boolean isAvailable(){
+        return this.available;
+    }
+    public void setAvailable(boolean available){
+        this.available = available;
+    }
+
     public String getName(){
         return this.name;
     }
@@ -76,13 +91,6 @@ public class Task {
     }
     public void setDescription(String description){
         this.name = description;
-    }
-
-    public int getPoints(){
-        return this.points;
-    }
-    public void setPoints(String points){
-        this.name = points;
     }
 
     public Date getStartDate(){
@@ -106,18 +114,17 @@ public class Task {
         this.dueDate = (Date) dueDate.clone();
     }
 
-    public boolean isAvailable(){
-        return this.available;
-    }
-    public void setAvailable(boolean available){
-        this.available = available;
-    }
-
     public User getCreator(){
         return (User) this.creator.clone();
     }
     public void setDueDate(User creator){
         this.creator = (User) creator.clone();
+    }
+
+
+    public Task clone() {
+        Task aClone = new Task(this.points, this.available, this.name, this.description, this.startDate, this.endDate, this.dueDate, this.creator);
+        return aClone;
     }
 
 }
