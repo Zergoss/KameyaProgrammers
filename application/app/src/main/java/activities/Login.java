@@ -93,23 +93,33 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (!inputValidation.isInputEditTextFilled(textInputEditTextUsername, textInputLayoutUsername, getString(R.string.error_message_username_empty))) {
             return;
         }
-        if (!inputValidation.isInputEditTextUsername(textInputEditTextUsername, textInputLayoutUsername, getString(R.string.error_message_username_invalid))) {
+        if (!inputValidation.isInputEditTextUsername(textInputEditTextUsername, textInputLayoutUsername,
+                getString(R.string.error_message_username_invalid))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_password_empty))) {
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword,
+                getString(R.string.error_message_password_empty))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextPassword(textInputEditTextPassword, textInputLayoutPassword,
+                getString(R.string.error_message_password_invalid))) {
             return;
         }
 
         if (databaseHelper.checkUser(textInputEditTextUsername.getText().toString().trim())) {
-
-            Intent accountsIntent = new Intent(activity, MainActivity.class);
-            accountsIntent.putExtra("USERNAME", textInputEditTextUsername.getText().toString().trim());
-            emptyInputEditText();
-            startActivity(accountsIntent);
-
-        } else {
-            Snackbar.make(nestedScrollView, getString(R.string.error_valid_username_password), Snackbar.LENGTH_LONG).show();
+            String aPass = textInputEditTextPassword.getText().toString().trim();
+            String password = databaseHelper.checkPassword(textInputEditTextUsername.getText().toString().trim());
+            if (aPass.equals(password)) {
+                Intent accountsIntent = new Intent(activity, MainActivity.class);
+                accountsIntent.putExtra("USERNAME", textInputEditTextUsername.getText().toString().trim());
+                emptyInputEditText();
+                startActivity(accountsIntent);
+            }
+            Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
+            return;
         }
+        Snackbar.make(nestedScrollView, getString(R.string.error_valid_username_exist), Snackbar.LENGTH_LONG).show();
+
     }
 
 

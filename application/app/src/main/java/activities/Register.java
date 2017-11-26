@@ -105,6 +105,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_password_empty))) {
             return;
         }
+        if (!inputValidation.isInputEditTextPassword(textInputEditTextPassword, textInputLayoutPassword,
+                getString(R.string.error_message_password_invalid))) {
+            return;
+        }
         if (!inputValidation.isInputEditTextMatches(textInputEditTextPassword, textInputEditTextConfirmPassword,
                 textInputLayoutConfirmPassword, getString(R.string.error_password_match))) {
             return;

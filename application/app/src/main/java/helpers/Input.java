@@ -31,7 +31,7 @@ public class Input {
     //Check InputEditText has valid username
     public boolean isInputEditTextUsername(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
         String value = textInputEditText.getText().toString().trim();
-        if (value.isEmpty() | value.length() < 2) {
+        if (value.isEmpty() | value.length() < 1) {
             textInputLayout.setError(message);
             hideKeyboardFrom(textInputEditText);
             return false;
@@ -43,7 +43,7 @@ public class Input {
     //Check InputEditText has valid password
     public boolean isInputEditTextPassword(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
         String value = textInputEditText.getText().toString().trim();
-        if (value.isEmpty() | value.length() < 3) {
+        if (value.isEmpty() | value.length() < 1) {
             textInputLayout.setError(message);
             hideKeyboardFrom(textInputEditText);
             return false;
@@ -65,6 +65,7 @@ public class Input {
         }
         return true;
     }
+
 
     private void hideKeyboardFrom(View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);

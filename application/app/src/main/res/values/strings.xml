@@ -22,12 +22,14 @@
     <string name="error_message_username_empty">Enter Username</string>
     <string name="error_message_username_invalid">Enter valid username (Bigger than 1)</string>
     <string name="error_message_password_empty">Enter Password</string>
-    <string name="error_message_password_invalid">Enter valid Password (Bigger than 2)</string>
+    <string name="error_message_password_invalid">Enter valid Password (Bigger than 1)</string>
     <string name="success_message">Registration Successful</string>
     <string name="text_not_member">No account yet? Create one</string>
     <string name="text_already_member">Already a member? Login</string>
     <string name="error_username_exists">Username Already Exists</string>
     <string name="error_password_match">Password Does Not Matches</string>
+    <string name="error_valid_username_taken">Username already taken</string>
+    <string name="error_valid_username_exist">Usename doesn\'t exist</string>
     <string name="error_valid_username_password">Wrong Username or Password</string>
 
     <!-- Activity_main -->

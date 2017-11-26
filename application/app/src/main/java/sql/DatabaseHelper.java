@@ -261,7 +261,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //Check if user or task exist
+    //User or task return 1 if exist & if password is good
     public boolean checkUser(String username) {
         // array of columns to fetch
         String[] columns = {
@@ -309,4 +309,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return false;
     }
+    public String checkPassword(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String u = COLUMN_USER_USERNAME + " = ?";
+        String p = COLUMN_USER_PASSWORD + " = ?";
+        String query = "SELECT " + COLUMN_USER_USERNAME + ", " + COLUMN_USER_PASSWORD + " FROM " + TABLE_USER;
+        Cursor cursor = db.rawQuery(query, null);
+        String a, b;
+        b = "not found";
+        if(cursor.moveToFirst()) {
+            do {
+                a = cursor.getString(0);
+                if(a.equals(username)) {
+                    b = cursor.getString(1);
+                    break;
+                }
+            } while(cursor.moveToNext());
+        }
+
+        return b;
+    }
+
 }
