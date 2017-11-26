@@ -15,7 +15,6 @@ public class Task {
     private Date endDate;
     private Date dueDate;
     private User creator;
-
     //Ressource List
     //GroupTache
 
@@ -62,6 +61,17 @@ public class Task {
         this.endDate = endDate;
         this.dueDate = dueDate;
         this.creator = creator;
+    }
+
+    public Task(Task task) {
+        this.points = task.points;
+        this.available = task.available;
+        this.name = task.name;
+        this.description = task.description;
+        this.startDate = task.startDate;
+        this.endDate = task.endDate;
+        this.dueDate = task.dueDate;
+        this.creator = task.creator;
     }
 
     //getters & setters
@@ -115,16 +125,10 @@ public class Task {
     }
 
     public User getCreator(){
-        return (User) this.creator.clone();
+        return this.creator;
     }
     public void setDueDate(User creator){
-        this.creator = (User) creator.clone();
-    }
-
-
-    public Task clone() {
-        Task aClone = new Task(this.points, this.available, this.name, this.description, this.startDate, this.endDate, this.dueDate, this.creator);
-        return aClone;
+        this.creator = creator;
     }
 
 }

@@ -24,8 +24,19 @@ public class User {
         this.name = name;
         this.userName = userName;
         this.password = password;
-        List<Task> listTask = new ArrayList<Task>();
-        this.listTask = listTask;
+        this.listTask = new ArrayList<>();
+    }
+
+    public User(User user) {
+        this.id = user.id;
+        this.age = user.age;
+        this.points = user.points;
+        this.name = user.name;
+        this.userName = user.userName;
+        this.password = user.password;
+        for (Task aTask : user.listTask) {
+            this.listTask.add(aTask);
+        }
     }
 
     public int getId() {
@@ -73,21 +84,15 @@ public class User {
     public List<Task> getListPeople() {
         List<Task> listReturn = new ArrayList<Task>();
         for (Task aTask : this.listTask) {
-            listReturn.add((Task) aTask.clone());
+            listReturn.add(aTask);
         }
 
         return listReturn;
     }
     public void setListPeople(List<Task> list) {
         for (Task aTask : list) {
-            this.listTask.add((Task) aTask.clone());
+            this.listTask.add(aTask);
         }
-    }
-
-
-    public User clone() {
-        User aClone = new User(this.id, this.age, this.name, this.userName, this.password);
-        return aClone;
     }
 
 }
