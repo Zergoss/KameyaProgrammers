@@ -15,8 +15,9 @@ public class User {
     private List<Task> listTask; //Picture???
 
     //Default constructor
-    public User(int id, String userName, String password) {
-        this.id = id;
+    public User() {
+    }
+    public User(String userName, String password) {
         this.points = 0;
         this.userName = userName;
         this.password = password;

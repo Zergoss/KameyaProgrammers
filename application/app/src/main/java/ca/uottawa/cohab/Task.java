@@ -7,6 +7,7 @@ import java.util.Date;
  */
 
 public class Task {
+    private int id;
     private int points;  //Real???
     private boolean available;
     private String name;
@@ -15,9 +16,12 @@ public class Task {
     private Date endDate;
     private Date dueDate;
     private User creator;
+    private User assignedUser;
     //Ressource List
     //GroupTache
 
+    //Default
+    public Task() {}
     //Minimum Constructor
     public Task (int points, String name, String description, Date dueDate, User creator) {
         this.points = points;
@@ -64,6 +68,13 @@ public class Task {
     }
 
     //getters & setters
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getPoints(){
         return this.points;
     }
@@ -116,8 +127,22 @@ public class Task {
     public User getCreator(){
         return this.creator;
     }
-    public void setDueDate(User creator){
+    public void setCreator(User creator){
         this.creator = creator;
     }
 
+    public User getAssignedUser(){
+        return this.assignedUser;
+    }
+    public void setAssignedUser(User assignedUser){
+        this.assignedUser = assignedUser;
+    }
+
+    public long getDateLong(Date date) {
+        return date.getTime();
+    }
+    public Date getDate(long date) {
+        Date aDate = new Date(date);
+        return aDate;
+    }
 }
