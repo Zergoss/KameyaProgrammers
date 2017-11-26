@@ -63,17 +63,6 @@ public class Task {
         this.creator = creator;
     }
 
-    public Task(Task task) {
-        this.points = task.points;
-        this.available = task.available;
-        this.name = task.name;
-        this.description = task.description;
-        this.startDate = task.startDate;
-        this.endDate = task.endDate;
-        this.dueDate = task.dueDate;
-        this.creator = task.creator;
-    }
-
     //getters & setters
     public int getPoints(){
         return this.points;

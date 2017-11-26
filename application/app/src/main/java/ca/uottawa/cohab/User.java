@@ -9,36 +9,21 @@ import java.util.List;
 
 public class User {
     private int id;
-    private int age;
     private int points;
-    private String name;
     private String userName;
     private String password;
     private List<Task> listTask; //Picture???
 
-
-    public User(int id, int age, String name, String userName, String password) {
+    //Default constructor
+    public User(int id, String userName, String password) {
         this.id = id;
-        this.age = age;
         this.points = 0;
-        this.name = name;
         this.userName = userName;
         this.password = password;
         this.listTask = new ArrayList<>();
     }
 
-    public User(User user) {
-        this.id = user.id;
-        this.age = user.age;
-        this.points = user.points;
-        this.name = user.name;
-        this.userName = user.userName;
-        this.password = user.password;
-        for (Task aTask : user.listTask) {
-            this.listTask.add(aTask);
-        }
-    }
-
+    //getters & setters
     public int getId() {
         return id;
     }
@@ -46,25 +31,11 @@ public class User {
         this.id = id;
     }
 
-    public int getAge() {
-        return age;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public int getPoints(){
         return this.points;
     }
     public void setPoints(int points){
         this.points = points;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getuserName() {
