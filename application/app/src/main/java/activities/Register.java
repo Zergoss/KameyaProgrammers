@@ -116,7 +116,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         if (!databaseHelper.checkUser(textInputEditTextUsername.getText().toString().trim())) {
 
-            user.setuserName(textInputEditTextUsername.getText().toString().trim());
+            user.setUsername(textInputEditTextUsername.getText().toString().trim());
             user.setPassword(textInputEditTextPassword.getText().toString().trim());
 
             databaseHelper.addUser(user);

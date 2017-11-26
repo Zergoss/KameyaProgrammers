@@ -10,6 +10,7 @@ import java.util.List;
 public class User {
     private int id;
     private int points;
+    private int numberTask;
     private String userName;
     private String password;
     private List<Task> listTask; //Picture???
@@ -19,6 +20,7 @@ public class User {
     }
     public User(String userName, String password) {
         this.points = 0;
+        this.numberTask = 0;
         this.userName = userName;
         this.password = password;
         this.listTask = new ArrayList<>();
@@ -39,10 +41,17 @@ public class User {
         this.points = points;
     }
 
-    public String getuserName() {
+    public int getNumberTask() {
+        return numberTask;
+    }
+    public void setNumberTask(int numberTask) {
+        this.numberTask = numberTask;
+    }
+
+    public String getUsername() {
         return userName;
     }
-    public void setuserName(String userName) {
+    public void setUsername(String userName) {
         this.userName = userName;
     }
 

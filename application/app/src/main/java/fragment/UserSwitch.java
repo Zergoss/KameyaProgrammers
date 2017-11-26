@@ -11,14 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import ca.uottawa.cohab.R;
 import activities.TaskView;
+import ca.uottawa.cohab.R;
 
 /**
  * Created by Administrateur on 2017-11-22.
  */
 
-public class SwitchUser extends Fragment {
+public class UserSwitch extends Fragment {
 
     View myView;
     ListView listView;
@@ -26,7 +26,7 @@ public class SwitchUser extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.content_switch_user,container, false);
+        myView = inflater.inflate(R.layout.content_user_switch,container, false);
         addUserList();
         return myView;
     }

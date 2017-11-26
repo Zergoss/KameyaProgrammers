@@ -11,11 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import fragment.ProfileEdit;
 import ca.uottawa.cohab.R;
-import fragment.SwitchUser;
+import fragment.ProfileView;
 import fragment.TaskList;
 import fragment.UserList;
+import fragment.UserSwitch;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_user_list) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new UserList()).commit();
         } else if (id == R.id.nav_profile) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileEdit()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileView()).commit();
         } else if (id == R.id.nav_switch_user) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SwitchUser()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new UserSwitch()).commit();
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
             startActivity(MainIntent);

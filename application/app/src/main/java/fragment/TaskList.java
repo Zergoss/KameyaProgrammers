@@ -15,9 +15,6 @@ import android.widget.Spinner;
 import ca.uottawa.cohab.R;
 import activities.TaskView;
 
-/**
- * Created by Administrateur on 2017-11-22.
- */
 
 public class TaskList extends Fragment {
 

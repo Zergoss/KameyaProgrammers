@@ -28,25 +28,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // User Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_USER_POINTS = "user_points";
+    private static final String COLUMN_USER_NUMBERTASK = "user_numberTask";
     private static final String COLUMN_USER_USERNAME = "user_name";
     private static final String COLUMN_USER_PASSWORD = "user_password";
     private static final String COLUMN_USER_TASK = "user_listTask";
 
-    private static final String COLUMN_TASK_ID = "user_id";
-    private static final String COLUMN_TASK_POINTS = "user_points";
-    private static final String COLUMN_TASK_AVAILABLE = "user_available";
-    private static final String COLUMN_TASK_NAME = "user_name";
-    private static final String COLUMN_TASK_DESCRIPTION = "user_description";
-    private static final String COLUMN_TASK_STARTDATE = "user_startDate";
-    private static final String COLUMN_TASK_ENDDATE = "user_endDate";
-    private static final String COLUMN_TASK_DUEDATE = "user_dueDate";
-    private static final String COLUMN_TASK_CREATOR = "user_creator";
-    private static final String COLUMN_TASK_ASSIGNEDUSED = "user_assignedUser";
+    private static final String COLUMN_TASK_ID = "task_id";
+    private static final String COLUMN_TASK_POINTS = "task_points";
+    private static final String COLUMN_TASK_AVAILABLE = "task_available";
+    private static final String COLUMN_TASK_NAME = "task_name";
+    private static final String COLUMN_TASK_DESCRIPTION = "task_description";
+    private static final String COLUMN_TASK_STARTDATE = "task_startDate";
+    private static final String COLUMN_TASK_ENDDATE = "task_endDate";
+    private static final String COLUMN_TASK_DUEDATE = "task_dueDate";
+    private static final String COLUMN_TASK_CREATOR = "task_creator";
+    private static final String COLUMN_TASK_ASSIGNEDUSED = "task_assignedUser";
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_USER_POINTS + " INTEGER,"
+            + COLUMN_USER_NUMBERTASK + " INTEGER,"
             + COLUMN_USER_USERNAME + " TEXT,"
             + COLUMN_USER_PASSWORD + " TEXT" + ")";
             //+ COLUMN_USER_TASK + " LISTTASK"+
@@ -96,7 +98,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_USERNAME, user.getuserName());
+        values.put(COLUMN_USER_USERNAME, user.getUsername());
+        values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
         values.put(COLUMN_USER_POINTS, user.getPoints());
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
         //values.put(COLUMN_USER_TASK, user.getTask());
@@ -122,24 +125,99 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //Return User, Task
+    public User getUser(String username) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_USER_ID,
+                COLUMN_USER_POINTS,
+                COLUMN_USER_NUMBERTASK,
+                COLUMN_USER_USERNAME,
+                COLUMN_USER_PASSWORD
+                //COLUMN_USER_TASK
+        };
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        User user = new User();
+
+        String query =("SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = " + username);
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through a column and all rows adding to user
+        if (cursor.moveToFirst()) {
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
+            user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
+            user.setNumberTask(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_NUMBERTASK)));
+            user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
+            // Adding user record to list
+        }
+        cursor.close();
+        db.close();
+
+        return user;
+    }
+    public Task getTask(String name) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_TASK_ID,
+                COLUMN_TASK_POINTS,
+                COLUMN_TASK_AVAILABLE,
+                COLUMN_TASK_NAME,
+                COLUMN_TASK_DESCRIPTION,
+                COLUMN_TASK_STARTDATE,
+                COLUMN_TASK_ENDDATE,
+                COLUMN_TASK_DUEDATE
+                //COLUMN_TASK_CREATOR
+                //COLUMN_TASK_ASSIGNEDUSED
+        };
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Task task = new Task();
+        Date aDate;
+
+        String query =("SELECT * FROM LIST WHERE " + COLUMN_TASK_NAME + " = " + name);
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through a column and all rows adding to user
+        if (cursor.moveToFirst()) {
+            task.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_ID))));
+            task.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_POINTS)));
+            task.setAvailable(((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE)))) == 1);
+            task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
+            task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+            task.setStartDate(aDate);
+            aDate = new Date(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+            task.setEndDate(aDate);
+            aDate = new Date(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+            task.setDueDate(aDate);
+            // Adding user record to list
+        }
+        cursor.close();
+        db.close();
+
+        return task;
+    }
+
     //Return list of all user
     public List<User> getAllUser() {
         // array of columns to fetch
         String[] columns = {
                 COLUMN_USER_ID,
                 COLUMN_USER_POINTS,
+                COLUMN_USER_NUMBERTASK,
                 COLUMN_USER_USERNAME,
                 COLUMN_USER_PASSWORD
                 //COLUMN_USER_TASK
         };
-        // sorting orders
+
         String sortOrder =
                 COLUMN_USER_USERNAME + " ASC";
         List<User> userList = new ArrayList<User>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // query the user table
         Cursor cursor = db.query(TABLE_USER, columns, null, null, null, null, sortOrder);
 
         // Traversing through all rows and adding to list
@@ -147,8 +225,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 User user = new User();
                 user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
-                user.setuserName(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
                 user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
+                user.setNumberTask(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_NUMBERTASK)));
+                user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
                 user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
                 // Adding user record to list
                 userList.add(user);
@@ -157,7 +236,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
 
-        // return user list
         return userList;
     }
     public List<Task> getAllTask() {
@@ -178,12 +256,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sortOrder =
                 COLUMN_TASK_NAME + " ASC";
         List<Task> taskList = new ArrayList<Task>();
-
         SQLiteDatabase db = this.getReadableDatabase();
+        Date aDate;
 
         // query the user table
         Cursor cursor = db.query(TABLE_TASK, columns, null, null, null, null, sortOrder);
-        Date aDate;
+
 
         // Traversing through all rows and adding to list
         if (cursor.moveToFirst()) {
@@ -217,7 +295,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_POINTS, user.getPoints());
-        values.put(COLUMN_USER_USERNAME, user.getuserName());
+        values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
+        values.put(COLUMN_USER_USERNAME, user.getUsername());
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
         //listTask
 
@@ -273,14 +352,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String[] selectionArgs = {username};
 
-        //SELECT user_id FROM user WHERE user_name = 'username';
-        Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null,null);                      //The sort order
-        int cursorCount = cursor.getCount();
-        cursor.close();
-        db.close();
+        ///SELECT user_id FROM name WHERE user_name = 'username';
+        try {
+            Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null);                      //The sort order
+            int cursorCount = cursor.getCount();
+            cursor.close();
+            db.close();
 
-        if (cursorCount > 0) {
-            return true;
+            if (cursorCount > 0) {
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
 
         return false;
@@ -311,8 +394,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public String checkPassword(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String u = COLUMN_USER_USERNAME + " = ?";
-        String p = COLUMN_USER_PASSWORD + " = ?";
         String query = "SELECT " + COLUMN_USER_USERNAME + ", " + COLUMN_USER_PASSWORD + " FROM " + TABLE_USER;
         Cursor cursor = db.rawQuery(query, null);
         String a, b;

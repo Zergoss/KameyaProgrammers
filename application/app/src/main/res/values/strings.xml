@@ -17,6 +17,8 @@
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_points">Points</string>
+    <string name="hint_numberTask"># Task</string>
     <string name="text_login">Login</string>
     <string name="text_register">Register</string>
     <string name="error_message_username_empty">Enter Username</string>
@@ -41,6 +43,9 @@
 
     <!--Header_main drawer -->
     <string name="user_name">Username</string>
+    <string name="user_points">Points</string>
+    <string name="user_numberTask">Number of task</string>
+
     <string name="image_profile">Image of profile</string>
 
     <!--Content layout -->
@@ -49,6 +54,9 @@
     <string name="switch_user">Switch user</string>
     <string name="log_off">Log off</string>
     <string name="user_list">User list</string>
+    <string name="user_edit">Edit user</string>
+    <string name="user_changePic">Change Picture</string>
+    <string name="user_delete">Delete Profile</string>
 
     <!--content_task_list -->
     <string-array name="dropDownTask">

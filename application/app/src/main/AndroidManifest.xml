@@ -32,7 +32,9 @@
         <activity android:name="activities.TaskView"
             android:label="@string/task_name"/>
         <activity android:name="activities.TaskEdit"
-            android:label="@string/task_edit" />
+        android:label="@string/task_edit" />
+        <activity android:name="activities.UserEdit"
+            android:label="@string/user_edit" />
     </application>
 
 </manifest>
