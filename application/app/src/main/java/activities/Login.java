@@ -14,6 +14,7 @@ import android.view.View;
 
 import ca.uottawa.cohab.R;
 import helpers.Input;
+import model.User;
 import sql.DatabaseHelper;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
@@ -70,7 +71,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private void initObjects() {
         databaseHelper = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
-
     }
 
 

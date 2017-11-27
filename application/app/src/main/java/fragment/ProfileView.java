@@ -24,7 +24,8 @@ public class ProfileView extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), UserEdit.class);
+                Intent intent = new Intent(myView.getContext(), UserEdit.class);
+                //intent.putExtra("USERNAME", myView.getContext());
                 startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@ package activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,17 +11,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import ca.uottawa.cohab.R;
 import fragment.ProfileView;
 import fragment.TaskList;
 import fragment.UserList;
 import fragment.UserSwitch;
+import helpers.Input;
+import sql.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final CharSequence TITLE = "user";
+    private final AppCompatActivity activity = MainActivity.this;
+    //private DatabaseHelper databaseHelper;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +37,27 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         defaultDrawer();
+        initViews();
+        initNav();
+    }
+
+    private void initNav() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        TextView usernameTextMain = (TextView) header.findViewById(R.id.usernameTextMain);
+        usernameTextMain.setText(username);
+    }
+    private void initViews() {
+        username = getIntent().getStringExtra("USERNAME");
     }
 
     @Override
@@ -72,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
             startActivity(MainIntent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -79,12 +100,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-
     private void defaultDrawer() {
         FragmentManager fragmentManager = getFragmentManager();
         getSupportActionBar().setTitle("Task list");
         fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
     }
 
+    public String getUsername() {
+        return this.username;
+    }
 
 }

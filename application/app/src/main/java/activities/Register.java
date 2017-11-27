@@ -69,14 +69,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void initListeners() {
         appCompatButtonRegister.setOnClickListener(this);
         appCompatTextViewLoginLink.setOnClickListener(this);
-
     }
 
     private void initObjects() {
         inputValidation = new Input(activity);
         databaseHelper = new DatabaseHelper(activity);
         user = new User();
-
     }
 
 
