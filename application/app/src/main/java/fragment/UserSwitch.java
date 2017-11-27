@@ -1,49 +1,90 @@
 package fragment;
 
 import android.app.Fragment;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import activities.TaskView;
+import java.util.ArrayList;
+import java.util.List;
+
+import adapters.UserSwitchRecyclerAdapter;
 import ca.uottawa.cohab.R;
+import model.User;
+import sql.DatabaseHelper;
 
-/**
- * Created by Administrateur on 2017-11-22.
- */
 
 public class UserSwitch extends Fragment {
 
-    View myView;
-    ListView listView;
+    private View myView;
+    private AppCompatActivity activity;
+    private AppCompatTextView textViewUsername;
+    private RecyclerView recyclerViewUsers;
+    private List<User> listUsers;
+    private UserSwitchRecyclerAdapter userSwitchRecyclerAdapter;
+    private DatabaseHelper databaseHelper;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.content_user_switch,container, false);
-        addUserList();
+        super.onCreate(savedInstanceState);
+        myView = inflater.inflate(R.layout.content_user_switch, container, false);
+        initViews();
+        //initListeners();
+        initObjects();
         return myView;
     }
 
-    private void addUserList(){
-        listView = (ListView) myView.findViewById(R.id.switchUserList);
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.UserDummyList));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+    private void initViews() {
+        textViewUsername = (AppCompatTextView) myView.findViewById(R.id.textViewUsername);
+        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUsers);
+    }
+
+
+    private void initObjects() {
+        listUsers = new ArrayList<>();
+        activity = (AppCompatActivity)getActivity();
+        userSwitchRecyclerAdapter = new UserSwitchRecyclerAdapter(listUsers);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
+        recyclerViewUsers.setLayoutManager(mLayoutManager);
+        recyclerViewUsers.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewUsers.setHasFixedSize(true);
+        recyclerViewUsers.setAdapter(userSwitchRecyclerAdapter);
+        databaseHelper = new DatabaseHelper(activity);
+
+        //String usernameFromIntent = getActivity().getIntent().getStringExtra("USERNAME");
+        //textViewUsername.setText(usernameFromIntent);
+
+        getDataFromSQLite();
+    }
+
+    private void getDataFromSQLite() {
+        // AsyncTask is used that SQLite operation not blocks the UI Thread.
+        new AsyncTask<Void, Void, Void>() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myView.getContext(), TaskView.class);
-                //intent.putExtra("name", listView.getItemAtPosition(i).toString());
-                startActivity(intent);
+            protected Void doInBackground(Void... params) {
+                listUsers.clear();
+                listUsers.addAll(databaseHelper.getAllUser());
+
+                return null;
             }
-        });
-        listView.setAdapter(mAdapter);
-    };
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                userSwitchRecyclerAdapter.notifyDataSetChanged();
+            }
+        }.execute();
+    }
 
 }

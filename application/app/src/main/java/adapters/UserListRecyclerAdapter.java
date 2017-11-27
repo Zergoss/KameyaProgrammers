@@ -7,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import ca.uottawa.cohab.R;
 import model.User;
 
-import java.util.List;
-
-public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdapter.UserViewHolder> {
+public class UserListRecyclerAdapter extends RecyclerView.Adapter<UserListRecyclerAdapter.UserViewHolder> {
 
     private List<User> listUsers;
 
-    public UsersRecyclerAdapter(List<User> listUsers) {
+    public UserListRecyclerAdapter(List<User> listUsers) {
         this.listUsers = listUsers;
     }
 
@@ -24,7 +24,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflating recycler item view
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_user_recycler, parent, false);
+                .inflate(R.layout.item_user_list_recycler, parent, false);
 
         return new UserViewHolder(itemView);
     }
@@ -32,13 +32,13 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         holder.textViewUsername.setText(listUsers.get(position).getUsername());
-        holder.textViewPoints.setText(listUsers.get(position).getPoints());
-        holder.textViewNumberTask.setText(listUsers.get(position).getNumberTask());
+        holder.textViewPoints.setText(String.valueOf(listUsers.get(position).getPoints()));
+        holder.textViewNumberTask.setText(String.valueOf(listUsers.get(position).getNumberTask()));
     }
 
     @Override
     public int getItemCount() {
-        Log.v(UsersRecyclerAdapter.class.getSimpleName(),""+listUsers.size());
+        Log.v(UserListRecyclerAdapter.class.getSimpleName(),""+listUsers.size());
         return listUsers.size();
     }
 

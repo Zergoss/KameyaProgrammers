@@ -1,7 +1,6 @@
 package fragment;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,15 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import activities.UserView;
-import adapters.UsersRecyclerAdapter;
+import adapters.UserListRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import model.User;
 import sql.DatabaseHelper;
@@ -30,12 +25,11 @@ import sql.DatabaseHelper;
 public class UserList extends Fragment {
 
     private View myView;
-    private ListView listView;
     private AppCompatActivity activity;
     private AppCompatTextView textViewUsername;
     private RecyclerView recyclerViewUsers;
     private List<User> listUsers;
-    private UsersRecyclerAdapter usersRecyclerAdapter;
+    private UserListRecyclerAdapter userListRecyclerAdapter;
     private DatabaseHelper databaseHelper;
 
     @Nullable
@@ -70,13 +64,13 @@ public class UserList extends Fragment {
     private void initObjects() {
         listUsers = new ArrayList<>();
         activity = (AppCompatActivity)getActivity();
-        usersRecyclerAdapter = new UsersRecyclerAdapter(listUsers);
+        userListRecyclerAdapter = new UserListRecyclerAdapter(listUsers);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
         recyclerViewUsers.setLayoutManager(mLayoutManager);
         recyclerViewUsers.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUsers.setHasFixedSize(true);
-        recyclerViewUsers.setAdapter(usersRecyclerAdapter);
+        recyclerViewUsers.setAdapter(userListRecyclerAdapter);
         databaseHelper = new DatabaseHelper(activity);
 
         //String usernameFromIntent = getActivity().getIntent().getStringExtra("USERNAME");
@@ -99,7 +93,7 @@ public class UserList extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                usersRecyclerAdapter.notifyDataSetChanged();
+                userListRecyclerAdapter.notifyDataSetChanged();
             }
         }.execute();
     }

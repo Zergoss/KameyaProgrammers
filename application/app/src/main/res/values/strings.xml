@@ -14,6 +14,7 @@
 
     <!-- Strings related to New login -->
     <string name="text_accounts">All Accounts</string>
+    <string name="text_other_accounts">Other Accounts</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
@@ -51,7 +52,7 @@
     <!--Content layout -->
     <string name="task_list">Task list</string>
     <string name="profile">Profile</string>
-    <string name="switch_user">Switch user</string>
+    <string name="user_switch">Switch user</string>
     <string name="log_off">Log off</string>
     <string name="user_list">User list</string>
     <string name="user_edit">Edit user</string>

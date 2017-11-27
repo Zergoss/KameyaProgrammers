@@ -20,6 +20,8 @@ import fragment.UserSwitch;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final CharSequence TITLE = "user";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +58,16 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
 
         if (id == R.id.nav_task_list) {
+            getSupportActionBar().setTitle("Task list");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
         } else if (id == R.id.nav_user_list) {
+            getSupportActionBar().setTitle("User list");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new UserList()).commit();
         } else if (id == R.id.nav_profile) {
+            getSupportActionBar().setTitle("Profile");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileView()).commit();
-        } else if (id == R.id.nav_switch_user) {
+        } else if (id == R.id.nav_user_switch) {
+            getSupportActionBar().setTitle("Switch user");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new UserSwitch()).commit();
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
@@ -73,8 +79,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
     private void defaultDrawer() {
         FragmentManager fragmentManager = getFragmentManager();
+        getSupportActionBar().setTitle("Task list");
         fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
     }
+
+
 }
