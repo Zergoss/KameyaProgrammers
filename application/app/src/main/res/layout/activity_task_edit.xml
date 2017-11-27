@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="activities.TaskEdit">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/editTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_name" />
+            <!--android:inputType="textPersonName" ??-->
+
+        <EditText
+            android:id="@+id/editTaskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_description" />
+
+        <EditText
+            android:id="@+id/editTaskPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_points" />
+
+        <EditText
+            android:id="@+id/editTaskStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_start" />
+
+        <EditText
+            android:id="@+id/editTaskEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_end" />
+
+        <EditText
+            android:id="@+id/editTaskDueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_due" />
+
+        <EditText
+            android:id="@+id/editTask_availability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_availability" />
+
+        <EditText
+            android:id="@+id/editTask_creator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_createur" />
+
+        <Button
+            android:id="@+id/btn_saveEditTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_task_edit"
+            android:onClick="saveEditTask"/>
+
+        <Button
+            android:id="@+id/btn_cancelEditTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_task_edit"
+            android:onClick="cancelEditTask"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
