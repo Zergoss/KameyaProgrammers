@@ -27,6 +27,7 @@
     <string name="error_message_password_empty">Enter Password</string>
     <string name="error_message_password_invalid">Enter valid Password (Bigger than 1)</string>
     <string name="success_message">Registration Successful</string>
+    <string name="success_user_edit">Edit Successful</string>
     <string name="text_not_member">No account yet? Create one</string>
     <string name="text_already_member">Already a member? Login</string>
     <string name="error_username_exists">Username Already Exists</string>

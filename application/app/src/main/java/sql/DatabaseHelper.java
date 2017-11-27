@@ -294,16 +294,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        /*
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_POINTS, user.getPoints());
-        values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
-        values.put(COLUMN_USER_USERNAME, user.getUsername());
-        values.put(COLUMN_USER_PASSWORD, user.getPassword());
+        values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
+        values.put(DatabaseHelper.COLUMN_USER_NUMBERTASK, user.getNumberTask());
+        values.put(DatabaseHelper.COLUMN_USER_USERNAME, user.getUsername());
+        values.put(DatabaseHelper.COLUMN_USER_PASSWORD, user.getPassword());
         //listTask
+        String whereClause = COLUMN_USER_ID + "=?";       //COLUMN_USER_ID + " = ?"
+        String[] whereArgs = null;      //new String[]{String.valueOf(user.getId())}
+        db.update(TABLE_USER, values, whereClause, whereArgs);
+        --------------------
+        UPDATE inventory SET price = 20.00, item = "Witches hat hat" WHERE id = 4;
+
+        */
 
         // updating row
-        db.update(TABLE_USER, values, COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+        String query = "UPDATE " + TABLE_USER + " SET "
+                + COLUMN_USER_POINTS + " = " + user.getPoints() + ", "
+                + COLUMN_USER_NUMBERTASK + " = " + user.getNumberTask() + ", "
+                + COLUMN_USER_USERNAME + " = '" + user.getUsername() + "', "
+                + COLUMN_USER_PASSWORD + " = '" + user.getPassword()
+                + "' WHERE " + COLUMN_USER_ID + " = '" + user.getId() + "'";
+
+        db.execSQL(query);
         db.close();
     }
     public void updateTask(Task task) {

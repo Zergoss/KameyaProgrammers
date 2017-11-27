@@ -3,6 +3,8 @@ package activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,13 +26,13 @@ public class UserEdit extends AppCompatActivity {
     private Input inputValidation;
     private NestedScrollView nestedScrollView;
 
-    private EditText profile_username_edit;
-    private EditText profile_password_edit;
-    private EditText profile_passwordConfirm_edit;
+    private TextInputLayout profile_username_layout;
+    private TextInputLayout profile_password_layout;
+    private TextInputLayout profile_passwordConfirm_layout;
 
-    private Button btn_changePic;
-    private Button btn_delete_profile;
-    private Button btn_saveEditProfile;
+    private TextInputEditText profile_username_edit;
+    private TextInputEditText profile_password_edit;
+    private TextInputEditText profile_passwordConfirm_edit;
 
 
     @Override
@@ -46,22 +48,22 @@ public class UserEdit extends AppCompatActivity {
     private void initViews() {
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
 
-        profile_username_edit = (EditText) findViewById(R.id.profile_username_edit);
-        profile_password_edit = (EditText) findViewById(R.id.profile_password_edit);
-        profile_passwordConfirm_edit = (EditText) findViewById(R.id.profile_passwordConfirm_edit);
+        profile_username_layout = (TextInputLayout) findViewById(R.id.profile_username_layout);
+        profile_password_layout = (TextInputLayout) findViewById(R.id.profile_password_layout);
+        profile_passwordConfirm_layout = (TextInputLayout) findViewById(R.id.profile_passwordConfirm_layout);
 
-        btn_changePic = (Button) findViewById(R.id.btn_changePic);
-        btn_delete_profile = (Button) findViewById(R.id.btn_delete_profile);
-        btn_saveEditProfile = (Button) findViewById(R.id.btn_saveEditProfile);
+        profile_username_edit = (TextInputEditText) findViewById(R.id.profile_username_edit);
+        profile_password_edit = (TextInputEditText) findViewById(R.id.profile_password_edit);
+        profile_passwordConfirm_edit = (TextInputEditText) findViewById(R.id.profile_passwordConfirm_edit);
+
     }
     private void initObjects() {
         inputValidation = new Input(activity);
         db = new DatabaseHelper(activity);
-        user = new User();
+        user = db.getUser(getIntent().getStringExtra("USERNAME"));
     }
     private void loadUserInfo() {
         //Load info from database
-        user = db.getUser(getIntent().getStringExtra("USERNAME"));
         profile_username_edit.setText(user.getUsername());
     }
 
@@ -76,42 +78,40 @@ public class UserEdit extends AppCompatActivity {
         startActivity(intent);
     }
     public void saveUser(View view){
-        postDataToSQLite();
-        db.deleteUser(user);
-        Intent intent = new Intent(view.getContext(), Login.class);
-        startActivity(intent);
+        updateDataToSQLite();
     }
 
-    private void postDataToSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextUsername, textInputLayoutUsername, getString(R.string.error_message_username_empty))) {
+    private void updateDataToSQLite() {
+        if (!inputValidation.isInputEditTextFilled(profile_username_edit, profile_username_layout, getString(R.string.error_message_username_empty))) {
             return;
         }
-        if (!inputValidation.isInputEditTextUsername(textInputEditTextUsername, textInputLayoutUsername, getString(R.string.error_message_username_invalid))) {
+        if (!inputValidation.isInputEditTextUsername(profile_username_edit, profile_username_layout, getString(R.string.error_message_username_invalid))) {
             return;
         }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_password_empty))) {
+        if (!inputValidation.isInputEditTextFilled(profile_password_edit, profile_password_layout, getString(R.string.error_message_password_empty))) {
             return;
         }
-        if (!inputValidation.isInputEditTextPassword(textInputEditTextPassword, textInputLayoutPassword,
+        if (!inputValidation.isInputEditTextPassword(profile_password_edit, profile_password_layout,
                 getString(R.string.error_message_password_invalid))) {
             return;
         }
-        if (!inputValidation.isInputEditTextMatches(textInputEditTextPassword, textInputEditTextConfirmPassword,
-                textInputLayoutConfirmPassword, getString(R.string.error_password_match))) {
+        if (!inputValidation.isInputEditTextMatches(profile_password_edit, profile_passwordConfirm_edit,
+                profile_passwordConfirm_layout, getString(R.string.error_password_match))) {
             return;
         }
 
-        if (!databaseHelper.checkUser(textInputEditTextUsername.getText().toString().trim())) {
+        if (!db.checkUser(profile_username_edit.getText().toString().trim())) {
+            user.setUsername(profile_username_edit.getText().toString().trim());
+            user.setPassword(profile_password_edit.getText().toString().trim());
 
-            user.setUsername(textInputEditTextUsername.getText().toString().trim());
-            user.setPassword(textInputEditTextPassword.getText().toString().trim());
-
-            databaseHelper.addUser(user);
+            db.updateUser(user);
 
             // Snack Bar to show success message that record saved successfully
-            Snackbar.make(nestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(nestedScrollView, getString(R.string.success_user_edit), Snackbar.LENGTH_LONG).show();
+            Intent intent = new Intent(UserEdit.this, MainActivity.class);
+            intent.putExtra("USERNAME", profile_username_edit.getText().toString().trim());
             emptyInputEditText();
-
+            startActivity(intent);
 
         } else {
             // Snack Bar to show error message that record already exists
@@ -123,9 +123,9 @@ public class UserEdit extends AppCompatActivity {
 
 
     private void emptyInputEditText() {
-        textInputEditTextUsername.setText(null);
-        textInputEditTextPassword.setText(null);
-        textInputEditTextConfirmPassword.setText(null);
+        profile_username_edit.setText(null);
+        profile_password_edit.setText(null);
+        profile_passwordConfirm_edit.setText(null);
     }
 
 }

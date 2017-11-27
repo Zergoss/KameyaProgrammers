@@ -3,10 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Administrateur on 2017-11-23.
- */
-
 public class User {
     private int id;
     private int points;
