@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "508184684228",
+    "firebase_url": "https://application-5991d.firebaseio.com",
+    "project_id": "application-5991d",
+    "storage_bucket": "application-5991d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508184684228:android:d2dac3af84bd50f0",
+        "android_client_info": {
+          "package_name": "ca.uottawa.cohab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508184684228-4dtgidt6jhp3tjqu8enfolkg5ve71ckt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.uottawa.cohab",
+            "certificate_hash": "81f27c038674aed055edc9c09b2c7aca44457e79"
+          }
+        },
+        {
+          "client_id": "508184684228-utjh77vtrvnqrgosrht6h50ttgl85m5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl6BcQpDxs3SVPLvfgCXJ1vXr9vMDx16U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508184684228-utjh77vtrvnqrgosrht6h50ttgl85m5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
