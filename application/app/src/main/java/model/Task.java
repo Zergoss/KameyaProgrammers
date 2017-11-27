@@ -2,10 +2,6 @@ package model;
 
 import java.util.Date;
 
-/**
- * Created by Administrateur on 2017-11-23.
- */
-
 public class Task {
     private int id;
     private int points;  //Real???
