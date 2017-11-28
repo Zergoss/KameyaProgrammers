@@ -1,0 +1,36 @@
+CREATE TABLE user (
+  user_id INTEGER PRIMARY KEY,
+  user_points INTEGER,
+  user_numberTask INTEGER,
+  user_username TEXT,
+  user_password TEXT
+);
+
+CREATE TABLE task (
+task_id INTEGER PRIMARY KEY,
+task_points INTEGER,
+task_available NUMERIC,
+task_name TEXT,
+task_description TEXT,
+task_startDate NUMERIC,
+task_endDate NUMERIC,
+task_dueDate NUMERIC
+  /*FOREIGN KEY(artist) REFERENCES user(id)*/
+);
+
+INSERT INTO user VALUES (1, 0, 0, "r", 1);
+INSERT INTO user VALUES (2, 0, 0, "2", 1);
+INSERT INTO user VALUES (3, 0, 0, "test", 1);
+INSERT INTO user VALUES (4, 0, 0, "4", 1);
+
+
+INSERT INTO task VALUES (1, 0, 0, "Menage", "Room", 1, 2, 3);
+INSERT INTO task VALUES (2, 0, 0, "Vaiselle", "Cuisin", 1, 2, 3);
+INSERT INTO task VALUES (3, 0, 0, "Douche", "Bain", 1, 2, 3);
+INSERT INTO task VALUES (4, 0, 0, "Sleep", "Room", 1, 2, 3);
+INSERT INTO task VALUES (5, 0, 0, "Devoir", "Room", 1, 2, 3);
+
+SELECT * FROM user;
+SELECT * FROM task;
+
+SELECT user_id FROM user WHERE user_username = "test";

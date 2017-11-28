@@ -1,0 +1,23 @@
+CHEAT SHEET
+
+
+UserEdit
+    private final AppCompatActivity activity = this
+    private DatabaseHelper db
+
+    private User user
+    private Input inputValidation
+    private NestedScrollView nestedScrollView
+
+    private TextInputLayout profile_username_layout
+    private TextInputLayout profile_password_layout
+    private TextInputLayout profile_passwordConfirm_layout
+
+    private TextInputEditText profile_username_edit
+    private TextInputEditText profile_password_edit
+    private TextInputEditText profile_passwordConfirm_edit
+
+    private Button btn_changePic
+    private Button btn_delete_profile
+    private Button btn_saveEditProfile
+
