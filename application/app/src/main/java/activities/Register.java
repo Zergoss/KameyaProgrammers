@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import ca.uottawa.cohab.R;
 import helpers.Input;
 import model.User;
+import sql.DatabaseHelper;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,7 +40,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private AppCompatTextView appCompatTextViewLoginLink;
 
     private Input inputValidation;
-    private DatabaseReference databaseUser;
+    private DatabaseHelper databaseHelper;
     private User user;
 
     @Override
@@ -47,28 +48,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
-        databaseUser = FirebaseDatabase.getInstance().getReference("user");
 
         initViews();
         initListeners();
         initObjects();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //attaching value event listener
-        databaseUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
 
@@ -95,6 +78,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void initObjects() {
+        databaseHelper = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
         user = new User();
     }

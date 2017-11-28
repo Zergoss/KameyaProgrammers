@@ -18,10 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import ca.uottawa.cohab.R;
 import helpers.Input;
 import model.User;
+import sql.DatabaseHelper;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = Login.this;
-    private DatabaseReference databaseReference;
+    private DatabaseHelper databaseReference;
     private NestedScrollView nestedScrollView;
 
     private TextInputLayout textInputLayoutUsername;
@@ -41,7 +42,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-        databaseReference = FirebaseDatabase.getInstance().getReference("user");
 
         initViews();
         initListeners();
@@ -71,7 +71,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void initObjects() {
-        databaseHelper = new DatabaseHelper(activity);
+        databaseReference = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
     }
 
@@ -108,9 +108,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        if (databaseHelper.checkUser(textInputEditTextUsername.getText().toString().trim())) {
+        if (databaseReference.checkUser(textInputEditTextUsername.getText().toString().trim())) {
             String aPass = textInputEditTextPassword.getText().toString().trim();
-            String password = databaseHelper.checkPassword(textInputEditTextUsername.getText().toString().trim());
+            String password = databaseReference.checkPassword(textInputEditTextUsername.getText().toString().trim());
             if (aPass.equals(password)) {
                 Intent accountsIntent = new Intent(activity, MainActivity.class);
                 accountsIntent.putExtra("USERNAME", textInputEditTextUsername.getText().toString().trim());

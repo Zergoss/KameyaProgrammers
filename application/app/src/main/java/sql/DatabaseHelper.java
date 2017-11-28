@@ -294,20 +294,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        /*
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
         values.put(DatabaseHelper.COLUMN_USER_NUMBERTASK, user.getNumberTask());
         values.put(DatabaseHelper.COLUMN_USER_USERNAME, user.getUsername());
         values.put(DatabaseHelper.COLUMN_USER_PASSWORD, user.getPassword());
         //listTask
-        String whereClause = COLUMN_USER_ID + "=?";       //COLUMN_USER_ID + " = ?"
+        String whereClause = COLUMN_USER_ID + " = '" + user.getId() + "'";
         String[] whereArgs = null;      //new String[]{String.valueOf(user.getId())}
         db.update(TABLE_USER, values, whereClause, whereArgs);
-        --------------------
+        /*--------------------
         UPDATE inventory SET price = 20.00, item = "Witches hat hat" WHERE id = 4;
-
-        */
 
         // updating row
         String query = "UPDATE " + TABLE_USER + " SET "
@@ -316,8 +313,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_USER_USERNAME + " = '" + user.getUsername() + "', "
                 + COLUMN_USER_PASSWORD + " = '" + user.getPassword()
                 + "' WHERE " + COLUMN_USER_ID + " = '" + user.getId() + "'";
-
-        db.execSQL(query);
+                        db.execSQL(query);*/
         db.close();
     }
     public void updateTask(Task task) {
