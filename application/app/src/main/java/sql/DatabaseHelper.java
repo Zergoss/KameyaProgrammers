@@ -42,8 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TASK_STARTDATE = "task_startDate";
     private static final String COLUMN_TASK_ENDDATE = "task_endDate";
     private static final String COLUMN_TASK_DUEDATE = "task_dueDate";
-    //private static final String COLUMN_TASK_CREATOR = "task_creator";
-    //private static final String COLUMN_TASK_ASSIGNEDUSED = "task_assignedUser";
+    private static final String COLUMN_TASK_CREATOR = "task_creator";
+    private static final String COLUMN_TASK_ASSIGNEDUSED = "task_assignedUser";
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
@@ -63,11 +63,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TASK_DESCRIPTION + " TEXT,"
             + COLUMN_TASK_STARTDATE + " NUMERIC,"
             + COLUMN_TASK_ENDDATE + " NUMERIC,"
-            + COLUMN_TASK_DUEDATE + " NUMERIC"+ ")";
-            //+ COLUMN_TASK_CREATOR + " INTEGER,"
-            //+ COLUMN_TASK_ASSIGNEDUSED + " INTEGER,"
-            //+ "FOREIGN KEY (" + COLUMN_TASK_CREATOR + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "),"
-            //+ "FOREIGN KEY (" + COLUMN_TASK_ASSIGNEDUSED + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + ")";
+            + COLUMN_TASK_DUEDATE + " NUMERIC,"
+            + COLUMN_TASK_CREATOR + " INTEGER,"
+            + COLUMN_TASK_ASSIGNEDUSED + " INTEGER,"
+            + "FOREIGN KEY (" + COLUMN_TASK_CREATOR + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "),"
+            + "FOREIGN KEY (" + COLUMN_TASK_ASSIGNEDUSED + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "))";
 
 
     // drop table sql query
@@ -122,8 +122,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_STARTDATE, task.getStartDate().getTime());
         values.put(COLUMN_TASK_ENDDATE, task.getEndDate().getTime());
         values.put(COLUMN_TASK_DUEDATE, task.getDueDate().getTime());
-        //values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
-        //values.put(COLUMN_TASK_ASSIGNEDUSED, task.getAssignedUser().getId());
+        values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
+        values.put(COLUMN_TASK_ASSIGNEDUSED, task.getAssignedUser().getId());
 
         // Inserting Row
         db.insert(TABLE_TASK, null, values);
@@ -162,6 +162,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return user;
     }
+    public User getUser(int id) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_USER_ID,
+                COLUMN_USER_POINTS,
+                COLUMN_USER_NUMBERTASK,
+                COLUMN_USER_USERNAME,
+                COLUMN_USER_PASSWORD
+                //COLUMN_USER_TASK
+        };
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        User user = new User();
+
+        String query =("SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_USER_ID + " = '" + id + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through a column and all rows adding to user
+        if (cursor.moveToFirst()) {
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
+            user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
+            user.setNumberTask(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_NUMBERTASK)));
+            user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
+            // Adding user record to list
+        }
+        cursor.close();
+        db.close();
+
+        return user;
+    }
     public Task getTask(String name) {
         // array of columns to fetch
         String[] columns = {
@@ -172,32 +203,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TASK_DESCRIPTION,
                 COLUMN_TASK_STARTDATE,
                 COLUMN_TASK_ENDDATE,
-                COLUMN_TASK_DUEDATE
-                //COLUMN_TASK_CREATOR
+                COLUMN_TASK_DUEDATE,
+                COLUMN_TASK_CREATOR
                 //COLUMN_TASK_ASSIGNEDUSED
         };
 
         SQLiteDatabase db = this.getReadableDatabase();
         Task task = new Task();
         Date aDate;
+        User user;
 
-        String query =("SELECT * FROM LIST WHERE " + COLUMN_TASK_NAME + " = " + name);
+        String query =("SELECT * FROM LIST WHERE " + COLUMN_TASK_NAME + " = '" + name + "'");
         Cursor cursor = db.rawQuery(query, null);
 
         // Traversing through a column and all rows adding to user
         if (cursor.moveToFirst()) {
             task.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_ID))));
             task.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_POINTS)));
-            task.setAvailable(((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE)))) == 1);
+            task.setAvailable((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE))) == 1);
             task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
             task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
-            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+
+            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STARTDATE)));
             task.setStartDate(aDate);
-            aDate = new Date(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ENDDATE)));
             task.setEndDate(aDate);
-            aDate = new Date(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
             task.setDueDate(aDate);
-            // Adding user record to list
+
+            task.setAssignedUser(null);
+            task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+
         }
         cursor.close();
         db.close();
@@ -253,14 +289,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TASK_DESCRIPTION,
                 COLUMN_TASK_STARTDATE,
                 COLUMN_TASK_ENDDATE,
-                COLUMN_TASK_DUEDATE
-                //COLUMN_TASK_CREATOR
-                //COLUMN_TASK_ASSIGNEDUSED
+                COLUMN_TASK_DUEDATE,
+                COLUMN_TASK_CREATOR,
+                COLUMN_TASK_ASSIGNEDUSED
         };
         // sorting orders
         String sortOrder =
                 COLUMN_TASK_NAME + " ASC";
         List<Task> taskList = new ArrayList<Task>();
+
         SQLiteDatabase db = this.getReadableDatabase();
         Date aDate;
 
@@ -277,13 +314,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setAvailable(((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE)))) == 1);
                 task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
                 task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+
+                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STARTDATE)));
                 task.setStartDate(aDate);
-                aDate = new Date(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ENDDATE)));
                 task.setEndDate(aDate);
-                aDate = new Date(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setDueDate(aDate);
-                // Adding user record to list
+
+                task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+                task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSED))));
+
                 taskList.add(task);
             } while (cursor.moveToNext());
         }
@@ -321,7 +362,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_STARTDATE, task.getStartDate().getTime());
         values.put(COLUMN_TASK_ENDDATE, task.getEndDate().getTime());
         values.put(COLUMN_TASK_DUEDATE, task.getDueDate().getTime());
-        //CREATOR AND ASSIGN
+        values.put(COLUMN_TASK_CREATOR , task.getCreator().getId());
+        values.put(COLUMN_TASK_ASSIGNEDUSED , task.getAssignedUser().getId());
 
         // updating row
         db.update(TABLE_TASK, values, COLUMN_TASK_ID + " = ?",
@@ -339,13 +381,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete(TABLE_TASK, COLUMN_TASK_ID + " = ?",
-                new String[]{String.valueOf(task.getId())});
+        db.delete(TABLE_TASK, COLUMN_TASK_ID + " = ?", new String[]{String.valueOf(task.getId())});
         db.close();
     }
 
 
-    //User or task return 1 if exist & if password is good
+    //User or task return 1 if exist & password if it's good
     public boolean checkUser(String username) {
         // array of columns to fetch
         String[] columns = {
@@ -369,7 +410,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }catch(Exception e){
             e.printStackTrace();
-
         }
 
         return false;
@@ -386,14 +426,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // selection arguments
         String[] selectionArgs = {name};
 
-        Cursor cursor = db.query(TABLE_TASK, columns, selection, selectionArgs, null, null,null);
+        try {
+            Cursor cursor = db.query(TABLE_TASK, columns, selection, selectionArgs, null, null, null);                      //The sort order
+            int cursorCount = cursor.getCount();
+            cursor.close();
+            db.close();
 
-        int cursorCount = cursor.getCount();
-
-        cursor.close();
-        db.close();
-        if (cursorCount > 0) {
-            return true;
+            if (cursorCount > 0) {
+                return true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
 
         return false;
