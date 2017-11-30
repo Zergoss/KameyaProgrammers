@@ -10,11 +10,12 @@ android:label="@string/user_list" >
     android:layout_height="wrap_content"
     android:paddingBottom="5dp"
     android:paddingLeft="16dp"
+    android:paddingStart="16dp"
     android:paddingTop="5dp"
     android:text="@string/text_accounts" />
 
 <android.support.v7.widget.RecyclerView
-    android:id="@+id/recyclerViewUsers"
+    android:id="@+id/recyclerViewUserList"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 

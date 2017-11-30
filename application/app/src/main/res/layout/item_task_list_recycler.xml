@@ -8,7 +8,7 @@
 
 
     <LinearLayout
-        android:id="@+id/userList"
+        android:id="@+id/taskList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -23,15 +23,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/hint_username"
+                android:text="@string/task_name"
                 android:textColor="@color/colorTextHint" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textViewUsername"
+                android:id="@+id/textViewName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/hint_username"
+                android:text="@string/task_name"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
@@ -67,15 +67,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/hint_numberTask"
+                android:text="@string/hint_dueDate"
                 android:textColor="@color/colorTextHint" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textViewNumberTask"
+                android:id="@+id/textViewDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/hint_numberTask"
+                android:text="@string/task_due"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 

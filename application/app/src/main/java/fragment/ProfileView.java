@@ -62,7 +62,7 @@ public class ProfileView extends Fragment {
     public void initObjects() {
         databaseHelper = new DatabaseHelper(getActivity());
 
-        Bundle bundle = this.getArguments();
+        Bundle bundle = getArguments();
         if(bundle!=null) {
             String username = bundle.getString("USERNAME");
             user = databaseHelper.getUser(username);

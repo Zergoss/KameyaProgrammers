@@ -46,7 +46,7 @@ public class UserSwitch extends Fragment {
 
     private void initViews() {
         textViewUsername = (AppCompatTextView) myView.findViewById(R.id.textViewUsername);
-        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUsers);
+        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUserSwitch);
     }
 
 

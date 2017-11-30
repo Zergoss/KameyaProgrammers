@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/head_list">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,6 +17,20 @@
             android:orientation="horizontal"
             tools:layout_editor_absoluteY="72dp">
 
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_newTask"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="newTask"
+                android:text="@string/new_task" />
+
             <SearchView
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
@@ -23,17 +38,14 @@
 
             </SearchView>
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/tasklist"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewTaskList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

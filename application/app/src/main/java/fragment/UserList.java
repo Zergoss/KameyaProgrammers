@@ -26,7 +26,6 @@ public class UserList extends Fragment {
 
     private View myView;
     private AppCompatActivity activity;
-    private AppCompatTextView textViewUsername;
     private RecyclerView recyclerViewUsers;
     private List<User> listUsers;
     private UserRecyclerAdapter userRecyclerAdapter;
@@ -47,8 +46,7 @@ public class UserList extends Fragment {
 
 
     private void initViews() {
-        textViewUsername = (AppCompatTextView) myView.findViewById(R.id.textViewUsername);
-        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUsers);
+        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUserList);
     }
     private void initListeners() {
     /*private void initListeners() {
