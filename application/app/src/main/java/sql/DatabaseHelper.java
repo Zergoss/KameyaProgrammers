@@ -17,7 +17,7 @@ import model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "DataManager.db";
@@ -119,6 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK_POINTS, task.getPoints());
         values.put(COLUMN_TASK_AVAILABLE, task.isAvailable());
+        values.put(COLUMN_TASK_NAME, task.getName());
         values.put(COLUMN_TASK_DESCRIPTION, task.getDescription());
         values.put(COLUMN_TASK_STARTDATE, checkDate(task.getStartDate()));
         values.put(COLUMN_TASK_ENDDATE, checkDate(task.getStartDate()));

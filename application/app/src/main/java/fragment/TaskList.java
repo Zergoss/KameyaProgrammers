@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +26,8 @@ import java.util.List;
 import adapters.TaskRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import activities.TaskView;
+import listener.RecyclerViewClickListener;
+import listener.RecyclerViewTouchListener;
 import model.Task;
 import model.User;
 import sql.DatabaseHelper;
@@ -123,6 +126,19 @@ public class TaskList extends Fragment {
             }
 
         });
+
+        recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), listTask.get(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), listTask.get(position).getDescription(), Toast.LENGTH_SHORT).show();
+
+            }
+        }));
     }
     private void initObjects() {
         listTask = new ArrayList<>();
