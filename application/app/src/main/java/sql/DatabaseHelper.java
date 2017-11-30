@@ -17,7 +17,7 @@ import model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
     private static final String DATABASE_NAME = "DataManager.db";
@@ -42,8 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TASK_STARTDATE = "task_startDate";
     private static final String COLUMN_TASK_ENDDATE = "task_endDate";
     private static final String COLUMN_TASK_DUEDATE = "task_dueDate";
-    private static final String COLUMN_TASK_CREATOR = "task_creator";
-    private static final String COLUMN_TASK_ASSIGNEDUSED = "task_assignedUser";
+    //private static final String COLUMN_TASK_CREATOR = "task_creator";
+    //private static final String COLUMN_TASK_ASSIGNEDUSED = "task_assignedUser";
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
@@ -63,9 +63,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TASK_DESCRIPTION + " TEXT,"
             + COLUMN_TASK_STARTDATE + " NUMERIC,"
             + COLUMN_TASK_ENDDATE + " NUMERIC,"
-            + COLUMN_TASK_DUEDATE + " NUMERIC" + ")";
-            //+ COLUMN_TASK_CREATOR + " USER,"
-            //+ COLUMN_TASK_ASSIGNEDUSED + " USER"
+            + COLUMN_TASK_DUEDATE + " NUMERIC"+ ")";
+            //+ COLUMN_TASK_CREATOR + " INTEGER,"
+            //+ COLUMN_TASK_ASSIGNEDUSED + " INTEGER,"
+            //+ "FOREIGN KEY (" + COLUMN_TASK_CREATOR + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "),"
+            //+ "FOREIGN KEY (" + COLUMN_TASK_ASSIGNEDUSED + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + ")";
+
 
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
@@ -119,7 +122,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_STARTDATE, task.getStartDate().getTime());
         values.put(COLUMN_TASK_ENDDATE, task.getEndDate().getTime());
         values.put(COLUMN_TASK_DUEDATE, task.getDueDate().getTime());
-        //add creator and assign
+        //values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
+        //values.put(COLUMN_TASK_ASSIGNEDUSED, task.getAssignedUser().getId());
 
         // Inserting Row
         db.insert(TABLE_TASK, null, values);
