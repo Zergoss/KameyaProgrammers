@@ -35,7 +35,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/UsernameTextView"
+                    android:id="@+id/usernameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
@@ -45,7 +45,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/PointsTextView"
+                    android:id="@+id/pointsTextView"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
@@ -55,7 +55,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/NumberTaskTextView"
+                    android:id="@+id/numberTaskTextView"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
@@ -80,7 +80,7 @@
             android:layout_height="15dp" />
 
         <TextView
-            android:id="@+id/TaskListTextView"
+            android:id="@+id/taskListTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/task_list"

@@ -17,7 +17,7 @@ import model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "DataManager.db";
@@ -141,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         User user = new User();
 
-        String query =("SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = " + username);
+        String query =("SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = '" + username + "'");
         Cursor cursor = db.rawQuery(query, null);
 
         // Traversing through a column and all rows adding to user
@@ -295,25 +295,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_USER_POINTS, user.getPoints());
-        values.put(DatabaseHelper.COLUMN_USER_NUMBERTASK, user.getNumberTask());
-        values.put(DatabaseHelper.COLUMN_USER_USERNAME, user.getUsername());
-        values.put(DatabaseHelper.COLUMN_USER_PASSWORD, user.getPassword());
-        //listTask
-        String whereClause = COLUMN_USER_ID + " = '" + user.getId() + "'";
-        String[] whereArgs = null;      //new String[]{String.valueOf(user.getId())}
-        db.update(TABLE_USER, values, whereClause, whereArgs);
-        /*--------------------
-        UPDATE inventory SET price = 20.00, item = "Witches hat hat" WHERE id = 4;
+        values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
+        values.put(COLUMN_USER_USERNAME, user.getUsername());
+        values.put(COLUMN_USER_PASSWORD, user.getPassword());
+        values.put(COLUMN_USER_POINTS, user.getPoints());
+        //values.put(COLUMN_USER_TASK, user.getTask());
 
-        // updating row
-        String query = "UPDATE " + TABLE_USER + " SET "
-                + COLUMN_USER_POINTS + " = " + user.getPoints() + ", "
-                + COLUMN_USER_NUMBERTASK + " = " + user.getNumberTask() + ", "
-                + COLUMN_USER_USERNAME + " = '" + user.getUsername() + "', "
-                + COLUMN_USER_PASSWORD + " = '" + user.getPassword()
-                + "' WHERE " + COLUMN_USER_ID + " = '" + user.getId() + "'";
-                        db.execSQL(query);*/
+        // Update row
+        db.update(TABLE_USER, values, COLUMN_USER_ID + " = ?",
+                new String[]{String.valueOf(user.getId())});
         db.close();
     }
     public void updateTask(Task task) {
@@ -339,8 +329,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete(TABLE_USER, COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+        db.delete(TABLE_USER, COLUMN_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
         db.close();
     }
     public void deleteTask(Task task) {
@@ -350,6 +339,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(task.getId())});
         db.close();
     }
+
 
     //User or task return 1 if exist & if password is good
     public boolean checkUser(String username) {
@@ -406,6 +396,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public String checkPassword(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
+
         String query = "SELECT " + COLUMN_USER_USERNAME + ", " + COLUMN_USER_PASSWORD + " FROM " + TABLE_USER;
         Cursor cursor = db.rawQuery(query, null);
         String a, b;
@@ -415,10 +406,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 a = cursor.getString(0);
                 if(a.equals(username)) {
                     b = cursor.getString(1);
-                    break;
+                    //break;
                 }
             } while(cursor.moveToNext());
         }
+        cursor.close();
+        db.close();
 
         return b;
     }

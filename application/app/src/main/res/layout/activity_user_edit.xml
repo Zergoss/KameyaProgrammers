@@ -85,7 +85,7 @@
                         android:id="@+id/profile_username_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Test"
+                        android:hint="@string/user_name"
                         android:inputType="text"
                         android:maxLines="1"
                         android:textColor="@android:color/white" />

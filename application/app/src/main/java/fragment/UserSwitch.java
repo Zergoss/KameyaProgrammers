@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.UserSwitchRecyclerAdapter;
+import adapters.UserRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import model.User;
 import sql.DatabaseHelper;
@@ -29,7 +29,7 @@ public class UserSwitch extends Fragment {
     private AppCompatTextView textViewUsername;
     private RecyclerView recyclerViewUsers;
     private List<User> listUsers;
-    private UserSwitchRecyclerAdapter userSwitchRecyclerAdapter;
+    private UserRecyclerAdapter userRecyclerAdapter;
     private DatabaseHelper databaseHelper;
 
     @Nullable
@@ -53,13 +53,13 @@ public class UserSwitch extends Fragment {
     private void initObjects() {
         listUsers = new ArrayList<>();
         activity = (AppCompatActivity)getActivity();
-        userSwitchRecyclerAdapter = new UserSwitchRecyclerAdapter(listUsers);
+        userRecyclerAdapter = new UserRecyclerAdapter(listUsers, 2);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
         recyclerViewUsers.setLayoutManager(mLayoutManager);
         recyclerViewUsers.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUsers.setHasFixedSize(true);
-        recyclerViewUsers.setAdapter(userSwitchRecyclerAdapter);
+        recyclerViewUsers.setAdapter(userRecyclerAdapter);
         databaseHelper = new DatabaseHelper(activity);
 
         //String usernameFromIntent = getActivity().getIntent().getStringExtra("USERNAME");
@@ -82,7 +82,7 @@ public class UserSwitch extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                userSwitchRecyclerAdapter.notifyDataSetChanged();
+                userRecyclerAdapter.notifyDataSetChanged();
             }
         }.execute();
     }

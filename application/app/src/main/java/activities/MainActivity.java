@@ -19,20 +19,12 @@ import fragment.ProfileView;
 import fragment.TaskList;
 import fragment.UserList;
 import fragment.UserSwitch;
-import helpers.Input;
-import sql.DatabaseHelper;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final AppCompatActivity activity = MainActivity.this;
-    DatabaseReference databaseReference;
     private String username;
 
     @Override
@@ -41,7 +33,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        databaseReference = FirebaseDatabase.getInstance().getReference("user");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -51,7 +42,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         defaultDrawer();
-        initViews();
         initNav();
     }
 
@@ -61,10 +51,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         TextView usernameTextMain = (TextView) header.findViewById(R.id.usernameTextMain);
-        usernameTextMain.setText(username);
-    }
-    private void initViews() {
         username = getIntent().getStringExtra("USERNAME");
+        usernameTextMain.setText(username);
     }
 
     @Override
@@ -83,19 +71,37 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
+        Bundle bundle = new Bundle();
+        bundle.putString("USERNAME", username);
 
         if (id == R.id.nav_task_list) {
             getSupportActionBar().setTitle("Task list");
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
+
+            TaskList taskList = new TaskList();
+            taskList.setArguments(bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, taskList).commit();
         } else if (id == R.id.nav_user_list) {
             getSupportActionBar().setTitle("User list");
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new UserList()).commit();
+
+            UserList userList = new UserList();
+            userList.setArguments(bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, userList).commit();
         } else if (id == R.id.nav_profile) {
             getSupportActionBar().setTitle("Profile");
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileView()).commit();
+
+            ProfileView profileView = new ProfileView();
+            profileView.setArguments(bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, profileView).commit();
         } else if (id == R.id.nav_user_switch) {
             getSupportActionBar().setTitle("Switch user");
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new UserSwitch()).commit();
+
+            UserSwitch userSwitch = new UserSwitch();
+            userSwitch.setArguments(bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, userSwitch).commit();
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
             startActivity(MainIntent);
@@ -115,6 +121,9 @@ public class MainActivity extends AppCompatActivity
 
     public String getUsername() {
         return this.username;
+    }
+    public void getUsername(String username) {
+        this.username = username;
     }
 
 }
