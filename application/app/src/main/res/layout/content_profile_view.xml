@@ -88,10 +88,11 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/listViewTasks"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewUserList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
+
 
     </LinearLayout>
 

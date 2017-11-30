@@ -12,12 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import adapters.UserRecyclerAdapter;
 import ca.uottawa.cohab.R;
+import listener.RecyclerViewClickListener;
+import listener.RecyclerViewTouchListener;
 import model.User;
 import sql.DatabaseHelper;
 
@@ -26,7 +29,6 @@ public class UserList extends Fragment {
 
     private View myView;
     private AppCompatActivity activity;
-    private AppCompatTextView textViewUsername;
     private RecyclerView recyclerViewUsers;
     private List<User> listUsers;
     private UserRecyclerAdapter userRecyclerAdapter;
@@ -47,20 +49,21 @@ public class UserList extends Fragment {
 
 
     private void initViews() {
-        textViewUsername = (AppCompatTextView) myView.findViewById(R.id.textViewUsername);
-        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUsers);
+        recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUserList);
     }
     private void initListeners() {
-    /*private void initListeners() {
-        listView = (ListView) myView.findViewById(R.id.userlist);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerViewUsers.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewUsers, new RecyclerViewClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myView.getContext(), UserView.class);
-                //intent.putExtra("name", listView.getItemAtPosition(i).toString());
-                startActivity(intent);
+            public void onClick(View view, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), listUsers.get(position).getUsername(), Toast.LENGTH_SHORT).show();
             }
-        });*/
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), listUsers.get(position).getPassword(), Toast.LENGTH_SHORT).show();
+
+            }
+        }));
     }
 
     private void initObjects() {

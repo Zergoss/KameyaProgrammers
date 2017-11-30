@@ -100,24 +100,39 @@ public class Task {
     }
 
     public Date getStartDate(){
-        return (Date) this.startDate.clone();
+        if(startDate != null){
+            return (Date) this.startDate.clone();
+        }
+        return null;
     }
     public void setStartDate(Date startDate){
-        this.startDate = (Date) startDate.clone();
+        if(startDate != null){
+            this.startDate = (Date) startDate.clone();
+        }
     }
 
     public Date getEndDate(){
-        return (Date) this.endDate.clone();
+        if(startDate != null){
+            return (Date) this.endDate.clone();
+        }
+        return null;
     }
     public void setEndDate(Date endDate){
-        this.endDate = (Date) endDate.clone();
+        if(startDate != null){
+            this.endDate = (Date) endDate.clone();
+        }
     }
 
     public Date getDueDate(){
-        return (Date) this.dueDate.clone();
+        if(startDate != null){
+            return (Date) this.dueDate.clone();
+        }
+        return null;
     }
     public void setDueDate(Date dueDate){
-        this.dueDate = (Date) dueDate.clone();
+        if(startDate != null){
+            this.dueDate = (Date) dueDate.clone();
+        }
     }
 
     public User getCreator(){
@@ -138,7 +153,27 @@ public class Task {
         return date.getTime();
     }
     public Date getDate(long date) {
-        Date aDate = new Date(date);
-        return aDate;
+        return new Date(date);
     }
 }
+
+/*
+Calendar cal = Calendar.getInstance();
+cal.set(Calendar.YEAR, 1988);
+cal.set(Calendar.MONTH, Calendar.JANUARY);
+cal.set(Calendar.DAY_OF_MONTH, 1);
+cal.getTimeInMillis()
+
+
+Calendar calendar = Calendar.getInstance();
+calendar.setTimeInMillis(timeStamp);
+
+System.out.println(cal.getTimeInMillis());
+
+Calendar calendar = Calendar.getInstance();
+//calendar.setTimeInMillis(timeStamp);
+
+System.out.println(calendar.get(mYear));
+System.out.println(calendar.get(mMonth));
+System.out.println(calendar.get(mDay));
+ */

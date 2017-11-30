@@ -116,7 +116,13 @@ public class MainActivity extends AppCompatActivity
     private void defaultDrawer() {
         FragmentManager fragmentManager = getFragmentManager();
         getSupportActionBar().setTitle("Task list");
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("USERNAME", username);
+        TaskList taskList = new TaskList();
+        taskList.setArguments(bundle);
+
+        fragmentManager.beginTransaction().replace(R.id.content_frame, taskList).commit();
     }
 
     public String getUsername() {

@@ -72,19 +72,19 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
     }
 
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    protected class UserViewHolder extends RecyclerView.ViewHolder {
 
-        public AppCompatTextView textViewUsername;
-        public AppCompatTextView textViewPoints;
-        public AppCompatTextView textViewNumberTask;
+        protected AppCompatTextView textViewUsername;
+        protected AppCompatTextView textViewPoints;
+        protected AppCompatTextView textViewNumberTask;
 
-        public UserViewHolder(View view, int userType) {
+        protected UserViewHolder(View view, int userType) {
             super(view);
             switch (userType) {
                 case USER_LIST_CASE:
                     textViewUsername = (AppCompatTextView) view.findViewById(R.id.textViewUsername);
-                    textViewPoints = (AppCompatTextView) view.findViewById(R.id.textViewEmail);
-                    textViewNumberTask = (AppCompatTextView) view.findViewById(R.id.textViewPassword);
+                    textViewPoints = (AppCompatTextView) view.findViewById(R.id.textViewPoints);
+                    textViewNumberTask = (AppCompatTextView) view.findViewById(R.id.textViewNumberTask);
                 break;
 
                 case USER_SWITCH_CASE:
