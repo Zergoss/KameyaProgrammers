@@ -129,10 +129,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             Snackbar.make(nestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show();
             emptyInputEditText();
 
-
         } else {
             // Snack Bar to show error message that record already exists
             Snackbar.make(nestedScrollView, getString(R.string.error_username_exists), Snackbar.LENGTH_LONG).show();
+            emptyInputEditText();
         }
 
 

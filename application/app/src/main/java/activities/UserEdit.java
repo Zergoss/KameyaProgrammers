@@ -64,7 +64,7 @@ public class UserEdit extends AppCompatActivity {
     }
     private void loadUserInfo() {
         //Load info from database
-        profile_username_edit.setText(user.getUsername());
+        profile_username_layout.setHint("Username: " + user.getUsername());
     }
 
 
@@ -76,6 +76,7 @@ public class UserEdit extends AppCompatActivity {
         db.deleteUser(user);
         Intent intent = new Intent(view.getContext(), Login.class);
         startActivity(intent);
+        finish();
     }
     public void saveUser(View view){
         updateDataToSQLite();

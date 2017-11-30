@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.UserListRecyclerAdapter;
+import adapters.UserRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import model.User;
 import sql.DatabaseHelper;
@@ -29,7 +29,7 @@ public class UserList extends Fragment {
     private AppCompatTextView textViewUsername;
     private RecyclerView recyclerViewUsers;
     private List<User> listUsers;
-    private UserListRecyclerAdapter userListRecyclerAdapter;
+    private UserRecyclerAdapter userRecyclerAdapter;
     private DatabaseHelper databaseHelper;
 
     @Nullable
@@ -37,9 +37,11 @@ public class UserList extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myView = inflater.inflate(R.layout.content_user_list, container, false);
+
         initViews();
-        //initListeners();
+        initListeners();
         initObjects();
+
         return myView;
     }
 
@@ -48,7 +50,7 @@ public class UserList extends Fragment {
         textViewUsername = (AppCompatTextView) myView.findViewById(R.id.textViewUsername);
         recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUsers);
     }
-
+    private void initListeners() {
     /*private void initListeners() {
         listView = (ListView) myView.findViewById(R.id.userlist);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,23 +60,20 @@ public class UserList extends Fragment {
                 //intent.putExtra("name", listView.getItemAtPosition(i).toString());
                 startActivity(intent);
             }
-        });
-    }*/
+        });*/
+    }
 
     private void initObjects() {
         listUsers = new ArrayList<>();
         activity = (AppCompatActivity)getActivity();
-        userListRecyclerAdapter = new UserListRecyclerAdapter(listUsers);
+        userRecyclerAdapter = new UserRecyclerAdapter(listUsers, 1);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
         recyclerViewUsers.setLayoutManager(mLayoutManager);
         recyclerViewUsers.setItemAnimator(new DefaultItemAnimator());
         recyclerViewUsers.setHasFixedSize(true);
-        recyclerViewUsers.setAdapter(userListRecyclerAdapter);
+        recyclerViewUsers.setAdapter(userRecyclerAdapter);
         databaseHelper = new DatabaseHelper(activity);
-
-        //String usernameFromIntent = getActivity().getIntent().getStringExtra("USERNAME");
-        //textViewUsername.setText(usernameFromIntent);
 
         getDataFromSQLite();
     }
@@ -93,7 +92,7 @@ public class UserList extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                userListRecyclerAdapter.notifyDataSetChanged();
+                userRecyclerAdapter.notifyDataSetChanged();
             }
         }.execute();
     }
