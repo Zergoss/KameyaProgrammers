@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         TaskList taskList = new TaskList();
         taskList.setArguments(bundle);
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, new TaskList()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, taskList).commit();
     }
 
     public String getUsername() {

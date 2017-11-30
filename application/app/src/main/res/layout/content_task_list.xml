@@ -31,6 +31,14 @@
                 android:onClick="newTask"
                 android:text="@string/new_task" />
 
+            <Button
+                android:id="@+id/btn_deleteTask"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="deleteTask"
+                android:text="@string/delete_task" />
+
             <SearchView
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"

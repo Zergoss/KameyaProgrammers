@@ -114,20 +114,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void addTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
+        Date date;
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK_POINTS, task.getPoints());
         values.put(COLUMN_TASK_AVAILABLE, task.isAvailable());
         values.put(COLUMN_TASK_DESCRIPTION, task.getDescription());
-        values.put(COLUMN_TASK_STARTDATE, task.getStartDate().getTime());
-        values.put(COLUMN_TASK_ENDDATE, task.getEndDate().getTime());
-        values.put(COLUMN_TASK_DUEDATE, task.getDueDate().getTime());
+        values.put(COLUMN_TASK_STARTDATE, checkDate(task.getStartDate()));
+        values.put(COLUMN_TASK_ENDDATE, checkDate(task.getStartDate()));
+        values.put(COLUMN_TASK_DUEDATE, checkDate(task.getStartDate()));
         values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
-        values.put(COLUMN_TASK_ASSIGNEDUSED, task.getAssignedUser().getId());
+        values.put(COLUMN_TASK_ASSIGNEDUSED, checkId(task.getAssignedUser()));
 
         // Inserting Row
         db.insert(TABLE_TASK, null, values);
         db.close();
+    }
+    private int checkId (User user) {
+        int i = -1;
+        if (user != null){
+            i = user.getId();
+        }
+        return i;
+    }
+    private long checkDate(Date date) {
+        long l = 0;
+        if (date != null){
+            l = date.getTime();
+        }
+        return l;
     }
 
     //Return User, Task
@@ -213,7 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Date aDate;
         User user;
 
-        String query =("SELECT * FROM LIST WHERE " + COLUMN_TASK_NAME + " = '" + name + "'");
+        String query =("SELECT * FROM TASK WHERE " + COLUMN_TASK_NAME + " = '" + name + "'");
         Cursor cursor = db.rawQuery(query, null);
 
         // Traversing through a column and all rows adding to user

@@ -41,14 +41,22 @@ public class TaskList extends Fragment {
     private TaskRecyclerAdapter taskRecyclerAdapter;
     private DatabaseHelper databaseHelper;
     private Button btn_newTask;
+    private Button btn_deleteTask;
+
+
+    Task t1 = new Task (1, "Clean", "Room", new Date(), new User());
+    Task t2 = new Task (2, "Sleep", "Bed", new Date(), new User());
+    Task t3 = new Task (3, "Eat", "Dinner", new Date(), new User());
+    Task t4 = new Task (4, "Garbage", "Outside", new Date(), new User());
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.content_task_list,container, false);
 
-        addListenerOnSpinnerItemSelection();
         initViews();
+        addListenerOnSpinnerItemSelection();
         initListeners();
         initObjects();
 
@@ -88,27 +96,33 @@ public class TaskList extends Fragment {
         btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = getArguments();
-                String username = bundle.getString("USERNAME");
-                User user = databaseHelper.getUser(username);
-                databaseHelper.addTask(new Task (1, "Clean", "Room", new Date(), user));
-                databaseHelper.addTask(new Task (2, "Sleep", "Bed", new Date(), user));
-                databaseHelper.addTask(new Task (3, "Eat", "Dinner", new Date(), new User()));
-                databaseHelper.addTask(new Task (4, "Garbage", "Outside", new Date(), new User()));
-                //Task (int points, String name, String description, Date dueDate, User creator)
+                /*Bundle bundle = getArguments();
+                User user = new User();
+                if(bundle!=null) {
+                    String username = bundle.getString("USERNAME");
+                    user= databaseHelper.getUser(username);
+                }*/
 
+                databaseHelper.addTask(t1);
+                databaseHelper.addTask(t2);
+                databaseHelper.addTask(t3);
+                databaseHelper.addTask(t4);
+                getDataFromSQLite();
             }
         });
-    /*private void initListeners() {
-        listView = (ListView) myView.findViewById(R.id.userlist);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        btn_deleteTask = (Button) myView.findViewById(R.id.btn_deleteTask);
+        btn_deleteTask.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myView.getContext(), UserView.class);
-                //intent.putExtra("name", listView.getItemAtPosition(i).toString());
-                startActivity(intent);
+            public void onClick(View view) {
+                List<Task> taskList = databaseHelper.getAllTask();
+                for (Task e : taskList){
+                    databaseHelper.deleteTask(e);
+                }
+                getDataFromSQLite();
             }
-        });*/
+
+        });
     }
     private void initObjects() {
         listTask = new ArrayList<>();
@@ -132,6 +146,7 @@ public class TaskList extends Fragment {
             protected Void doInBackground(Void... params) {
                 listTask.clear();
                 listTask.addAll(databaseHelper.getAllTask());
+
 
                 return null;
             }
