@@ -90,7 +90,7 @@ public class ProfileView extends Fragment {
         listTask = new ArrayList<>();
         databaseHelper = new DatabaseHelper(getActivity());
         taskRecyclerAdapter = new TaskRecyclerAdapter(listTask, 1);
-        recyclerViewList = (RecyclerView) myView.findViewById(R.id.listViewTasks);
+        recyclerViewList = (RecyclerView) myView.findViewById(R.id.recyclerViewUserList);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
         recyclerViewList.setLayoutManager(mLayoutManager);
