@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
             getSupportActionBar().setTitle("Profile");
 
-            ProfileView profileView = new ProfileView();
-            profileView.setArguments(bundle);
-
-            fragmentManager.beginTransaction().replace(R.id.content_frame, profileView).commit();
+            Intent profileIntent = new Intent (MainActivity.this, UserEdit.class);
+            profileIntent.putExtra("USERNAME", username);
+            profileIntent.putExtra("PROFILE", false);
+            startActivity(profileIntent);
         } else if (id == R.id.nav_user_switch) {
             getSupportActionBar().setTitle("Switch user");
 

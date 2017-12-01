@@ -37,7 +37,6 @@ public class TaskList extends Fragment {
 
     private View myView;
     private Spinner spinner;
-    private ListView listView;
     private AppCompatActivity activity;
     private RecyclerView recyclerViewList;
     private List<Task> listTask;
