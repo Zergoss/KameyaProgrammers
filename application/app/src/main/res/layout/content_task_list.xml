@@ -50,8 +50,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewTaskList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="345dp"
+            android:layout_height="329dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="174dp">
 
         </android.support.v7.widget.RecyclerView>
 
