@@ -57,6 +57,7 @@
     <string name="log_off">Log off</string>
     <string name="user_list">User list</string>
     <string name="user_edit">Edit user</string>
+    <string name="user_view">User View</string>
     <string name="user_changePic">Change Picture</string>
     <string name="user_delete">Delete Profile</string>
 

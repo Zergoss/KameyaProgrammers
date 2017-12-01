@@ -1,7 +1,6 @@
 package fragment;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,7 +36,6 @@ public class TaskList extends Fragment {
 
     private View myView;
     private Spinner spinner;
-    private ListView listView;
     private AppCompatActivity activity;
     private RecyclerView recyclerViewList;
     private List<Task> listTask;
