@@ -4,6 +4,7 @@ package model;
  * Created by Tony on 11/30/2017.
  */
 
+
 public class Recompenses {
     private User user;
     private String name;

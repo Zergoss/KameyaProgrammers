@@ -98,5 +98,9 @@
 
     <!-- Recompenses -->
     <string name= "Recompenses_name">Name</string>
+    <string name = "Recompenses_description">Description</string>
+    <!-- Strings related to create a recompense -->
+    <string name="error_message_name_empty">Enter a valid name </string>
+    <string name="error_message_description_empty">Enter a valid description</string>
 
 </resources>
