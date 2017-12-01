@@ -38,11 +38,14 @@ public class UserView extends AppCompatActivity {
     private TaskRecyclerAdapter taskRecyclerAdapter;
     private DatabaseHelper databaseHelper;
     private Context context;
+    private String username;
+    private Boolean isProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_view);
+        context = getApplicationContext();
 
         initObjects();
         initViews();
@@ -59,20 +62,25 @@ public class UserView extends AppCompatActivity {
         //pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
 
-        context = getApplicationContext();
-
     }
     //private TextInputEditText textInputEditTextUsername;
     public void initListeners() {
         btn = (Button) findViewById(R.id.btn_editProfile);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UserEdit.class);
-                intent.putExtra("USERNAME", user.getUsername());
-                startActivity(intent);
-            }
-        });
+
+
+
+        if(isProfile){
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), UserEdit.class);
+                    intent.putExtra("USERNAME", user.getUsername());
+                    startActivity(intent);
+                }
+            });
+        } else {
+            btn.setVisibility(View.GONE);
+        }
 
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
@@ -99,7 +107,10 @@ public class UserView extends AppCompatActivity {
         recyclerViewList.setHasFixedSize(true);
         recyclerViewList.setAdapter(taskRecyclerAdapter);
 
-        String username = getIntent().getStringExtra("USERNAME");
+        Bundle extras = getIntent().getExtras();
+        username = extras.getString("USERNAME");
+        isProfile = extras.getBoolean("PROFILE");
+
         user = databaseHelper.getUser(username);
 
         getDataFromSQLite();
