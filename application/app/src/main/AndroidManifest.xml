@@ -42,7 +42,13 @@
         <activity
             android:name="activities.UserView"
             android:label="@string/user_view" />
-        <activity android:name="activities.CreateTask"></activity>
+        <activity 
+            android:name="activities.CreateRecompenses">
+            android:label="Recompense" />
+        <activity 
+            android:name="activities.CreateTask">
+            android:label="Recompense" />
+
     </application>
 
 </manifest>
