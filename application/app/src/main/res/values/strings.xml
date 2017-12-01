@@ -96,4 +96,7 @@
     <string name="cancel_task_edit">Cancel</string>
     <string name="delete_task">Delete</string>
 
+    <!-- Recompenses -->
+    <string name= "Recompenses_name">Name</string>
+
 </resources>

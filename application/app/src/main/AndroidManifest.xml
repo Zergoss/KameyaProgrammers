@@ -27,14 +27,19 @@
             android:name="activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="activities.Register"
-            android:label="Registration"/>
-        <activity android:name="activities.TaskView"
-            android:label="@string/task_name"/>
-        <activity android:name="activities.TaskEdit"
-        android:label="@string/task_edit" />
-        <activity android:name="activities.UserEdit"
+        <activity
+            android:name="activities.Register"
+            android:label="Registration" />
+        <activity
+            android:name="activities.TaskView"
+            android:label="@string/task_name" />
+        <activity
+            android:name="activities.TaskEdit"
+            android:label="@string/task_edit" />
+        <activity
+            android:name="activities.UserEdit"
             android:label="@string/user_edit" />
+        <activity android:name="activities.CreateRecompenses"></activity>
     </application>
 
 </manifest>
