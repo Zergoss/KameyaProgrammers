@@ -57,6 +57,7 @@
     <string name="log_off">Log off</string>
     <string name="user_list">User list</string>
     <string name="user_edit">Edit user</string>
+    <string name="user_view">User View</string>
     <string name="user_changePic">Change Picture</string>
     <string name="user_delete">Delete Profile</string>
 
@@ -95,5 +96,12 @@
     <string name="save_task_edit">Save</string>
     <string name="cancel_task_edit">Cancel</string>
     <string name="delete_task">Delete</string>
+
+    <!-- Recompenses -->
+    <string name= "Recompenses_name">Name</string>
+    <string name = "Recompenses_description">Description</string>
+    <!-- Strings related to create a recompense -->
+    <string name="error_message_name_empty">Enter a valid name </string>
+    <string name="error_message_description_empty">Enter a valid description</string>
 
 </resources>
