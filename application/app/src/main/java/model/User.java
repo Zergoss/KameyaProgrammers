@@ -9,20 +9,24 @@ public class User {
     private int numberTask;
     private String userName;
     private String password;
+    private List<Recompenses> listReward;
     private List<Task> listTask; //Picture???
 
     //Default constructor
     public User() {
         this.points = 0;
         this.numberTask = 0;
-        this.userName = null;
-        this.password = null;
+        this.userName = "";
+        this.password = "";
+        this.listReward = new ArrayList<>();
+        this.listTask = new ArrayList<>();
     }
     public User(String userName, String password) {
         this.points = 0;
         this.numberTask = 0;
         this.userName = userName;
         this.password = password;
+        this.listReward = new ArrayList<>();
         this.listTask = new ArrayList<>();
     }
 
@@ -60,6 +64,20 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Recompenses> getListReward() {
+        List<Recompenses> listReturn = new ArrayList<Recompenses>();
+        for (Task aTask : this.listTask) {
+            listReturn.add(aTask);
+        }
+
+        return listReturn;
+    }
+    public void setListReward(List<Recompenses> list) {
+        for (Recompenses aTask : list) {
+            this.listTask.add(aTask);
+        }
     }
 
     public List<Task> getListPeople() {

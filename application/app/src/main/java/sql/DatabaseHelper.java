@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import model.Recompenses;
 import model.Task;
 import model.User;
 
@@ -25,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table name
     private static final String TABLE_USER = "user";
     private static final String TABLE_TASK = "task";
+    private static final String TABLE_REWARD = "recompences";
 
     // User Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
@@ -44,6 +46,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TASK_DUEDATE = "task_dueDate";
     private static final String COLUMN_TASK_CREATOR = "task_creator";
     private static final String COLUMN_TASK_ASSIGNEDUSED = "task_assignedUser";
+
+    private static final String COLUMN_REWARD_ID = "reward_id";
+    private static final String COLUMN_REWARD_NAME = "reward_name";
+    private static final String COLUMN_REWARD_DESCRIPTION = "reward_description";
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
@@ -69,10 +75,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "FOREIGN KEY (" + COLUMN_TASK_CREATOR + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "),"
             + "FOREIGN KEY (" + COLUMN_TASK_ASSIGNEDUSED + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "))";
 
+    private String CREATE_REWARD_TABLE = "CREATE TABLE " + TABLE_REWARD + "("
+            + COLUMN_REWARD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_REWARD_NAME + " TEXT,"
+            + COLUMN_REWARD_DESCRIPTION + " TEXT)";
 
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
     private String DROP_TASK_TABLE = "DROP TABLE IF EXISTS " + TABLE_TASK;
+    private String DROP_REWARD_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -82,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_TASK_TABLE);
+        db.execSQL(CREATE_REWARD_TABLE);
     }
 
 
@@ -91,6 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Drop User Table if exist
         db.execSQL(DROP_USER_TABLE);
         db.execSQL(DROP_TASK_TABLE);
+        db.execSQL(DROP_REWARD_TABLE);
 
         // Create tables again
         onCreate(db);
@@ -131,6 +145,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_TASK, null, values);
         db.close();
     }
+    public void addReward(Recompenses reward){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_REWARD_DESCRIPTION, reward.getName());
+        values.put(COLUMN_REWARD_DESCRIPTION, reward.getDescription());
+
+        // Inserting Row
+        db.insert(TABLE_REWARD, null, values);
+        db.close();
+    }
     private int checkId (User user) {
         int i = -1;
         if (user != null){
@@ -148,15 +173,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Return User, Task
     public User getUser(String username) {
-        // array of columns to fetch
-        String[] columns = {
-                COLUMN_USER_ID,
-                COLUMN_USER_POINTS,
-                COLUMN_USER_NUMBERTASK,
-                COLUMN_USER_USERNAME,
-                COLUMN_USER_PASSWORD
-                //COLUMN_USER_TASK
-        };
 
         SQLiteDatabase db = this.getReadableDatabase();
         User user = new User();
@@ -179,15 +195,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
     public User getUser(int id) {
-        // array of columns to fetch
-        String[] columns = {
-                COLUMN_USER_ID,
-                COLUMN_USER_POINTS,
-                COLUMN_USER_NUMBERTASK,
-                COLUMN_USER_USERNAME,
-                COLUMN_USER_PASSWORD
-                //COLUMN_USER_TASK
-        };
 
         SQLiteDatabase db = this.getReadableDatabase();
         User user = new User();
@@ -210,24 +217,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
     public Task getTask(String name) {
-        // array of columns to fetch
-        String[] columns = {
-                COLUMN_TASK_ID,
-                COLUMN_TASK_POINTS,
-                COLUMN_TASK_AVAILABLE,
-                COLUMN_TASK_NAME,
-                COLUMN_TASK_DESCRIPTION,
-                COLUMN_TASK_STARTDATE,
-                COLUMN_TASK_ENDDATE,
-                COLUMN_TASK_DUEDATE,
-                COLUMN_TASK_CREATOR
-                //COLUMN_TASK_ASSIGNEDUSED
-        };
 
         SQLiteDatabase db = this.getReadableDatabase();
         Task task = new Task();
         Date aDate;
-        User user;
 
         String query =("SELECT * FROM TASK WHERE " + COLUMN_TASK_NAME + " = '" + name + "'");
         Cursor cursor = db.rawQuery(query, null);
@@ -249,12 +242,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             task.setAssignedUser(null);
             task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
-
         }
         cursor.close();
         db.close();
 
         return task;
+    }
+    public Recompenses getReward(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Recompenses reward = new Recompenses();
+
+        String query =("SELECT * FROM " + TABLE_REWARD + " WHERE " + COLUMN_USER_ID + " = '" + id + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through a column and all rows adding to user
+        if (cursor.moveToFirst()) {
+            reward.setName(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_NAME)));
+            reward.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_NAME)));
+        }
+        cursor.close();
+        db.close();
+
+        return reward;
     }
 
     //Return list of all user
@@ -350,6 +360,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // return user list
         return taskList;
     }
+    public List<Recompenses> getRewardOf(User user) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_REWARD_NAME,
+                COLUMN_REWARD_DESCRIPTION
+        };
+        // sorting orders
+        String sortOrder =
+                COLUMN_TASK_NAME + " ASC";
+        List<Task> taskList = new ArrayList<Task>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date aDate;
+
+        // query the user table
+        Cursor cursor = db.query(TABLE_TASK, columns, null, null, null, null, sortOrder);
+
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_ID))));
+                task.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_POINTS)));
+                task.setAvailable(((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE)))) == 1);
+                task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
+                task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+
+                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STARTDATE)));
+                task.setStartDate(aDate);
+                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ENDDATE)));
+                task.setEndDate(aDate);
+                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
+                task.setDueDate(aDate);
+
+                task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+                task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSED))));
+
+                taskList.add(task);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        // return user list
+        return taskList;
+    }
+    //getAllTaskOf(User user)
 
     //Update user records
     public void updateUser(User user) {
