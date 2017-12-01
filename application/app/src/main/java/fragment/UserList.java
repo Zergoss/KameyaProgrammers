@@ -99,5 +99,4 @@ public class UserList extends Fragment {
             }
         }.execute();
     }
-
 }
