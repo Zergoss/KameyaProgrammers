@@ -3,6 +3,7 @@ package model;
 public class Recompenses {
     private String name;
     private String description;
+    private User owner;
 
     public Recompenses(){
         name = "";
@@ -26,6 +27,13 @@ public class Recompenses {
     }
     public void setName (String nom){
         name = nom;
+    }
+
+    public User getUser(){
+        return this.owner;
+    }
+    public void setUser(User user){
+        this.owner = user;
     }
 
 }

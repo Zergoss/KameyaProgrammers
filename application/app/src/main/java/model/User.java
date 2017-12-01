@@ -68,19 +68,19 @@ public class User {
 
     public List<Recompenses> getListReward() {
         List<Recompenses> listReturn = new ArrayList<Recompenses>();
-        for (Task aTask : this.listTask) {
-            listReturn.add(aTask);
+        for (Recompenses aReward : this.listReward) {
+            listReturn.add(aReward);
         }
 
         return listReturn;
     }
     public void setListReward(List<Recompenses> list) {
-        for (Recompenses aTask : list) {
-            this.listTask.add(aTask);
+        for (Recompenses aReward : list) {
+            this.listReward.add(aReward);
         }
     }
 
-    public List<Task> getListPeople() {
+    public List<Task> getListTask() {
         List<Task> listReturn = new ArrayList<Task>();
         for (Task aTask : this.listTask) {
             listReturn.add(aTask);
@@ -88,7 +88,7 @@ public class User {
 
         return listReturn;
     }
-    public void setListPeople(List<Task> list) {
+    public void setListTask(List<Task> list) {
         for (Task aTask : list) {
             this.listTask.add(aTask);
         }

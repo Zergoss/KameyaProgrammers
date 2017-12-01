@@ -60,19 +60,17 @@ public class UserList extends Fragment {
         recyclerViewUsers.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewUsers, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, listUsers.get(position).getUsername(), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(context, user.getUsername(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "@string/longClick", Toast.LENGTH_SHORT).show();
             }
-            //getActivity().getApplicationContext()
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent profileIntent = new Intent (context, UserView.class);
+                Intent userView = new Intent (context, UserView.class);
                 Bundle extras = new Bundle();
                 extras.putString("USERNAME", username);
                 extras.putBoolean("PROFILE", false);
-                profileIntent.putExtras(extras);
-                startActivity(profileIntent);
+                userView.putExtras(extras);
+                startActivity(userView);
             }
         }));
     }
@@ -103,7 +101,7 @@ public class UserList extends Fragment {
             @Override
             protected Void doInBackground(Void... params) {
                 listUsers.clear();
-                listUsers.addAll(databaseHelper.getAllUser());
+                listUsers.addAll(databaseHelper.getAllUser(user));
 
                 return null;
             }

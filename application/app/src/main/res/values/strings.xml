@@ -66,19 +66,13 @@
     <string name="task_due">Due date</string>
     <string name="head_list">Due date</string>
     <string name="new_task">Add task</string>
-
+    <string name="longClick">Long click to view.</string>
     <string-array name="dropDownTask">
         <item>All</item>
         <item>Personal</item>
         <item>Unassign</item>
     </string-array>
-    <string-array name="TaskDummyList">
-        <item>Task1</item>
-        <item>Task2</item>
-        <item>Task3</item>
-        <item>Task4</item>
-        <item>Task5</item>
-    </string-array>
+
 
     <!-- User -->
     <string name="user_edit_password">Change password</string>

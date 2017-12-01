@@ -67,31 +67,33 @@ public class UserView extends AppCompatActivity {
     public void initListeners() {
         btn = (Button) findViewById(R.id.btn_editProfile);
 
-
-
-        if(isProfile){
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isProfile) {
                     Intent intent = new Intent(getApplicationContext(), UserEdit.class);
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
+                } else {
+                    btn.setText("@string/add_reward");
+                    Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
+                    intent.putExtra("USERNAME", user.getUsername());
+                    startActivity(intent);
                 }
-            });
-        } else {
-            btn.setVisibility(View.GONE);
-        }
+            }
+        });
 
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, listTask.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "@string/longClick", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(context, listTask.get(position).getDescription(), Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(getApplicationContext(), TaskView.class);
+                intent.putExtra("USERNAME", listTask.get(position).getName());
+                startActivity(intent);
             }
         }));
     }
@@ -122,7 +124,7 @@ public class UserView extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... params) {
                 listTask.clear();
-                listTask.addAll(databaseHelper.getAllTask());
+                listTask.addAll(databaseHelper.getTaskOf(user.getId()));
 
 
                 return null;
