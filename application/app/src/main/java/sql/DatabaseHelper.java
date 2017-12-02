@@ -18,7 +18,7 @@ import model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "DataManager.db";
@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TASK_AVAILABLE + " NUMERIC,"
             + COLUMN_TASK_NAME + " TEXT,"
             + COLUMN_TASK_DESCRIPTION + " TEXT,"
-            + COLUMN_TASK_DUEDATE + " NUMERIC,"
+            + COLUMN_TASK_DUEDATE + " TEXT,"
             + COLUMN_TASK_CREATOR + " INTEGER,"
             + COLUMN_TASK_ASSIGNEDUSER + " INTEGER,"
             + "FOREIGN KEY (" + COLUMN_TASK_CREATOR + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + "),"
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_AVAILABLE, task.isAvailable());
         values.put(COLUMN_TASK_NAME, task.getName());
         values.put(COLUMN_TASK_DESCRIPTION, task.getDescription());
-        values.put(COLUMN_TASK_DUEDATE, checkDate(task.getDueDate()));
+        values.put(COLUMN_TASK_DUEDATE, task.getDueDate());
         values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
         values.put(COLUMN_TASK_ASSIGNEDUSER, checkUser(task.getAssignedUser()));
 
@@ -156,13 +156,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             i = user.getId();
         }
         return i;
-    }
-    private long checkDate(Date date) {
-        long l = 0;
-        if (date != null){
-            l = date.getTime();
-        }
-        return l;
     }
 
     //Return User, Task
@@ -229,10 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             task.setAvailable((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE))) == 1);
             task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
             task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
-
-            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
-            task.setDueDate(aDate);
-
+            task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
             task.setAssignedUser(null);
             task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
         }
@@ -333,10 +323,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setAvailable(((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE)))) == 1);
                 task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
                 task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
-
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
-                task.setDueDate(aDate);
-
+                task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
                 task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
 
@@ -368,10 +355,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setAvailable(((cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_AVAILABLE)))) == 1);
                 task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
                 task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
-
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
-                task.setDueDate(aDate);
-
+                task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
                 task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
 
@@ -435,7 +419,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_AVAILABLE, task.isAvailable());
         values.put(COLUMN_TASK_NAME, task.getName());
         values.put(COLUMN_TASK_DESCRIPTION, task.getDescription());
-        values.put(COLUMN_TASK_DUEDATE, task.getDueDate().getTime());
+        values.put(COLUMN_TASK_DUEDATE, task.getDueDate());
         values.put(COLUMN_TASK_CREATOR , task.getCreator().getId());
         values.put(COLUMN_TASK_ASSIGNEDUSER , task.getAssignedUser().getId());
 

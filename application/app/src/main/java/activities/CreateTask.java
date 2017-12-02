@@ -33,7 +33,6 @@ import sql.DatabaseHelper;
 
 public class CreateTask extends AppCompatActivity {
 
-
     private TextInputLayout textInputLayoutTaskName, textInputLayoutTaskDescription,
                             textInputLayoutTaskPoint, textInputLayoutTaskDate,
                             textInputLayoutTaskAssignedUser;
@@ -42,7 +41,6 @@ public class CreateTask extends AppCompatActivity {
                             textInputEditTextTaskAssignedUser,getTextInputEditTextTaskDate;
 
     private DatabaseHelper databaseHelper;
-    private List<User> userList;
     private Task newTask;
     private Input inputValidation;
     private Button createButton;
@@ -83,9 +81,7 @@ public class CreateTask extends AppCompatActivity {
                 postDataToSQLite();
             }
         });
-
         myScrollView = (ScrollView) findViewById(R.id.myScrollView);
-
 
     }
 
@@ -131,9 +127,8 @@ public class CreateTask extends AppCompatActivity {
        if (!databaseHelper.checkTask(textInputEditTextTaskName.getText().toString().trim())) {
 
            newTask.setName(textInputEditTextTaskName.getText().toString().trim());
-           newTask.setPoints(0);
+           newTask.setPoints(Integer.parseInt(textInputEditTextTaskPoint.getText().toString().trim()));
            newTask.setCreator(connectedUser);
-
 
            databaseHelper.addTask(newTask);
 
@@ -147,27 +142,6 @@ public class CreateTask extends AppCompatActivity {
            textInputEditTextTaskName.setText(null);
        }
        }
-
-
-
-
-    private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                userList.clear();
-                userList.addAll(databaseHelper.getAllUser(connectedUser));
-                return null;
-            }
-
-           /* @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                taskRecyclerAdapter.notifyDataSetChanged();
-            }*/
-        }.execute();
-    }
 
     private void emptyInputEditText() {
         textInputEditTextTaskDate.setText(null);

@@ -27,10 +27,12 @@ public class TaskView extends AppCompatActivity {
     private Context context;
     private DatabaseHelper databaseHelper;
     private User user;
-    Task t1 ;
-    Task t2 ;
-    Task t3 ;
-    Task t4 ;
+    private TextView taskPoints;
+    private TextView taskName;
+    private TextView taskDescription;
+    private TextView taskDueDate;
+    private TextView task_availability;
+    private TextView task_creator;
 
 
     @Override
@@ -38,43 +40,38 @@ public class TaskView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
         context = getApplicationContext();
-        initObjects();
 
+        initView();
+        initObjects();
         loadTaskInfo();
 
     }
-    public void initObjects() {
+    private void initObjects() {
         databaseHelper = new DatabaseHelper(context);
-
         task = databaseHelper.getTask(getIntent().getStringExtra("USERNAME"));
     }
-
-    private void loadTaskInfo() {
+    private void initView() {
         //Load info from Task object instead of dummy
-        TextView taskPoints = (TextView) findViewById(R.id.taskPoints);
-        TextView taskName = (TextView) findViewById(R.id.taskName);
-        TextView taskDescription = (TextView) findViewById(R.id.taskDescription);
-        TextView taskDueDate = (TextView) findViewById(R.id.taskDueDate);
-        TextView task_availability = (TextView) findViewById(R.id.task_availability);
-        TextView task_creator = (TextView) findViewById(R.id.task_creator);
-
-        taskPoints.setText(task.getPoints());
+        taskPoints = (TextView) findViewById(R.id.taskPoints);
+        taskName = (TextView) findViewById(R.id.taskName);
+        taskDescription = (TextView) findViewById(R.id.taskDescription);
+        taskDueDate = (TextView) findViewById(R.id.taskDueDate);
+        task_availability = (TextView) findViewById(R.id.task_availability);
+        task_creator = (TextView) findViewById(R.id.task_creator);
+    }
+    private void loadTaskInfo() {
+        taskPoints.setText(String.valueOf(task.getPoints()));
         taskName.setText(task.getName());
         taskDescription.setText(task.getDescription());
-        taskDueDate.setText(task.getDueDate().toString());
-        task_availability.setText(task.getAssignedUser().toString());
-        task_creator.setText(task.getCreator().toString());
+        taskDueDate.setText(task.getDueDate());
+        task_availability.setText(task.getAssignedUser().getUsername());
+        task_creator.setText(task.getCreator().getUsername());
     }
 
     public void editTask(View view){
         Intent intent = new Intent(TaskView.this, TaskEdit.class);
         startActivity(intent);
     }
-
-
-
-
-        //numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
 
 }
 

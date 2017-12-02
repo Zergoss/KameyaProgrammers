@@ -39,7 +39,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         holder.textViewName.setText(listTasks.get(position).getName());
         holder.textViewPoints.setText(String.valueOf(listTasks.get(position).getPoints()));
-        holder.textViewDueDate.setText((listTasks.get(position).getDueDate()).toString());
+        holder.textViewDueDate.setText((listTasks.get(position).getDueDate()));
     }
 
     @Override

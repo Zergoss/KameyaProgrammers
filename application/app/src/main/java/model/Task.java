@@ -8,7 +8,7 @@ public class Task {
     private boolean available;
     private String name;
     private String description;
-    private Date dueDate;
+    private String dueDate;
     private User creator;
     private User assignedUser;
     //Ressource List
@@ -18,7 +18,7 @@ public class Task {
     public Task() {}
 
     //Minimum Constructor
-    public Task (int points, String name, String description, Date dueDate, User creator) {
+    public Task (int points, String name, String description, String dueDate, User creator) {
         this.points = points;
         this.available = false;
         this.name = name;
@@ -28,7 +28,7 @@ public class Task {
     }
 
     //Assign
-    public Task (int points, boolean available, String name, String description, Date dueDate, User creator) {
+    public Task (int points, boolean available, String name, String description, String dueDate, User creator) {
         this.points = points;
         this.available = available;
         this.name = name;
@@ -37,7 +37,7 @@ public class Task {
         this.creator = creator;
     }
     //Full parameter
-    public Task (int points, String name, String description, Date dueDate, User creator, User assignedUser) {
+    public Task (int points, String name, String description, String dueDate, User creator, User assignedUser) {
         this.points = points;
         this.available = false;
         this.name = name;
@@ -83,15 +83,11 @@ public class Task {
         this.name = description;
     }
 
-
-    public Date getDueDate(){
-        if(dueDate != null){
-            return (Date) this.dueDate.clone();
-        }
-        return null;
+    public String getDueDate(){
+            return this.dueDate;
     }
-    public void setDueDate(Date dueDate){
-            this.dueDate = (Date) dueDate.clone();
+    public void setDueDate(String dueDate){
+            this.dueDate = dueDate;
     }
 
     public User getCreator(){
@@ -108,31 +104,4 @@ public class Task {
         this.assignedUser = assignedUser;
     }
 
-    public long getDateLong(Date date) {
-        return date.getTime();
-    }
-    public Date getDate(long date) {
-        return new Date(date);
-    }
 }
-
-/*
-Calendar cal = Calendar.getInstance();
-cal.set(Calendar.YEAR, 1988);
-cal.set(Calendar.MONTH, Calendar.JANUARY);
-cal.set(Calendar.DAY_OF_MONTH, 1);
-cal.getTimeInMillis()
-
-
-Calendar calendar = Calendar.getInstance();
-calendar.setTimeInMillis(timeStamp);
-
-System.out.println(cal.getTimeInMillis());
-
-Calendar calendar = Calendar.getInstance();
-//calendar.setTimeInMillis(timeStamp);
-
-System.out.println(calendar.get(mYear));
-System.out.println(calendar.get(mMonth));
-System.out.println(calendar.get(mDay));
- */
