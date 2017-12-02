@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import ca.uottawa.cohab.R;
-import fragment.ProfileView;
 import fragment.TaskList;
 import fragment.UserList;
 import fragment.UserSwitch;
@@ -89,12 +88,13 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, userList).commit();
         } else if (id == R.id.nav_profile) {
-            getSupportActionBar().setTitle("Profile");
 
-            ProfileView profileView = new ProfileView();
-            profileView.setArguments(bundle);
-
-            fragmentManager.beginTransaction().replace(R.id.content_frame, profileView).commit();
+            Intent profileIntent = new Intent (MainActivity.this, UserView.class);
+            Bundle extras = new Bundle();
+            extras.putString("USERNAME", username);
+            extras.putBoolean("PROFILE", true);
+            profileIntent.putExtras(extras);
+            startActivity(profileIntent);
         } else if (id == R.id.nav_user_switch) {
             getSupportActionBar().setTitle("Switch user");
 

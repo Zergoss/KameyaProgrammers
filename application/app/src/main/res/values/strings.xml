@@ -57,6 +57,7 @@
     <string name="log_off">Log off</string>
     <string name="user_list">User list</string>
     <string name="user_edit">Edit user</string>
+    <string name="user_view">User View</string>
     <string name="user_changePic">Change Picture</string>
     <string name="user_delete">Delete Profile</string>
 
@@ -65,25 +66,11 @@
     <string name="task_due">Due date</string>
     <string name="head_list">Due date</string>
     <string name="new_task">Add task</string>
-
+    <string name="longClick">Long click to view.</string>
     <string-array name="dropDownTask">
         <item>All</item>
         <item>Personal</item>
         <item>Unassign</item>
-    </string-array>
-
-    <!--Layout to be initiated when creating userlist dropdown spinner-->
-
-    <string-array name="dropDownUser">
-        <item>Assigned to </item>
-    </string-array>
-
-    <string-array name="TaskDummyList">
-        <item>Task1</item>
-        <item>Task2</item>
-        <item>Task3</item>
-        <item>Task4</item>
-        <item>Task5</item>
     </string-array>
 
     <!-- User -->
@@ -102,5 +89,12 @@
     <string name="save_task_edit">Save</string>
     <string name="cancel_task_edit">Cancel</string>
     <string name="delete_task">Delete</string>
+
+    <!-- Recompenses -->
+    <string name= "Recompenses_name">Name</string>
+    <string name = "Recompenses_description">Description</string>
+    <!-- Strings related to create a recompense -->
+    <string name="error_message_name_empty">Enter a valid name </string>
+    <string name="error_message_description_empty">Enter a valid description</string>
 
 </resources>

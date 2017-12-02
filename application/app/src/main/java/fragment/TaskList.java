@@ -38,7 +38,6 @@ public class TaskList extends Fragment {
 
     private View myView;
     private Spinner spinner;
-    private ListView listView;
     private AppCompatActivity activity;
     private RecyclerView recyclerViewList;
     private List<Task> listTask;
@@ -46,12 +45,13 @@ public class TaskList extends Fragment {
     private DatabaseHelper databaseHelper;
     private Button btn_newTask;
     private Button btn_deleteTask;
+    private User user;
 
 
-    Task t1 = new Task (1, "Clean", "Room", new Date(), new User());
-    Task t2 = new Task (2, "Sleep", "Bed", new Date(), new User());
-    Task t3 = new Task (3, "Eat", "Dinner", new Date(), new User());
-    Task t4 = new Task (4, "Garbage", "Outside", new Date(), new User());
+    Task t1 ;
+    Task t2 ;
+    Task t3 ;
+    Task t4 ;
 
 
     @Nullable
@@ -100,14 +100,10 @@ public class TaskList extends Fragment {
         btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent myintentCreateTask = new Intent(activity, CreateTask.class);
+                myintentCreateTask.putExtra("creator", user.getUsername());
 
-                Intent myintentCreateTask = new Intent(getContext(), CreateTask.class);
                 startActivity(myintentCreateTask);
-                /*databaseHelper.addTask(t1);
-                databaseHelper.addTask(t2);
-                databaseHelper.addTask(t3);
-                databaseHelper.addTask(t4);
-                getDataFromSQLite();*/
             }
         });
 
@@ -127,12 +123,17 @@ public class TaskList extends Fragment {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), listTask.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "@string/longClick", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), listTask.get(position).getDescription(), Toast.LENGTH_SHORT).show();
+                Intent taskView = new Intent (activity, TaskView.class);
+                Bundle extras = new Bundle();
+                extras.putString("USERNAME", user.getUsername());
+                extras.putBoolean("PROFILE", false);
+                taskView.putExtras(extras);
+                startActivity(taskView);
 
             }
         }));
@@ -148,8 +149,21 @@ public class TaskList extends Fragment {
         recyclerViewList.setHasFixedSize(true);
         recyclerViewList.setAdapter(taskRecyclerAdapter);
         databaseHelper = new DatabaseHelper(activity);
+        Bundle bundle = getArguments();
+        user = databaseHelper.getUser(bundle.getString("USERNAME"));
 
         getDataFromSQLite();
+    }
+    private void addTask() {
+        t1 = new Task (1, "Clean", "Room", new Date(), user);
+        t2 = new Task (2, "Sleep", "Bed", new Date(), user);
+        t3 = new Task (3, "Eat", "Dinner", new Date(), new User());
+        t4 = new Task (4, "Garbage", "Outside", new Date(), new User());
+
+        databaseHelper.addTask(t1);
+        databaseHelper.addTask(t2);
+        databaseHelper.addTask(t3);
+        databaseHelper.addTask(t4);
     }
 
     private void getDataFromSQLite() {
