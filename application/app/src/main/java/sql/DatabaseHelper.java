@@ -40,8 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TASK_AVAILABLE = "task_available";
     private static final String COLUMN_TASK_NAME = "task_name";
     private static final String COLUMN_TASK_DESCRIPTION = "task_description";
-    private static final String COLUMN_TASK_STARTDATE = "task_startDate";
-    private static final String COLUMN_TASK_ENDDATE = "task_endDate";
     private static final String COLUMN_TASK_DUEDATE = "task_dueDate";
     private static final String COLUMN_TASK_CREATOR = "task_creator";
     private static final String COLUMN_TASK_ASSIGNEDUSER = "task_assignedUser";
@@ -66,8 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TASK_AVAILABLE + " NUMERIC,"
             + COLUMN_TASK_NAME + " TEXT,"
             + COLUMN_TASK_DESCRIPTION + " TEXT,"
-            + COLUMN_TASK_STARTDATE + " NUMERIC,"
-            + COLUMN_TASK_ENDDATE + " NUMERIC,"
             + COLUMN_TASK_DUEDATE + " NUMERIC,"
             + COLUMN_TASK_CREATOR + " INTEGER,"
             + COLUMN_TASK_ASSIGNEDUSER + " INTEGER,"
@@ -134,9 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_AVAILABLE, task.isAvailable());
         values.put(COLUMN_TASK_NAME, task.getName());
         values.put(COLUMN_TASK_DESCRIPTION, task.getDescription());
-        values.put(COLUMN_TASK_STARTDATE, checkDate(task.getStartDate()));
-        values.put(COLUMN_TASK_ENDDATE, checkDate(task.getStartDate()));
-        values.put(COLUMN_TASK_DUEDATE, checkDate(task.getStartDate()));
+        values.put(COLUMN_TASK_DUEDATE, checkDate(task.getDueDate()));
         values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
         values.put(COLUMN_TASK_ASSIGNEDUSER, checkUser(task.getAssignedUser()));
 
@@ -236,10 +230,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
             task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
 
-            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STARTDATE)));
-            task.setStartDate(aDate);
-            aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ENDDATE)));
-            task.setEndDate(aDate);
             aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
             task.setDueDate(aDate);
 
@@ -318,8 +308,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TASK_AVAILABLE,
                 COLUMN_TASK_NAME,
                 COLUMN_TASK_DESCRIPTION,
-                COLUMN_TASK_STARTDATE,
-                COLUMN_TASK_ENDDATE,
                 COLUMN_TASK_DUEDATE,
                 COLUMN_TASK_CREATOR,
                 COLUMN_TASK_ASSIGNEDUSER
@@ -346,10 +334,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
                 task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
 
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STARTDATE)));
-                task.setStartDate(aDate);
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ENDDATE)));
-                task.setEndDate(aDate);
                 aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setDueDate(aDate);
 
@@ -385,10 +369,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
                 task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
 
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STARTDATE)));
-                task.setStartDate(aDate);
-                aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ENDDATE)));
-                task.setEndDate(aDate);
                 aDate = new Date(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setDueDate(aDate);
 
@@ -455,8 +435,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_AVAILABLE, task.isAvailable());
         values.put(COLUMN_TASK_NAME, task.getName());
         values.put(COLUMN_TASK_DESCRIPTION, task.getDescription());
-        values.put(COLUMN_TASK_STARTDATE, task.getStartDate().getTime());
-        values.put(COLUMN_TASK_ENDDATE, task.getEndDate().getTime());
         values.put(COLUMN_TASK_DUEDATE, task.getDueDate().getTime());
         values.put(COLUMN_TASK_CREATOR , task.getCreator().getId());
         values.put(COLUMN_TASK_ASSIGNEDUSER , task.getAssignedUser().getId());

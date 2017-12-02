@@ -17,6 +17,12 @@
 
             //Task name input layout
 
+            <Button
+                android:id="@+id/pickDateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pick Date" />
+
             <TextView
                 android:id="@+id/TitleCreateTask"
                 android:layout_width="match_parent"
@@ -88,15 +94,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="40dp">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/textInputEditTaskDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Date (YYYYMMDD)"
-                    android:inputType="date"
-                    android:maxLines="1"
-                    android:textColor="@android:color/white" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
