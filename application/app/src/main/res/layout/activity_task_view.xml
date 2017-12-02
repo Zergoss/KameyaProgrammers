@@ -9,7 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
             android:id="@+id/taskName"
@@ -91,8 +93,8 @@
             android:id="@+id/btn_editTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/task_edit"
-            android:onClick="editTask"/>
+            android:onClick="editTask"
+            android:text="@string/task_edit" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
