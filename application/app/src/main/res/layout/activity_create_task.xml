@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Date (YYYYMMDD)"
-                    android:inputType="number"
+                    android:inputType="date"
                     android:maxLines="1"
                     android:textColor="@android:color/white" />
             </android.support.design.widget.TextInputLayout>

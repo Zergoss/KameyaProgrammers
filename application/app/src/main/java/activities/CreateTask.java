@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.util.Date;
 import java.util.List;
 
 import ca.uottawa.cohab.R;
@@ -82,11 +83,19 @@ public class CreateTask extends AppCompatActivity {
        }
        if(inputValidation.isInputEditTextFilled(textInputEditTextTaskAssignedUser,textInputLayoutTaskAssignedUser,"") &&
                inputValidation.isInputEditTextFilled(textInputEditTextTaskDate,textInputLayoutTaskDate,"")){
-
+            User userAsssignmenttocheck = databaseHelper.getUser(textInputEditTextTaskAssignedUser.getText().toString().trim());
+            List<Task> hesTasks = databaseHelper.getTaskOf(userAsssignmenttocheck);
+            for(int i = 0; i < hesTasks.size(); i++){
+                Task iTask = hesTasks[i];
+                Date iTaskDate = iTask.getDate()
+                Date dateToCompare = (Date)textInputEditTextTaskDate.getText().toString().trim();
+                if()
+            }
+       }
        }
 
 
-        if (!databaseHelper.checkTask(textInputEditTextTaskName.getText().toString().trim())) {
+       /* if (!databaseHelper.checkTask(textInputEditTextTaskName.getText().toString().trim())) {
 
             newTask.setName(textInputEditTextTaskName.getText().toString().trim());
 
@@ -102,7 +111,7 @@ public class CreateTask extends AppCompatActivity {
             Snackbar.make(nestedScrollView, getString(R.string.error_username_exists), Snackbar.LENGTH_LONG).show();
             emptyInputEditText();
         }
-
+*/
 
     private void getDataFromSQLite() {
         // AsyncTask is used that SQLite operation not blocks the UI Thread.
