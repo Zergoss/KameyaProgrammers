@@ -21,6 +21,7 @@ public class UserEdit extends AppCompatActivity {
 
     private final AppCompatActivity activity = this;
     private DatabaseHelper db;
+    private Button btn_change;
 
     private User user;
     private Input inputValidation;
@@ -47,6 +48,7 @@ public class UserEdit extends AppCompatActivity {
 
     private void initViews() {
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
+        btn_change = (Button) findViewById(R.id.btn_changePic);
 
         profile_username_layout = (TextInputLayout) findViewById(R.id.profile_username_layout);
         profile_password_layout = (TextInputLayout) findViewById(R.id.profile_password_layout);
@@ -65,6 +67,13 @@ public class UserEdit extends AppCompatActivity {
     private void loadUserInfo() {
         //Load info from database
         profile_username_layout.setHint("Username: " + user.getUsername());
+    }
+    //TODO Verifier la syntaxe
+    btn_change.setOnClickListener(new View.OnClickListener(){
+        @Override
+                public void onClick(View v){
+            startActivity(new Intent(MainActivity.this, activity_change_picture.class));
+        }
     }
 
 

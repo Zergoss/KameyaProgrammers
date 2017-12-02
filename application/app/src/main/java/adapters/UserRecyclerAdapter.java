@@ -95,8 +95,8 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
                     textViewUsername = (AppCompatTextView) view.findViewById(R.id.textViewUsername);
                     ImageViewImage1 = (ImageView) view.findViewById(R.id.imageView);
                 break;
-            }
 
+            }
         }
     }
 

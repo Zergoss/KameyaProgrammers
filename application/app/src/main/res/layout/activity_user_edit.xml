@@ -41,8 +41,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:background="@color/colorTextHint"
-                    android:text="@string/user_changePic"
-                    android:onClick="picChange"/>
+                    android:onClick="picChange"
+                    android:text="@string/user_changePic" />
 
                 <Button
                     android:id="@+id/btn_delete_profile"
