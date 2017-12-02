@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import activities.CreateTask;
+//import activities.CreateTask;
 import adapters.TaskRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import activities.TaskView;
@@ -97,7 +97,7 @@ public class TaskList extends Fragment {
     }
     private void initListeners() {
         btn_newTask = (Button) myView.findViewById(R.id.btn_newTask);
-        btn_newTask.setOnClickListener(new View.OnClickListener() {
+        /*btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myintentCreateTask = new Intent(activity, CreateTask.class);
@@ -105,7 +105,7 @@ public class TaskList extends Fragment {
 
                 startActivity(myintentCreateTask);
             }
-        });
+        });*/
 
         btn_deleteTask = (Button) myView.findViewById(R.id.btn_deleteTask);
         btn_deleteTask.setOnClickListener(new View.OnClickListener() {
@@ -129,10 +129,10 @@ public class TaskList extends Fragment {
             @Override
             public void onLongClick(View view, int position) {
                 Intent taskView = new Intent (activity, TaskView.class);
-                Bundle extras = new Bundle();
-                extras.putString("USERNAME", user.getUsername());
-                extras.putBoolean("PROFILE", false);
-                taskView.putExtras(extras);
+                //Bundle extras = new Bundle();
+                //extras.putString("USERNAME", user.getUsername());
+                //extras.putBoolean("PROFILE", false);
+                taskView.putExtra("USERNAME",listTask.get(position).getName());
                 startActivity(taskView);
 
             }
@@ -154,7 +154,7 @@ public class TaskList extends Fragment {
 
         getDataFromSQLite();
     }
-    private void addTask() {
+    /*private void addTask() {
         t1 = new Task (1, "Clean", "Room", new Date(), user);
         t2 = new Task (2, "Sleep", "Bed", new Date(), user);
         t3 = new Task (3, "Eat", "Dinner", new Date(), new User());
@@ -164,7 +164,7 @@ public class TaskList extends Fragment {
         databaseHelper.addTask(t2);
         databaseHelper.addTask(t3);
         databaseHelper.addTask(t4);
-    }
+    }*/
 
     private void getDataFromSQLite() {
         // AsyncTask is used that SQLite operation not blocks the UI Thread.

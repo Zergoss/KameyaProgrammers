@@ -58,7 +58,7 @@ public class UserView extends AppCompatActivity {
         TextView numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
 
         usernameTextView.setText(user.getUsername());
-        pointsTextView.setText(user.getPassword());
+        pointsTextView.setText(user.getPoints());
         //pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
 
