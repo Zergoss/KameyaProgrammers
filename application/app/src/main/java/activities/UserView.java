@@ -60,12 +60,16 @@ public class UserView extends AppCompatActivity {
         usernameTextView.setText(user.getUsername());
         pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
+        btn = (Button) findViewById(R.id.btn_editProfile);
+        btn.setText(R.string.add_reward);
+
+        if(!isProfile){
+            btn.setText(R.string.add_reward);
+        }
 
     }
     //private TextInputEditText textInputEditTextUsername;
     public void initListeners() {
-        btn = (Button) findViewById(R.id.btn_editProfile);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +78,7 @@ public class UserView extends AppCompatActivity {
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
                 } else {
-                    btn.setText(R.string.add_reward);
+
                     Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);

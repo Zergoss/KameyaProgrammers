@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import activities.UserSwitchLogin;
 import activities.UserView;
 import adapters.UserRecyclerAdapter;
 import ca.uottawa.cohab.R;
@@ -66,8 +67,8 @@ public class UserSwitch extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent userView = new Intent (context, UserView.class);
-                userView.putExtra("USERNAME", user.getUsername());
+                Intent userView = new Intent (context, UserSwitchLogin.class);
+                userView.putExtra("USERNAME", listUsers.get(position).getUsername());
                 startActivity(userView);
             }
         }));

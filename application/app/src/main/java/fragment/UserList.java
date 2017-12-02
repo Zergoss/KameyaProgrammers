@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import activities.UserSwitchLogin;
 import activities.UserView;
 import adapters.UserRecyclerAdapter;
 import ca.uottawa.cohab.R;

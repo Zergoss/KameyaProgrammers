@@ -9,11 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.View;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import ca.uottawa.cohab.R;
 import helpers.Input;
@@ -113,7 +109,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             String aPass = textInputEditTextPassword.getText().toString().trim();
             String password = databaseReference.checkPassword(textInputEditTextUsername.getText().toString().trim());
 
-            if (aPass.equals(password) | aPass.equals("13") ) {
+            if (aPass.equals(password)) {
                 Intent accountsIntent = new Intent(activity, MainActivity.class);
                 accountsIntent.putExtra("USERNAME", textInputEditTextUsername.getText().toString().trim());
                 emptyInputEditText();

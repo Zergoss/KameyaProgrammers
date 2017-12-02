@@ -48,6 +48,8 @@
         <activity 
             android:name="activities.CreateTask"
             android:label="@string/create_task" />
+        <activity android:name="activities.UserSwitchLogin"
+            android:label="@string/switch_login" />
 
     </application>
 
