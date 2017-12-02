@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, userList).commit();
         } else if (id == R.id.nav_profile) {
-            //getSupportActionBar().setTitle("Profile");
 
             Intent profileIntent = new Intent (MainActivity.this, UserView.class);
             Bundle extras = new Bundle();

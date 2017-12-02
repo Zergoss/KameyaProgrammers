@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Task {
     private int id;
-    private int points;  //Real???
+    private int points;
     private boolean available;
     private String name;
     private String description;
