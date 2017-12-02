@@ -44,7 +44,10 @@ public class TaskEdit extends AppCompatActivity {
         textInputLayoutTaskName.setHint(aTask.getName());
         textInputLayoutTaskDescription.setHint(aTask.getDescription());
         textInputLayoutTaskDate.setHint("Due: " + aTask.getDueDate());
-        textInputLayoutTaskAssignedUser.setHint("Creator: " + aTask.getCreator().getUsername());
+        textInputLayoutTaskAssignedUser.setHint("Task unassigned");
+        if(aTask.getAssignedUser()!=null) {
+            textInputLayoutTaskAssignedUser.setHint("Assign to " + aTask.getAssignedUser().getUsername());
+        }
     }
     private void initListeners() {
         createButton = (Button) findViewById(R.id.startEditTask);
@@ -92,7 +95,7 @@ public class TaskEdit extends AppCompatActivity {
             // Snack Bar to show success message that record saved successfully
             Snackbar.make(myScrollView, "Task Save !", Snackbar.LENGTH_LONG).show();
             emptyInputEditText();
-
+            finish();
         } else {
             // Snack Bar to show error message that record already exists
             Snackbar.make(myScrollView, "Task name already exists!", Snackbar.LENGTH_LONG).show();

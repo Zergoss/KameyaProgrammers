@@ -57,6 +57,7 @@ public class CreateTask extends AppCompatActivity {
         initObjects();
         initViews();
         initListeners();
+        createButton.setText(connectedUser.getUsername());
     }
 
     private void initListeners() {

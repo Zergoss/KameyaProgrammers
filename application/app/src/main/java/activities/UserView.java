@@ -118,23 +118,10 @@ public class UserView extends AppCompatActivity {
     }
 
     private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listTask.clear();
-                listTask.addAll(databaseHelper.getTaskOf(user.getId()));
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                taskRecyclerAdapter.notifyDataSetChanged();
-            }
-        }.execute();
+        listTask.clear();
+        listTask.addAll(databaseHelper.getTaskOf(user.getId()));
+        taskRecyclerAdapter.notifyDataSetChanged();
     }
+
 }
 

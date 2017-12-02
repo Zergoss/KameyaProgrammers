@@ -91,22 +91,9 @@ public class UserSwitch extends Fragment {
     }
 
     private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listUsers.clear();
-                listUsers.addAll(databaseHelper.getAllUser(user));
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                userRecyclerAdapter.notifyDataSetChanged();
-            }
-        }.execute();
+        listUsers.clear();
+        listUsers.addAll(databaseHelper.getAllUser(user));
+        userRecyclerAdapter.notifyDataSetChanged();
     }
 
 }

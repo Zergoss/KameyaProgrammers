@@ -56,8 +56,9 @@ public class TaskList extends Fragment {
 
         initViews();
         addListenerOnSpinnerItemSelection();
-        initListeners();
         initObjects();
+        initListeners();
+
 
         return myView;
     }
@@ -98,7 +99,6 @@ public class TaskList extends Fragment {
             public void onClick(View view) {
                 Intent myintentCreateTask = new Intent(context, CreateTask.class);
                 myintentCreateTask.putExtra("CREATOR", user.getUsername());
-
                 startActivity(myintentCreateTask);
             }
         });
@@ -119,7 +119,8 @@ public class TaskList extends Fragment {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), listTask.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getActivity().getApplicationContext(), R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
@@ -152,24 +153,5 @@ public class TaskList extends Fragment {
         listTask.addAll(databaseHelper.getAllTask());
         taskRecyclerAdapter.notifyDataSetChanged();
     }
-/*
-    private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listTask.clear();
-                listTask.addAll(databaseHelper.getAllTask());
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                taskRecyclerAdapter.notifyDataSetChanged();
-            }
-        }.execute();
-    }*/
 
 }

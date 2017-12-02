@@ -17,25 +17,6 @@ public class Task {
         this.dueDate = "No due date";
     }
 
-    /*/Minimum Constructor
-    public Task (int points, String name, String description, String dueDate, User creator) {
-        this.points = points;
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.creator = creator;
-    }
-
-    //Full parameter
-    public Task (int points, String name, String description, String dueDate, User creator, User assignedUser) {
-        this.points = points;
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.creator = creator;
-        this.assignedUser = assignedUser;
-    }*/
-
     //getters & setters
     public int getId() {
         return id;

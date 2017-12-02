@@ -113,7 +113,7 @@ public class UserEdit extends AppCompatActivity {
             intent.putExtra("USERNAME", profile_username_edit.getText().toString().trim());
             emptyInputEditText();
             startActivity(intent);
-
+            finish();
         } else {
             // Snack Bar to show error message that record already exists
             Snackbar.make(nestedScrollView, getString(R.string.error_username_exists), Snackbar.LENGTH_LONG).show();

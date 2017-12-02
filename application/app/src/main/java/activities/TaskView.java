@@ -54,7 +54,10 @@ public class TaskView extends AppCompatActivity {
     private void loadTaskInfo() {
         String pts = "Points: " + String.valueOf(task.getPoints());
         String due = "Due: " + task.getDueDate();
-        String creator = "Creator: " + task.getCreator().getUsername();
+        String creator = "Creator: don't exist.";
+        if (task.getCreator()!=null) {
+            creator = "Creator: " + task.getCreator().getUsername();
+        }
 
         taskName.setText(task.getName());
         taskDescription.setText(task.getDescription());
@@ -70,12 +73,12 @@ public class TaskView extends AppCompatActivity {
 
     public void editTask(View view){
         Intent intent = new Intent(TaskView.this, TaskEdit.class);
-        intent.putExtra("TASK", task.getId());
+        intent.putExtra("TASK", task.getName());
         startActivity(intent);
     }
     public void doneTask(View view){
         if (task.getAssignedUser() != null){
-            //erase task
+            databaseHelper.doneTask(task);
             finish();
         }
     }
