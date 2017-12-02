@@ -71,6 +71,13 @@
         <item>Personal</item>
         <item>Unassign</item>
     </string-array>
+
+    <!--Layout to be initiated when creating userlist dropdown spinner-->
+
+    <string-array name="dropDownUser">
+        <item>Assigned to </item>
+    </string-array>
+
     <string-array name="TaskDummyList">
         <item>Task1</item>
         <item>Task2</item>

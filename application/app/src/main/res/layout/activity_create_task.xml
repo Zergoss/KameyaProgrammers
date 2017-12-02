@@ -13,6 +13,119 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:orientation="vertical">
+
+            //Task name input layout
+
+            <TextView
+                android:id="@+id/TitleCreateTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Task"
+                android:textAlignment="center"
+                android:textSize="36sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textInputEditTaskName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Task name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            //Description input layout
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutTaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textInputEditTaskDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            //Points obtained
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutTaskPoint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textInputEditTaskPoint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Points"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            //Due date layout
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutTaskDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textInputEditTaskDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Date (YYYYMMDD)"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutAssignedUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textInputEditTaskAssignedUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Assign to"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/startCreateTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Create" />
+        </LinearLayout>
+    </ScrollView><![CDATA[
+
+    />
+]]>
 </android.support.constraint.ConstraintLayout>

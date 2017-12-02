@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import activities.CreateTask;
 import adapters.TaskRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import activities.TaskView;
@@ -99,18 +100,14 @@ public class TaskList extends Fragment {
         btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Bundle bundle = getArguments();
-                User user = new User();
-                if(bundle!=null) {
-                    String username = bundle.getString("USERNAME");
-                    user= databaseHelper.getUser(username);
-                }*/
 
-                databaseHelper.addTask(t1);
+                Intent myintentCreateTask = new Intent(getContext(), CreateTask.class);
+                startActivity(myintentCreateTask);
+                /*databaseHelper.addTask(t1);
                 databaseHelper.addTask(t2);
                 databaseHelper.addTask(t3);
                 databaseHelper.addTask(t4);
-                getDataFromSQLite();
+                getDataFromSQLite();*/
             }
         });
 
