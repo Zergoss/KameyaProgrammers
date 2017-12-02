@@ -72,20 +72,24 @@ public class CreateTask extends AppCompatActivity {
             textInputEditTextTaskDescription.setText("");
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskDate, textInputLayoutTaskDate, "")) {
-            return;
+            textInputEditTextTaskDate.setText("0");
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskPoint, textInputLayoutTaskPoint,"")) {
-            return;
+            textInputEditTextTaskPoint.setText("0");
         }
        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskAssignedUser, textInputLayoutTaskAssignedUser,"")) {
-           return;
+           textInputEditTextTaskAssignedUser.setText(null);
+       }
+       if(inputValidation.isInputEditTextFilled(textInputEditTextTaskAssignedUser,textInputLayoutTaskAssignedUser,"") &&
+               inputValidation.isInputEditTextFilled(textInputEditTextTaskDate,textInputLayoutTaskDate,"")){
+
        }
 
 
         if (!databaseHelper.checkTask(textInputEditTextTaskName.getText().toString().trim())) {
 
             newTask.setName(textInputEditTextTaskName.getText().toString().trim());
-            
+
 
             databaseHelper.addUser(user);
 
