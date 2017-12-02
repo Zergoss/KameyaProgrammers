@@ -31,11 +31,12 @@ public class UserSwitchLogin extends AppCompatActivity implements View.OnClickLi
     private AppCompatButton appCompatButtonLogin;
 
     private Input inputValidation;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_switchLogin);
+        setContentView(R.layout.activity_switch_login);
         getSupportActionBar().hide();
 
         initViews();
@@ -64,7 +65,8 @@ public class UserSwitchLogin extends AppCompatActivity implements View.OnClickLi
     private void initObjects() {
         databaseReference = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
-
+        user = databaseReference.getUser(getIntent().getStringExtra("USERNAME"));
+        textUsername.setText(user.getUsername());
     }
 
 
@@ -83,21 +85,16 @@ public class UserSwitchLogin extends AppCompatActivity implements View.OnClickLi
                 getString(R.string.error_message_password_invalid))) {
             return;
         }
+        String aPass = textInputEditTextPassword.getText().toString().trim();
+        String password = databaseReference.checkPassword(user.getUsername());
 
-        if (databaseReference.checkUser(textInputEditTextUsername.getText().toString().trim())) {
-            String aPass = textInputEditTextPassword.getText().toString().trim();
-            String password = databaseReference.checkPassword(textInputEditTextUsername.getText().toString().trim());
-
-            if (aPass.equals(password)) {
-                Intent accountsIntent = new Intent(activity, MainActivity.class);
-                accountsIntent.putExtra("USERNAME", textInputEditTextUsername.getText().toString().trim());
-                emptyInputEditText();
-                startActivity(accountsIntent);
-            }
-            Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
-            return;
+        if (aPass.equals(password)) {
+            Intent accountsIntent = new Intent(activity, MainActivity.class);
+            accountsIntent.putExtra("USERNAME", user.getUsername());
+            emptyInputEditText();
+            startActivity(accountsIntent);
         }
-        Snackbar.make(nestedScrollView, getString(R.string.error_valid_username_exist), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
 
     }
 

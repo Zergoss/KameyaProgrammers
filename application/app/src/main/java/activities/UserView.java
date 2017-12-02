@@ -58,15 +58,17 @@ public class UserView extends AppCompatActivity {
         TextView numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
 
         usernameTextView.setText(user.getUsername());
-        pointsTextView.setText(user.getPassword());
-        //pointsTextView.setText(String.valueOf(user.getPoints()));
+        pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
+        btn = (Button) findViewById(R.id.btn_editProfile);
+
+        if(!isProfile){
+            btn.setText(R.string.add_reward);
+        }
 
     }
     //private TextInputEditText textInputEditTextUsername;
     public void initListeners() {
-        btn = (Button) findViewById(R.id.btn_editProfile);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +77,6 @@ public class UserView extends AppCompatActivity {
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
                 } else {
-                    btn.setText("@string/add_reward");
                     Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
@@ -86,7 +87,7 @@ public class UserView extends AppCompatActivity {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "@string/longClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Long click to view.", Toast.LENGTH_SHORT).show();
             }
 
             @Override

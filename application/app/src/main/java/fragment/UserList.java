@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import activities.UserSwitchLogin;
 import activities.UserView;
 import adapters.UserRecyclerAdapter;
 import ca.uottawa.cohab.R;
@@ -60,7 +61,7 @@ public class UserList extends Fragment {
         recyclerViewUsers.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewUsers, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "@string/longClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Long click to view.", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -77,6 +77,7 @@
     <!-- User -->
     <string name="user_edit_password">Change password</string>
     <string name="save">Save</string>
+    <string name="add_reward">Add reward</string>
 
     <!-- Task View -->
     <string name="task_name">Task Title</string>
