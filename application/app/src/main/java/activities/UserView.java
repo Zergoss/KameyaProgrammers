@@ -58,8 +58,7 @@ public class UserView extends AppCompatActivity {
         TextView numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
 
         usernameTextView.setText(user.getUsername());
-        pointsTextView.setText(user.getPoints());
-        //pointsTextView.setText(String.valueOf(user.getPoints()));
+        pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
 
     }
@@ -75,7 +74,7 @@ public class UserView extends AppCompatActivity {
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
                 } else {
-                    btn.setText("@string/add_reward");
+                    btn.setText(R.string.add_reward);
                     Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
@@ -86,12 +85,12 @@ public class UserView extends AppCompatActivity {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "@string/longClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), TaskView.class);
+                Intent intent = new Intent(context, TaskView.class);
                 intent.putExtra("USERNAME", listTask.get(position).getName());
                 startActivity(intent);
             }

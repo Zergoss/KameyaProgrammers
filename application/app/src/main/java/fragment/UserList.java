@@ -60,7 +60,7 @@ public class UserList extends Fragment {
         recyclerViewUsers.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewUsers, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "@string/longClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override

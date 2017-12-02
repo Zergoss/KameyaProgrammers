@@ -38,7 +38,7 @@ public class CreateTask extends AppCompatActivity {
                             textInputLayoutTaskAssignedUser;
     private TextInputEditText textInputEditTextTaskName, textInputEditTextTaskDescription,
                             textInputEditTextTaskPoint, textInputEditTextTaskDate,
-                            textInputEditTextTaskAssignedUser,getTextInputEditTextTaskDate;
+                            textInputEditTextTaskAssignedUser;
 
     private DatabaseHelper databaseHelper;
     private Task newTask;
@@ -49,15 +49,25 @@ public class CreateTask extends AppCompatActivity {
     private ScrollView myScrollView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
+
         initObjects();
         initViews();
+        initListeners();
     }
 
+    private void initListeners() {
+        createButton = (Button) findViewById(R.id.startCreateTask);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postDataToSQLite();
+            }
+        });
+    }
     private void initViews(){
 
         textInputLayoutTaskName = (TextInputLayout) findViewById(R.id.textInputLayoutTaskName);
@@ -72,39 +82,28 @@ public class CreateTask extends AppCompatActivity {
         textInputEditTextTaskAssignedUser = (TextInputEditText) findViewById(R.id.textInputEditTaskAssignedUser);
         textInputEditTextTaskDate = (TextInputEditText) findViewById(R.id.textInputEditTaskDate);
 
-        connectedUser = databaseHelper.getUser(getIntent().getStringExtra("creator"));
-
-        createButton = (Button) findViewById(R.id.startCreateTask);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postDataToSQLite();
-            }
-        });
         myScrollView = (ScrollView) findViewById(R.id.myScrollView);
-
     }
-
     private void initObjects() {
         databaseHelper = new DatabaseHelper(this);
         inputValidation = new Input(this);
         newTask = new Task ();
-
+        connectedUser = databaseHelper.getUser(getIntent().getStringExtra("CREATOR"));
     }
 
    private void postDataToSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskName, textInputLayoutTaskName, "Insert task name")) {
-            return;
-        }
-       /* if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskDescription, textInputLayoutTaskDescription, "")) {
-            textInputEditTextTaskDescription.setText("");
-        }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskDate, textInputLayoutTaskDate, "")) {
-
-        }*/
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskPoint, textInputLayoutTaskPoint,"")) {
-            textInputEditTextTaskPoint.setText("0");
-        }
+       if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskName, textInputLayoutTaskName, getString(R.string.error_message_username_empty))) {
+           return;
+       }
+       if (!textInputEditTextTaskDescription.getText().toString().trim().isEmpty()) {
+           newTask.setDescription(textInputEditTextTaskDescription.getText().toString().trim());
+       }
+       if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskDate, textInputLayoutTaskDate, getString(R.string.error_message_date_empty))) {
+           return;
+       }
+       if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskPoint, textInputLayoutTaskPoint, getString(R.string.error_message_points_empty))) {
+           return;
+       }
        /*if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskAssignedUser, textInputLayoutTaskAssignedUser,"")) {
            textInputEditTextTaskAssignedUser.setText(null);
        }*/
@@ -128,20 +127,20 @@ public class CreateTask extends AppCompatActivity {
 
            newTask.setName(textInputEditTextTaskName.getText().toString().trim());
            newTask.setPoints(Integer.parseInt(textInputEditTextTaskPoint.getText().toString().trim()));
+           newTask.setDueDate(textInputEditTextTaskDate.getText().toString().trim());
            newTask.setCreator(connectedUser);
 
            databaseHelper.addTask(newTask);
 
            // Snack Bar to show success message that record saved successfully
-          Snackbar.make(myScrollView,"Task Created !", Snackbar.LENGTH_LONG).show();
-          emptyInputEditText();
+           Snackbar.make(myScrollView, "Task Created !", Snackbar.LENGTH_LONG).show();
+           emptyInputEditText();
 
        } else {
            // Snack Bar to show error message that record already exists
-           Snackbar.make(myScrollView,"Task name already exists!", Snackbar.LENGTH_LONG).show();
-           textInputEditTextTaskName.setText(null);
+           Snackbar.make(myScrollView, "Task name already exists!", Snackbar.LENGTH_LONG).show();
        }
-       }
+   }
 
     private void emptyInputEditText() {
         textInputEditTextTaskDate.setText(null);

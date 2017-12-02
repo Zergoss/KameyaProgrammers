@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="activities.CreateTask">
+    tools:context="activities.TaskEdit">
 
     <ScrollView
         android:id="@+id/myScrollView"
@@ -57,24 +57,6 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayoutTaskPoint"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/textInputEditTaskPoint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Points"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:textColor="@android:color/white" />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayoutTaskDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -112,11 +94,11 @@
 
 
             <Button
-                android:id="@+id/startCreateTask"
+                android:id="@+id/startEditTask"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Create"
+                android:text="@string/save"
                 android:layout_marginTop="20dp"/>
         </LinearLayout>
     </ScrollView>

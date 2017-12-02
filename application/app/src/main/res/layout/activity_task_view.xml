@@ -10,91 +10,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/task_name" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:text="@string/task_name"
+            android:textSize="35sp"
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/taskDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/task_description" />
+            android:text="@string/task_description"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"/>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/taskPoints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/task_points" />
+            android:text="@string/task_points"
+            android:textSize="25sp"
+            android:layout_marginTop="30dp"/>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:id="@+id/taskStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/task_start" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:id="@+id/taskEndDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/task_end" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/taskDueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/task_due" />
+            android:text="@string/task_due"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"/>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:id="@+id/task_availability"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/task_availability" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/task_creator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/task_createur" />
+            android:text="@string/task_createur"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"/>
+
+
+        <TextView
+            android:id="@+id/task_availability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_availability"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"/>
+
 
         <Button
             android:id="@+id/btn_editTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="editTask"
-            android:text="@string/task_edit" />
+            android:text="@string/task_edit"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btn_doneTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="doneTask"
+            android:text="@string/task_done" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

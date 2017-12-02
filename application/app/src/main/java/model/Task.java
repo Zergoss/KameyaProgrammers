@@ -1,51 +1,40 @@
 package model;
 
-import java.util.Date;
-
 public class Task {
     private int id;
     private int points;
-    private boolean available;
     private String name;
     private String description;
     private String dueDate;
     private User creator;
     private User assignedUser;
-    //Ressource List
-    //GroupTache
 
     //Default
-    public Task() {}
+    public Task() {
+        this.points = 0;
+        this.name = "No name";
+        this.description = "No description";
+        this.dueDate = "No due date";
+    }
 
-    //Minimum Constructor
+    /*/Minimum Constructor
     public Task (int points, String name, String description, String dueDate, User creator) {
         this.points = points;
-        this.available = false;
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
         this.creator = creator;
     }
 
-    //Assign
-    public Task (int points, boolean available, String name, String description, String dueDate, User creator) {
-        this.points = points;
-        this.available = available;
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.creator = creator;
-    }
     //Full parameter
     public Task (int points, String name, String description, String dueDate, User creator, User assignedUser) {
         this.points = points;
-        this.available = false;
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
         this.creator = creator;
         this.assignedUser = assignedUser;
-    }
+    }*/
 
     //getters & setters
     public int getId() {
@@ -62,13 +51,6 @@ public class Task {
         this.points = points;
     }
 
-    public boolean isAvailable(){
-        return this.available;
-    }
-    public void setAvailable(boolean available){
-        this.available = available;
-    }
-
     public String getName(){
         return this.name;
     }
@@ -80,7 +62,7 @@ public class Task {
         return this.description;
     }
     public void setDescription(String description){
-        this.name = description;
+        this.description = description;
     }
 
     public String getDueDate(){
@@ -102,6 +84,14 @@ public class Task {
     }
     public void setAssignedUser(User assignedUser){
         this.assignedUser = assignedUser;
+    }
+
+    public Boolean isAvailable(){
+        Boolean dispo = true;
+        if (this.assignedUser!=null) {
+            dispo = false;
+        }
+        return dispo;
     }
 
 }

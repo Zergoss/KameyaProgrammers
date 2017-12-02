@@ -12,7 +12,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
 
-    <!-- Strings related to New login -->
+    <!-- Strings related to login, create task -->
     <string name="text_accounts">All Accounts</string>
     <string name="text_other_accounts">Other Accounts</string>
     <string name="hint_username">Username</string>
@@ -23,6 +23,8 @@
     <string name="text_login">Login</string>
     <string name="text_register">Register</string>
     <string name="error_message_username_empty">Enter Username</string>
+    <string name="error_message_date_empty">Enter date</string>
+    <string name="error_message_points_empty">Enter points</string>
     <string name="error_message_username_invalid">Enter valid username (Bigger than 1)</string>
     <string name="error_message_password_empty">Enter Password</string>
     <string name="error_message_password_invalid">Enter valid Password (Bigger than 1)</string>
@@ -51,15 +53,21 @@
     <string name="image_profile">Image of profile</string>
 
     <!--Content layout -->
-    <string name="task_list">Task list</string>
+    <string name="task_list">Task List</string>
     <string name="profile">Profile</string>
-    <string name="user_switch">Switch user</string>
-    <string name="log_off">Log off</string>
-    <string name="user_list">User list</string>
-    <string name="user_edit">Edit user</string>
+    <string name="user_switch">Switch User</string>
+    <string name="log_off">Log Off</string>
+    <string name="user_list">User List</string>
+    <string name="user_edit">Edit User</string>
     <string name="user_view">User View</string>
     <string name="user_changePic">Change Picture</string>
     <string name="user_delete">Delete Profile</string>
+    <string name="create_task">Create Task</string>
+    <string name="create_reward">Create Reward</string>
+    <string name="registration">Registration</string>
+    <string name="task_view">Task View</string>
+
+
 
     <!--content_task_list -->
     <string name="hint_dueDate">Due on: </string>
@@ -78,21 +86,24 @@
     <string name="save">Save</string>
 
     <!-- Task View -->
-    <string name="task_name">Task Title</string>
+    <string name="task_name">Task name</string>
     <string name="task_description">Here is a description of the task</string>
     <string name="task_points">Points</string>
     <string name="task_start">The start date</string>
     <string name="task_end">The end date</string>
-    <string name="task_availability">Assignment</string>
+    <string name="task_availability">Task unassigned</string>
     <string name="task_createur">The creator</string>
     <string name="task_edit">Edit task</string>
+    <string name="task_done">Done</string>
     <string name="save_task_edit">Save</string>
     <string name="cancel_task_edit">Cancel</string>
     <string name="delete_task">Delete</string>
+    <string name="no_description">No description</string>
 
     <!-- Recompenses -->
-    <string name= "Recompenses_name">Name</string>
-    <string name = "Recompenses_description">Description</string>
+    <string name= "recompenses_name">Name</string>
+    <string name = "recompenses_description">Description</string>
+    <string name="add_reward">Add Reward</string>
     <!-- Strings related to create a recompense -->
     <string name="error_message_name_empty">Enter a valid name </string>
     <string name="error_message_description_empty">Enter a valid description</string>

@@ -29,10 +29,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="activities.Register"
-            android:label="Registration" />
+            android:label="@string/registration" />
         <activity
             android:name="activities.TaskView"
-            android:label="@string/task_name" />
+            android:label="@string/task_view" />
         <activity
             android:name="activities.TaskEdit"
             android:label="@string/task_edit" />
@@ -44,10 +44,10 @@
             android:label="@string/user_view" />
         <activity 
             android:name="activities.CreateRecompenses"
-            android:label="Recompense" />
+            android:label="@string/create_reward" />
         <activity 
             android:name="activities.CreateTask"
-            android:label="Recompense" />
+            android:label="@string/create_task" />
 
     </application>
 

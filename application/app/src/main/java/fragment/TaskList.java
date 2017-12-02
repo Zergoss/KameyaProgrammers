@@ -1,6 +1,7 @@
 package fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class TaskList extends Fragment {
 
     private View myView;
     private Spinner spinner;
-    private AppCompatActivity activity;
+    private Context context;
     private RecyclerView recyclerViewList;
     private List<Task> listTask;
     private TaskRecyclerAdapter taskRecyclerAdapter;
@@ -88,14 +89,15 @@ public class TaskList extends Fragment {
     private void initViews() {
         spinner = (Spinner) myView.findViewById(R.id.spinner);
         recyclerViewList = (RecyclerView) myView.findViewById(R.id.recyclerViewTaskList);
+        context = (Context) myView.getContext();
     }
     private void initListeners() {
         btn_newTask = (Button) myView.findViewById(R.id.btn_newTask);
         btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myintentCreateTask = new Intent(activity, CreateTask.class);
-                myintentCreateTask.putExtra("creator", user.getUsername());
+                Intent myintentCreateTask = new Intent(context, CreateTask.class);
+                myintentCreateTask.putExtra("CREATOR", user.getUsername());
 
                 startActivity(myintentCreateTask);
             }
@@ -117,16 +119,14 @@ public class TaskList extends Fragment {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), "@string/longClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), listTask.get(position).getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent taskView = new Intent (activity, TaskView.class);
-                //Bundle extras = new Bundle();
-                //extras.putString("USERNAME", user.getUsername());
-                //extras.putBoolean("PROFILE", false);
-                taskView.putExtra("USERNAME",listTask.get(position).getName());
+                Intent taskView = new Intent (context, TaskView.class);
+                taskView.putExtra("NAME",listTask.get(position).getName());
                 startActivity(taskView);
 
             }
@@ -134,7 +134,6 @@ public class TaskList extends Fragment {
     }
     private void initObjects() {
         listTask = new ArrayList<>();
-        activity = (AppCompatActivity)getActivity();
         taskRecyclerAdapter = new TaskRecyclerAdapter(listTask, 1);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
@@ -142,13 +141,18 @@ public class TaskList extends Fragment {
         recyclerViewList.setItemAnimator(new DefaultItemAnimator());
         recyclerViewList.setHasFixedSize(true);
         recyclerViewList.setAdapter(taskRecyclerAdapter);
-        databaseHelper = new DatabaseHelper(activity);
+        databaseHelper = new DatabaseHelper(context);
         Bundle bundle = getArguments();
         user = databaseHelper.getUser(bundle.getString("USERNAME"));
 
         getDataFromSQLite();
     }
-
+    private void getDataFromSQLite() {
+        listTask.clear();
+        listTask.addAll(databaseHelper.getAllTask());
+        taskRecyclerAdapter.notifyDataSetChanged();
+    }
+/*
     private void getDataFromSQLite() {
         // AsyncTask is used that SQLite operation not blocks the UI Thread.
         new AsyncTask<Void, Void, Void>() {
@@ -156,7 +160,6 @@ public class TaskList extends Fragment {
             protected Void doInBackground(Void... params) {
                 listTask.clear();
                 listTask.addAll(databaseHelper.getAllTask());
-
 
                 return null;
             }
@@ -167,6 +170,6 @@ public class TaskList extends Fragment {
                 taskRecyclerAdapter.notifyDataSetChanged();
             }
         }.execute();
-    }
+    }*/
 
 }
