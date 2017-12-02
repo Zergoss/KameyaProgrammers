@@ -61,7 +61,7 @@ public class UserList extends Fragment {
         recyclerViewUsers.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewUsers, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "Long click to view.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -97,21 +97,10 @@ public class UserList extends Fragment {
     }
 
     private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listUsers.clear();
-                listUsers.addAll(databaseHelper.getAllUser(user));
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                userRecyclerAdapter.notifyDataSetChanged();
-            }
-        }.execute();
+        listUsers.clear();
+        listUsers.addAll(databaseHelper.getAllUser(user));
+        userRecyclerAdapter.notifyDataSetChanged();
     }
+
+
 }

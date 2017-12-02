@@ -8,7 +8,11 @@
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
 
 
         <android.support.design.widget.TextInputLayout
@@ -21,7 +25,7 @@
                 android:id="@+id/textInputEditTextUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Recompenses_name"
+                android:hint="@string/recompenses_name"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@android:color/white" />
@@ -37,7 +41,7 @@
                 android:id="@+id/textInputEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Recompenses_description"
+                android:hint="@string/recompenses_description"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@android:color/white" />
@@ -46,12 +50,11 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text ="Save"
+            android:text ="@string/save"
             android:id ="@+id/button"
             android:layout_alignParentRight = "true"
-            android:layout_alignParentEnd = "true" />
-
-
+            android:layout_alignParentEnd = "true"
+            android:layout_marginTop="40dp"/>
 
 
     </android.support.v7.widget.LinearLayoutCompat>

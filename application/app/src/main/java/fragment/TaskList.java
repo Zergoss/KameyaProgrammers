@@ -1,6 +1,7 @@
 package fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import activities.UserView;
+//import activities.CreateTask;
+import activities.CreateTask;
 import adapters.TaskRecyclerAdapter;
 import ca.uottawa.cohab.R;
 import activities.TaskView;
@@ -38,7 +40,7 @@ public class TaskList extends Fragment {
 
     private View myView;
     private Spinner spinner;
-    private AppCompatActivity activity;
+    private Context context;
     private RecyclerView recyclerViewList;
     private List<Task> listTask;
     private TaskRecyclerAdapter taskRecyclerAdapter;
@@ -47,13 +49,6 @@ public class TaskList extends Fragment {
     private Button btn_deleteTask;
     private User user;
 
-
-    Task t1 ;
-    Task t2 ;
-    Task t3 ;
-    Task t4 ;
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -61,8 +56,9 @@ public class TaskList extends Fragment {
 
         initViews();
         addListenerOnSpinnerItemSelection();
-        initListeners();
         initObjects();
+        initListeners();
+
 
         return myView;
     }
@@ -94,22 +90,16 @@ public class TaskList extends Fragment {
     private void initViews() {
         spinner = (Spinner) myView.findViewById(R.id.spinner);
         recyclerViewList = (RecyclerView) myView.findViewById(R.id.recyclerViewTaskList);
+        context = (Context) myView.getContext();
     }
     private void initListeners() {
         btn_newTask = (Button) myView.findViewById(R.id.btn_newTask);
         btn_newTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Bundle bundle = getArguments();
-                User user = new User();
-                if(bundle!=null) {
-                    String username = bundle.getString("USERNAME");
-                    user= databaseHelper.getUser(username);
-                }*/
-
-                addTask();
-
-                getDataFromSQLite();
+                Intent myintentCreateTask = new Intent(context, CreateTask.class);
+                myintentCreateTask.putExtra("CREATOR", user.getUsername());
+                startActivity(myintentCreateTask);
             }
         });
 
@@ -129,16 +119,15 @@ public class TaskList extends Fragment {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), "Long click to view.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent taskView = new Intent (activity, TaskView.class);
-                Bundle extras = new Bundle();
-                extras.putString("USERNAME", user.getUsername());
-                extras.putBoolean("PROFILE", false);
-                taskView.putExtras(extras);
+                Intent taskView = new Intent (context, TaskView.class);
+                taskView.putExtra("NAME",listTask.get(position).getName());
                 startActivity(taskView);
 
             }
@@ -146,7 +135,6 @@ public class TaskList extends Fragment {
     }
     private void initObjects() {
         listTask = new ArrayList<>();
-        activity = (AppCompatActivity)getActivity();
         taskRecyclerAdapter = new TaskRecyclerAdapter(listTask, 1);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
@@ -154,42 +142,16 @@ public class TaskList extends Fragment {
         recyclerViewList.setItemAnimator(new DefaultItemAnimator());
         recyclerViewList.setHasFixedSize(true);
         recyclerViewList.setAdapter(taskRecyclerAdapter);
-        databaseHelper = new DatabaseHelper(activity);
+        databaseHelper = new DatabaseHelper(context);
         Bundle bundle = getArguments();
         user = databaseHelper.getUser(bundle.getString("USERNAME"));
 
         getDataFromSQLite();
     }
-    private void addTask() {
-        t1 = new Task (1, "Clean", "Room", new Date(), user);
-        t2 = new Task (2, "Sleep", "Bed", new Date(), user);
-        t3 = new Task (3, "Eat", "Dinner", new Date(), new User());
-        t4 = new Task (4, "Garbage", "Outside", new Date(), new User());
-
-        databaseHelper.addTask(t1);
-        databaseHelper.addTask(t2);
-        databaseHelper.addTask(t3);
-        databaseHelper.addTask(t4);
-    }
-
     private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listTask.clear();
-                listTask.addAll(databaseHelper.getAllTask());
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                taskRecyclerAdapter.notifyDataSetChanged();
-            }
-        }.execute();
+        listTask.clear();
+        listTask.addAll(databaseHelper.getAllTask());
+        taskRecyclerAdapter.notifyDataSetChanged();
     }
 
 }

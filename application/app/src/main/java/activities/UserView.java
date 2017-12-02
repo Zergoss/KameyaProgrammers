@@ -61,6 +61,7 @@ public class UserView extends AppCompatActivity {
         pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
         btn = (Button) findViewById(R.id.btn_editProfile);
+        btn.setText(R.string.add_reward);
 
         if(!isProfile){
             btn.setText(R.string.add_reward);
@@ -77,6 +78,7 @@ public class UserView extends AppCompatActivity {
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
                 } else {
+
                     Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
                     intent.putExtra("USERNAME", user.getUsername());
                     startActivity(intent);
@@ -87,12 +89,12 @@ public class UserView extends AppCompatActivity {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "Long click to view.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), TaskView.class);
+                Intent intent = new Intent(context, TaskView.class);
                 intent.putExtra("USERNAME", listTask.get(position).getName());
                 startActivity(intent);
             }
@@ -120,23 +122,10 @@ public class UserView extends AppCompatActivity {
     }
 
     private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                listTask.clear();
-                listTask.addAll(databaseHelper.getTaskOf(user.getId()));
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                taskRecyclerAdapter.notifyDataSetChanged();
-            }
-        }.execute();
+        listTask.clear();
+        listTask.addAll(databaseHelper.getTaskOf(user.getId()));
+        taskRecyclerAdapter.notifyDataSetChanged();
     }
+
 }
 

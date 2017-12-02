@@ -94,4 +94,8 @@ public class User {
         }
     }
 
+    public void addPoints(int pts) {
+        points = points + pts;
+    }
+
 }
