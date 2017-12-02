@@ -8,8 +8,6 @@ public class Task {
     private boolean available;
     private String name;
     private String description;
-    private Date startDate;
-    private Date endDate;
     private Date dueDate;
     private User creator;
     private User assignedUser;
@@ -18,49 +16,35 @@ public class Task {
 
     //Default
     public Task() {}
+
     //Minimum Constructor
     public Task (int points, String name, String description, Date dueDate, User creator) {
         this.points = points;
         this.available = false;
         this.name = name;
         this.description = description;
-        this.startDate = null;
-        this.endDate = null;
         this.dueDate = dueDate;
         this.creator = creator;
     }
-    //With start/end Date
-    public Task (int points, String name, String description, Date startDate, Date endDate, Date dueDate, User creator) {
-        this.points = points;
-        this.available = false;
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.dueDate = dueDate;
-        this.creator = creator;
-    }
+
     //Assign
     public Task (int points, boolean available, String name, String description, Date dueDate, User creator) {
         this.points = points;
         this.available = available;
         this.name = name;
         this.description = description;
-        this.startDate = null;
-        this.endDate = null;
         this.dueDate = dueDate;
         this.creator = creator;
     }
-    //With start/end Date & assign
-    public Task (int points, boolean available, String name, String description, Date startDate, Date endDate, Date dueDate, User creator) {
+    //Full parameter
+    public Task (int points, String name, String description, Date dueDate, User creator, User assignedUser) {
         this.points = points;
-        this.available = available;
+        this.available = false;
         this.name = name;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.dueDate = dueDate;
         this.creator = creator;
+        this.assignedUser = assignedUser;
     }
 
     //getters & setters
@@ -99,40 +83,15 @@ public class Task {
         this.name = description;
     }
 
-    public Date getStartDate(){
-        if(startDate != null){
-            return (Date) this.startDate.clone();
-        }
-        return null;
-    }
-    public void setStartDate(Date startDate){
-        if(startDate != null){
-            this.startDate = (Date) startDate.clone();
-        }
-    }
-
-    public Date getEndDate(){
-        if(startDate != null){
-            return (Date) this.endDate.clone();
-        }
-        return null;
-    }
-    public void setEndDate(Date endDate){
-        if(startDate != null){
-            this.endDate = (Date) endDate.clone();
-        }
-    }
 
     public Date getDueDate(){
-        if(startDate != null){
+        if(dueDate != null){
             return (Date) this.dueDate.clone();
         }
         return null;
     }
     public void setDueDate(Date dueDate){
-        if(startDate != null){
             this.dueDate = (Date) dueDate.clone();
-        }
     }
 
     public User getCreator(){
