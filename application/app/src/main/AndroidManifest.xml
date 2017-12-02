@@ -47,7 +47,9 @@
             android:label="Recompense" />
         <activity 
             android:name="activities.CreateTask"
-            android:label="Recompense" />
+            android:label="CreateTask" />
+        <activity android:name="activities.UserSwitchLogin"
+            android:label="Switch Login" />
 
     </application>
 

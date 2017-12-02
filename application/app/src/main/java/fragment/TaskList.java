@@ -129,7 +129,7 @@ public class TaskList extends Fragment {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), "@string/longClick", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Long click to view.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
