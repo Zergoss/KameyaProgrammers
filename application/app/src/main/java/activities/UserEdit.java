@@ -109,10 +109,13 @@ public class UserEdit extends AppCompatActivity {
 
             // Snack Bar to show success message that record saved successfully
             Snackbar.make(nestedScrollView, getString(R.string.success_user_edit), Snackbar.LENGTH_LONG).show();
-            Intent intent = new Intent(UserEdit.this, MainActivity.class);
-            intent.putExtra("USERNAME", profile_username_edit.getText().toString().trim());
-            emptyInputEditText();
-            startActivity(intent);
+            Intent userView = new Intent (UserEdit.this, UserView.class);
+            Bundle extras = new Bundle();
+            extras.putString("USERNAME", profile_username_edit.getText().toString().trim());
+            extras.putBoolean("PROFILE", true);
+            userView.putExtras(extras);
+            startActivity(userView);
+            startActivity(userView);
             finish();
         } else {
             // Snack Bar to show error message that record already exists

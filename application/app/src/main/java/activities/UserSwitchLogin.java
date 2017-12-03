@@ -93,6 +93,7 @@ public class UserSwitchLogin extends AppCompatActivity implements View.OnClickLi
             accountsIntent.putExtra("USERNAME", user.getUsername());
             emptyInputEditText();
             startActivity(accountsIntent);
+            finish();
         }
         Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
 

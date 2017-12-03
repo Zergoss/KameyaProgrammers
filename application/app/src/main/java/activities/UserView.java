@@ -61,7 +61,6 @@ public class UserView extends AppCompatActivity {
         pointsTextView.setText(String.valueOf(user.getPoints()));
         numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
         btn = (Button) findViewById(R.id.btn_editProfile);
-        btn.setText(R.string.add_reward);
 
         if(!isProfile){
             btn.setText(R.string.add_reward);

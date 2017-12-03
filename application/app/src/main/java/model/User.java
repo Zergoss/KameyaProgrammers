@@ -16,8 +16,8 @@ public class User {
     public User() {
         this.points = 0;
         this.numberTask = 0;
-        this.userName = "";
-        this.password = "";
+        this.userName = "No username";
+        this.password = "1";
         this.listReward = new ArrayList<>();
         this.listTask = new ArrayList<>();
     }

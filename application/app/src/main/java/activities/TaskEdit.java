@@ -90,11 +90,14 @@ public class TaskEdit extends AppCompatActivity {
         }
         if (!databaseHelper.checkTask(textInputEditTextTaskName.getText().toString().trim())) {
 
-            databaseHelper.addTask(aTask);
+            databaseHelper.updateTask(aTask);
 
             // Snack Bar to show success message that record saved successfully
             Snackbar.make(myScrollView, "Task Save !", Snackbar.LENGTH_LONG).show();
             emptyInputEditText();
+            Intent intent = new Intent(TaskEdit.this, TaskView.class);
+            intent.putExtra("TASK", aTask.getName());
+            startActivity(intent);
             finish();
         } else {
             // Snack Bar to show error message that record already exists

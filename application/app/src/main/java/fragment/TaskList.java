@@ -56,14 +56,16 @@ public class TaskList extends Fragment {
 
         initViews();
         addListenerOnSpinnerItemSelection();
+        addSearch();
         initObjects();
         initListeners();
-
 
         return myView;
     }
 
-    //Spinner
+    private void addSearch () {
+
+    }
     private void addListenerOnSpinnerItemSelection() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.dropDownTask, android.R.layout.simple_spinner_item);
@@ -86,7 +88,6 @@ public class TaskList extends Fragment {
             }
         });
     }
-
     private void initViews() {
         spinner = (Spinner) myView.findViewById(R.id.spinner);
         recyclerViewList = (RecyclerView) myView.findViewById(R.id.recyclerViewTaskList);
@@ -148,6 +149,7 @@ public class TaskList extends Fragment {
 
         getDataFromSQLite();
     }
+
     private void getDataFromSQLite() {
         listTask.clear();
         listTask.addAll(databaseHelper.getAllTask());
