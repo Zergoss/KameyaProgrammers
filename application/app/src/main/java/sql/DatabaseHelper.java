@@ -139,6 +139,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_TASK, null, values);
         db.close();
+        User user = task.getAssignedUser();
+        if(user.getId() != -1) {
+           user.addPoints(task.getPoints());
+           updateUser(user);
+        }
     }
     public void addReward(Recompenses reward){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -533,9 +538,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return b;
     }
+    public int checkNumberTask(User user)  {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_TASK_ASSIGNEDUSER
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        String selection = COLUMN_TASK_ASSIGNEDUSER + " = ?";
+
+        String[] selectionArgs = {Integer.toString(user.getId())};
+
+        try {
+            Cursor cursor = db.query(TABLE_TASK, columns, selection, selectionArgs, null, null, null);                      //The sort order
+            int cursorCount = cursor.getCount();
+            cursor.close();
+            db.close();
+
+            if (cursorCount > 0) {
+                return cursorCount;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
     public void doneTask(Task task) {
-        task.getAssignedUser().addPoints(task.getPoints());
+        User user = task.getAssignedUser();
+        user.addPoints(task.getPoints());
+        updateUser(user);
         deleteTask(task);
     }
 
