@@ -31,7 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // User Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_USER_POINTS = "user_points";
-    private static final String COLUMN_USER_NUMBERTASK = "user_numberTask";
     private static final String COLUMN_USER_USERNAME = "user_name";
     private static final String COLUMN_USER_PASSWORD = "user_password";
 
@@ -52,7 +51,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_USER_POINTS + " INTEGER,"
-            + COLUMN_USER_NUMBERTASK + " INTEGER,"
             + COLUMN_USER_USERNAME + " TEXT,"
             + COLUMN_USER_PASSWORD + " TEXT" + ")";
 
@@ -116,7 +114,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
         values.put(COLUMN_USER_USERNAME, user.getUsername());
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
         values.put(COLUMN_USER_POINTS, user.getPoints());
@@ -149,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_REWARD_DESCRIPTION, reward.getName());
+        values.put(COLUMN_REWARD_NAME, reward.getName());
         values.put(COLUMN_REWARD_DESCRIPTION, reward.getDescription());
         values.put(COLUMN_REWARD_ASSIGNEDUSER, reward.getUser().getId());
 
@@ -172,7 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             user.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID)));
             user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
-            user.setNumberTask(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_NUMBERTASK)));
+            user.setNumberTask(checkNumberTask(user));
             user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
         }
@@ -194,7 +191,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             user.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID)));
             user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
-            user.setNumberTask(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_NUMBERTASK)));
+            user.setNumberTask(checkNumberTask(user));
             user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
         }
@@ -277,7 +274,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] columns = {
                 COLUMN_USER_ID,
                 COLUMN_USER_POINTS,
-                COLUMN_USER_NUMBERTASK,
                 COLUMN_USER_USERNAME,
                 COLUMN_USER_PASSWORD
         };
@@ -296,7 +292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 User user = new User();
                 user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
                 user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
-                user.setNumberTask(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_NUMBERTASK)));
+                user.setNumberTask(checkNumberTask(user));
                 user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
                 user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
                 // Adding user record to list
@@ -414,7 +410,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_NUMBERTASK, user.getNumberTask());
         values.put(COLUMN_USER_USERNAME, user.getUsername());
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
         values.put(COLUMN_USER_POINTS, user.getPoints());
