@@ -14,8 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteY="72dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_newTask"
@@ -41,21 +40,10 @@
 
         </LinearLayout>
 
-        <SearchView
-            android:id="@+id/search"
-            android:title="Search"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-        </SearchView>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewTaskList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="174dp">
+            android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
 

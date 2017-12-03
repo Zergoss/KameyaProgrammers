@@ -56,16 +56,12 @@ public class TaskList extends Fragment {
 
         initViews();
         addListenerOnSpinnerItemSelection();
-        addSearch();
         initObjects();
         initListeners();
 
         return myView;
     }
 
-    private void addSearch () {
-
-    }
     private void addListenerOnSpinnerItemSelection() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.dropDownTask, android.R.layout.simple_spinner_item);
@@ -99,7 +95,7 @@ public class TaskList extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent myintentCreateTask = new Intent(context, CreateTask.class);
-                myintentCreateTask.putExtra("CREATOR", user.getUsername());
+                myintentCreateTask.putExtra("CREATOR", user.getId());
                 startActivity(myintentCreateTask);
             }
         });
@@ -120,17 +116,14 @@ public class TaskList extends Fragment {
         recyclerViewList.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewList, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity().getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getActivity().getApplicationContext(), R.string.longClick, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), R.string.longClick, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
                 Intent taskView = new Intent (context, TaskView.class);
-                taskView.putExtra("NAME",listTask.get(position).getName());
+                taskView.putExtra("ID",listTask.get(position).getId());
                 startActivity(taskView);
-
             }
         }));
     }
@@ -145,7 +138,7 @@ public class TaskList extends Fragment {
         recyclerViewList.setAdapter(taskRecyclerAdapter);
         databaseHelper = new DatabaseHelper(context);
         Bundle bundle = getArguments();
-        user = databaseHelper.getUser(bundle.getString("USERNAME"));
+        user = databaseHelper.getUser(bundle.getInt("ID"));
 
         getDataFromSQLite();
     }
@@ -155,5 +148,6 @@ public class TaskList extends Fragment {
         listTask.addAll(databaseHelper.getAllTask());
         taskRecyclerAdapter.notifyDataSetChanged();
     }
+
 
 }

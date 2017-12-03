@@ -1,18 +1,13 @@
 package activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +33,10 @@ public class UserView extends AppCompatActivity {
     private TaskRecyclerAdapter taskRecyclerAdapter;
     private DatabaseHelper databaseHelper;
     private Context context;
-    private String username;
     private Boolean isProfile;
+    TextView usernameTextView;
+    TextView pointsTextView;
+    TextView numberTaskTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,36 +47,31 @@ public class UserView extends AppCompatActivity {
         initObjects();
         initViews();
         initListeners();
+        loadTaskInfo();
     }
 
     public void initViews() {
-        TextView usernameTextView = (TextView) findViewById(R.id.usernameTextView);
-        TextView pointsTextView = (TextView) findViewById(R.id.pointsTextView);
-        TextView numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
+        usernameTextView = (TextView) findViewById(R.id.usernameTextView);
+        pointsTextView = (TextView) findViewById(R.id.pointsTextView);
+        numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
 
-        usernameTextView.setText(user.getUsername());
-        pointsTextView.setText(String.valueOf(user.getPoints()));
-        numberTaskTextView.setText(String.valueOf(user.getNumberTask()));
         btn = (Button) findViewById(R.id.btn_editProfile);
 
         if(!isProfile){
             btn.setText(R.string.add_reward);
         }
-
     }
-    //private TextInputEditText textInputEditTextUsername;
     public void initListeners() {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isProfile) {
                     Intent intent = new Intent(getApplicationContext(), UserEdit.class);
-                    intent.putExtra("USERNAME", user.getUsername());
+                    intent.putExtra("ID", user.getId());
                     startActivity(intent);
                 } else {
-
                     Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
-                    intent.putExtra("USERNAME", user.getUsername());
+                    intent.putExtra("ID", user.getId());
                     startActivity(intent);
                 }
             }
@@ -94,7 +86,7 @@ public class UserView extends AppCompatActivity {
             @Override
             public void onLongClick(View view, int position) {
                 Intent intent = new Intent(context, TaskView.class);
-                intent.putExtra("USERNAME", listTask.get(position).getName());
+                intent.putExtra("ID", listTask.get(position).getId());
                 startActivity(intent);
             }
         }));
@@ -112,11 +104,17 @@ public class UserView extends AppCompatActivity {
         recyclerViewList.setAdapter(taskRecyclerAdapter);
 
         Bundle extras = getIntent().getExtras();
-        username = extras.getString("USERNAME");
+        user = databaseHelper.getUser(extras.getInt("ID", -1));
         isProfile = extras.getBoolean("PROFILE");
+    }
 
-        user = databaseHelper.getUser(username);
-
+    private void loadTaskInfo() {
+        user = databaseHelper.getUser(user.getId());
+        usernameTextView.setText(user.getUsername());
+        String pts = "Points: " + String.valueOf(user.getPoints());
+        pointsTextView.setText(pts);
+        String numTask = "# Task: " + String.valueOf(user.getNumberTask());
+        numberTaskTextView.setText(numTask);
         getDataFromSQLite();
     }
 
@@ -124,6 +122,12 @@ public class UserView extends AppCompatActivity {
         listTask.clear();
         listTask.addAll(databaseHelper.getTaskOf(user.getId()));
         taskRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadTaskInfo();
     }
 
 }

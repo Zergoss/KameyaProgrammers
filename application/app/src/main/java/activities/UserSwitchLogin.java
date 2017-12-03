@@ -90,7 +90,8 @@ public class UserSwitchLogin extends AppCompatActivity implements View.OnClickLi
 
         if (aPass.equals(password)) {
             Intent accountsIntent = new Intent(activity, MainActivity.class);
-            accountsIntent.putExtra("USERNAME", user.getUsername());
+            accountsIntent.putExtra("ID", user.getId());
+            accountsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             emptyInputEditText();
             startActivity(accountsIntent);
             finish();

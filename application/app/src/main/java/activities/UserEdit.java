@@ -60,7 +60,7 @@ public class UserEdit extends AppCompatActivity {
     private void initObjects() {
         inputValidation = new Input(activity);
         db = new DatabaseHelper(activity);
-        user = db.getUser(getIntent().getStringExtra("USERNAME"));
+        user = db.getUser(getIntent().getIntExtra("ID", -1));
     }
     private void loadUserInfo() {
         //Load info from database
@@ -75,6 +75,7 @@ public class UserEdit extends AppCompatActivity {
     public void deleteUser(View view){
         db.deleteUser(user);
         Intent intent = new Intent(view.getContext(), Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
@@ -114,7 +115,6 @@ public class UserEdit extends AppCompatActivity {
             extras.putString("USERNAME", profile_username_edit.getText().toString().trim());
             extras.putBoolean("PROFILE", true);
             userView.putExtras(extras);
-            startActivity(userView);
             startActivity(userView);
             finish();
         } else {

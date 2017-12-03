@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sql.DatabaseHelper;
 
@@ -40,7 +41,6 @@ public class TaskView extends AppCompatActivity {
     }
     private void initObjects() {
         databaseHelper = new DatabaseHelper(context);
-        task = databaseHelper.getTask(getIntent().getStringExtra("NAME"));
     }
     private void initView() {
         //Load info from Task object instead of dummy
@@ -52,35 +52,46 @@ public class TaskView extends AppCompatActivity {
         task_creator = (TextView) findViewById(R.id.task_creator);
     }
     private void loadTaskInfo() {
+        task = databaseHelper.getTask(getIntent().getIntExtra("ID", -1));
         String pts = "Points: " + String.valueOf(task.getPoints());
         String due = "Due: " + task.getDueDate();
-        String creator = "Creator: don't exist.";
-        if (task.getCreator()!=null) {
+        String creator;
+        if(task.getCreator().getId()!=-1) {
             creator = "Creator: " + task.getCreator().getUsername();
+        } else {
+            creator = "Creator: User deleted";
         }
+
 
         taskName.setText(task.getName());
         taskDescription.setText(task.getDescription());
         taskPoints.setText(pts);
         taskDueDate.setText(due);
-        user = task.getAssignedUser();
-        if (user != null) {
-            String avail = "Assign to " + user.getUsername();
-            task_availability.setText(avail);
-        }
         task_creator.setText(creator);
+
+        user = task.getAssignedUser();
+        String avail = "Assign to " + user.getUsername();
+        task_availability.setText(avail);
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadTaskInfo();
     }
 
     public void editTask(View view){
         Intent intent = new Intent(TaskView.this, TaskEdit.class);
-        intent.putExtra("TASK", task.getName());
+        intent.putExtra("ID", task.getId());
         startActivity(intent);
     }
     public void doneTask(View view){
-        if (task.getAssignedUser() != null){
+        if (task.getAssignedUser().getId() != -1){
             databaseHelper.doneTask(task);
             finish();
         }
+        Toast.makeText(getApplicationContext(), "Task must be assign!", Toast.LENGTH_SHORT).show();
     }
 
 }

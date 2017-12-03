@@ -111,11 +111,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             if (aPass.equals(password)) {
                 Intent accountsIntent = new Intent(activity, MainActivity.class);
-                accountsIntent.putExtra("USERNAME", textInputEditTextUsername.getText().toString().trim());
+                accountsIntent.putExtra("ID", databaseReference.getUser(textInputEditTextUsername.getText().toString().trim()).getId());
                 emptyInputEditText();
                 startActivity(accountsIntent);
+            } else {
+                Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
             }
-            Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
             return;
         }
         Snackbar.make(nestedScrollView, getString(R.string.error_valid_username_exist), Snackbar.LENGTH_LONG).show();

@@ -74,12 +74,12 @@ public class TaskEdit extends AppCompatActivity {
     }
     private void initObjects() {
         databaseHelper = new DatabaseHelper(this);
-        aTask = databaseHelper.getTask(getIntent().getStringExtra("TASK"));
+        aTask = databaseHelper.getTask(getIntent().getIntExtra("ID", -1));
     }
 
     private void postDataToSQLite() {
 
-        if (!textInputEditTextTaskDescription.getText().toString().trim().isEmpty()) {
+        if (!textInputEditTextTaskName.getText().toString().trim().isEmpty()) {
             aTask.setName(textInputEditTextTaskName.getText().toString().trim());
         }
         if (!textInputEditTextTaskDescription.getText().toString().trim().isEmpty()) {
@@ -88,21 +88,24 @@ public class TaskEdit extends AppCompatActivity {
         if (!textInputEditTextTaskDate.getText().toString().trim().isEmpty()) {
             aTask.setDueDate(textInputEditTextTaskDate.getText().toString().trim());
         }
+        if (!textInputEditTextTaskAssignedUser.getText().toString().trim().isEmpty()) {
+            if (!databaseHelper.checkUser(textInputEditTextTaskAssignedUser.getText().toString().trim())) {
+                Snackbar.make(myScrollView, "User you are trying to assign doesn't exist!", Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            aTask.setAssignedUser(databaseHelper.getUser(textInputEditTextTaskAssignedUser.getText().toString().trim()));
+        }
         if (!databaseHelper.checkTask(textInputEditTextTaskName.getText().toString().trim())) {
 
             databaseHelper.updateTask(aTask);
 
             // Snack Bar to show success message that record saved successfully
-            Snackbar.make(myScrollView, "Task Save !", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(myScrollView, "Task Saved!", Snackbar.LENGTH_LONG).show();
             emptyInputEditText();
-            Intent intent = new Intent(TaskEdit.this, TaskView.class);
-            intent.putExtra("TASK", aTask.getName());
-            startActivity(intent);
-            finish();
+            loadUserInfo();
         } else {
             // Snack Bar to show error message that record already exists
             Snackbar.make(myScrollView, "Task name already exists!", Snackbar.LENGTH_LONG).show();
-            emptyInputEditText();
         }
     }
 

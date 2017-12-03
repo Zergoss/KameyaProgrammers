@@ -15,6 +15,8 @@ public class Task {
         this.name = "No name";
         this.description = "No description";
         this.dueDate = "No due date";
+        this.assignedUser = new User();
+        this.creator = new User();
     }
 
     //getters & setters

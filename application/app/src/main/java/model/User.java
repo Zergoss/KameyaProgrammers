@@ -14,18 +14,11 @@ public class User {
 
     //Default constructor
     public User() {
+        this.id = -1;
         this.points = 0;
         this.numberTask = 0;
-        this.userName = "No username";
+        this.userName = "no username";
         this.password = "1";
-        this.listReward = new ArrayList<>();
-        this.listTask = new ArrayList<>();
-    }
-    public User(String userName, String password) {
-        this.points = 0;
-        this.numberTask = 0;
-        this.userName = userName;
-        this.password = password;
         this.listReward = new ArrayList<>();
         this.listTask = new ArrayList<>();
     }
