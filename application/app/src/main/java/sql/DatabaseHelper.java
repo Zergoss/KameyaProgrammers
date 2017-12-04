@@ -387,9 +387,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Recompenses reward = new Recompenses();
-                reward.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
-                reward.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
-                reward.setUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
+                reward.setName(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_NAME)));
+                reward.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_DESCRIPTION)));
+                reward.setUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_REWARD_ASSIGNEDUSER))));
+
+                rewardList.add(reward);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return rewardList;
+    }
+    public List<Recompenses> getAllReward() {
+
+        List<Recompenses> rewardList = new ArrayList<Recompenses>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query =("SELECT * FROM " + TABLE_REWARD);
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Recompenses reward = new Recompenses();
+                reward.setName(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_NAME)));
+                reward.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_DESCRIPTION)));
+                reward.setUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_REWARD_ASSIGNEDUSER))));
 
                 rewardList.add(reward);
             } while (cursor.moveToNext());
@@ -519,7 +544,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 a = cursor.getString(0);
                 if(a.equals(username)) {
                     b = cursor.getString(1);
-                    //break;
+                    break;
                 }
             } while(cursor.moveToNext());
         }
@@ -528,6 +553,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return b;
     }
+
     public int checkNumberTask(User user)  {
         // array of columns to fetch
         String[] columns = {

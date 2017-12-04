@@ -14,29 +14,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp">
 
             <Button
                 android:id="@+id/btn_newTask"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="addTask"
-                android:text="@string/new_task" />
+                android:text="@string/new_task"/>
 
-            <Button
-                android:id="@+id/btn_deleteTask"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="deleteTask"
-                android:text="@string/delete_task" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
 
         </LinearLayout>
 

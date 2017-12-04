@@ -8,6 +8,7 @@ public class Recompenses {
     public Recompenses(){
         name = "";
         description = "";
+        owner = new User();
     }
 
     public Recompenses(String name, String description, User user){
@@ -38,6 +39,3 @@ public class Recompenses {
     }
 
 }
-
-
-

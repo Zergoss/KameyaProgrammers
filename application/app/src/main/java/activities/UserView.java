@@ -82,11 +82,12 @@ public class UserView extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
-                    intent.putExtra("USERVIEW", user.getId());
+                    intent.putExtra("VIEWUSER", user.getId());
                     startActivity(intent);
                 }
             }
         });
+
         simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -96,7 +97,7 @@ public class UserView extends AppCompatActivity {
                     listTextView.setText("Task List");
                     recyclerViewList.setAdapter(taskRecyclerAdapter);
                 }
-                loadTaskInfo();
+                getDataFromSQLite();
             }
         });
 
@@ -114,6 +115,8 @@ public class UserView extends AppCompatActivity {
             public void onLongClick(View view, int position) {
                 if(simpleSwitch.isChecked()) {
                     databaseHelper.deleteReward(listReward.get(position));
+                    recyclerViewList.setAdapter(rewardRecyclerAdapter);
+                    Toast.makeText(context, "Reward deleted", Toast.LENGTH_SHORT).show();
                     loadTaskInfo();
                 } else {
                     Intent taskView = new Intent (context, TaskView.class);
@@ -159,7 +162,8 @@ public class UserView extends AppCompatActivity {
     private void getDataFromSQLite() {
         if(simpleSwitch.isChecked()) {
             listReward.clear();
-            listReward.addAll(databaseHelper.getRewardOf(user.getId()));
+            //listReward.addAll(databaseHelper.getRewardOf(user.getId()));
+            listReward.addAll(databaseHelper.getAllReward());
         } else {
             listTask.clear();
             listTask.addAll(databaseHelper.getTaskOf(user.getId()));
@@ -170,7 +174,7 @@ public class UserView extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        loadTaskInfo();
+        getDataFromSQLite();
     }
 
 }

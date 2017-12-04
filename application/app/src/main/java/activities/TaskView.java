@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import sql.DatabaseHelper;
 
 import ca.uottawa.cohab.R;
@@ -98,6 +100,11 @@ public class TaskView extends AppCompatActivity {
     }
     public void doneTask(View view){
         databaseHelper.doneTask(task);
+        finish();
+    }
+    public void deleteTask(View view){
+        databaseHelper.deleteTask(task);
+        Toast.makeText(getApplicationContext(), "Task deleted", Toast.LENGTH_SHORT).show();
         finish();
     }
 

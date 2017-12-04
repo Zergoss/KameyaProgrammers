@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
 import helpers.Input;
@@ -77,6 +78,7 @@ public class UserEdit extends AppCompatActivity {
         Intent intent = new Intent(view.getContext(), Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        Toast.makeText(getApplicationContext(), "User deleted", Toast.LENGTH_SHORT).show();
         finish();
     }
     public void saveUser(View view){

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
 import fragment.TaskList;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, taskList).commit();
         } else if (id == R.id.nav_user_list) {
-            getSupportActionBar().setTitle("User list");
+            getSupportActionBar().setTitle("User List");
 
             UserList userList = new UserList();
             userList.setArguments(bundle);
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
             MainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Toast.makeText(activity, "Log off successful", Toast.LENGTH_SHORT).show();
             startActivity(MainIntent);
             finish();
         }

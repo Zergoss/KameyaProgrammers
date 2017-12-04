@@ -37,8 +37,8 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_create_recompenses);
 
         initViews();
-        initListeners();
         initObjects();
+        initListeners();
 
     }
 
@@ -56,7 +56,8 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
     private void initObjects() {
         databaseReference = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
-        user = databaseReference.getUser(getIntent().getStringExtra("USERVIEW"));
+
+        user = databaseReference.getUser(getIntent().getIntExtra("VIEWUSER", -1));
     }
 
     private void initListeners() {
@@ -65,6 +66,7 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        Recompenses reward = new Recompenses();
         if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, getString(R.string.error_message_name_empty))) {
             return;
         }
@@ -72,9 +74,14 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
                 getString(R.string.error_message_description_empty))) {
             return;
         }
-        Recompenses reward = new Recompenses(textInputEditTextName.getText().toString().trim(),
-                textInputEditTextDescription.getText().toString().trim(), user);
+        reward.setName(textInputEditTextName.getText().toString().trim());
+        reward.setDescription(textInputEditTextDescription.getText().toString().trim());
+        reward.setUser(user);
+
         databaseReference.addReward(reward);
+
+        textInputEditTextName.setText(null);
+        textInputEditTextDescription.setText(null);
         Toast.makeText(getApplicationContext(), "A ete ajoutee", Toast.LENGTH_SHORT).show();
 
     }
