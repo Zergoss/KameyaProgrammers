@@ -1,6 +1,8 @@
 package activities;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,19 +14,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
 import fragment.TaskList;
 import fragment.UserList;
 import fragment.UserSwitch;
+import model.User;
+import sql.DatabaseHelper;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final AppCompatActivity activity = MainActivity.this;
-    private String username;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,9 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        defaultDrawer();
+
         initNav();
+        defaultDrawer();
     }
 
     private void initNav() {
@@ -49,9 +56,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
+
         TextView usernameTextMain = (TextView) header.findViewById(R.id.usernameTextMain);
-        username = getIntent().getStringExtra("USERNAME");
-        usernameTextMain.setText(username);
+        DatabaseHelper databaseReference = new DatabaseHelper(getApplicationContext());
+
+        user = databaseReference.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
+        usernameTextMain.setText(user.getUsername());
     }
 
     @Override
@@ -60,8 +70,32 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to log off from app ?");
+            builder.setCancelable(false);
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+            Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+            nbutton.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+            Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+            pbutton.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -71,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putString("USERNAME", username);
+        bundle.putInt("CONNECTEDUSER", user.getId());
 
         if (id == R.id.nav_task_list) {
             getSupportActionBar().setTitle("Task list");
@@ -81,18 +115,19 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, taskList).commit();
         } else if (id == R.id.nav_user_list) {
-            getSupportActionBar().setTitle("User list");
+            getSupportActionBar().setTitle("User List");
 
             UserList userList = new UserList();
             userList.setArguments(bundle);
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, userList).commit();
         } else if (id == R.id.nav_profile) {
+            Bundle extras = new Bundle();
+            extras.putInt("VIEWUSER", user.getId());
+            extras.putBoolean("ISPROFILE", true);
+            extras.putInt("CONNECTEDUSER", user.getId());
 
             Intent profileIntent = new Intent (MainActivity.this, UserView.class);
-            Bundle extras = new Bundle();
-            extras.putString("USERNAME", username);
-            extras.putBoolean("PROFILE", true);
             profileIntent.putExtras(extras);
             startActivity(profileIntent);
         } else if (id == R.id.nav_user_switch) {
@@ -104,6 +139,8 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, userSwitch).commit();
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
+            MainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Toast.makeText(activity, "Log off successful", Toast.LENGTH_SHORT).show();
             startActivity(MainIntent);
             finish();
         }
@@ -118,18 +155,16 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("Task list");
 
         Bundle bundle = new Bundle();
-        bundle.putString("USERNAME", username);
+        bundle.putInt("CONNECTEDUSER", user.getId());
         TaskList taskList = new TaskList();
         taskList.setArguments(bundle);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, taskList).commit();
     }
 
-    public String getUsername() {
-        return this.username;
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        defaultDrawer();
     }
-    public void getUsername(String username) {
-        this.username = username;
-    }
-
 }

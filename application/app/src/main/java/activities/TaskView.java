@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import sql.DatabaseHelper;
 
@@ -18,13 +21,14 @@ public class TaskView extends AppCompatActivity {
     private Task task;
     private Context context;
     private DatabaseHelper databaseHelper;
-    private User user;
+    private User connectedUser;
     private TextView taskPoints;
     private TextView taskName;
     private TextView taskDescription;
     private TextView taskDueDate;
     private TextView task_availability;
     private TextView task_creator;
+    private Button btn_doneTask;
 
 
     @Override
@@ -40,7 +44,6 @@ public class TaskView extends AppCompatActivity {
     }
     private void initObjects() {
         databaseHelper = new DatabaseHelper(context);
-        task = databaseHelper.getTask(getIntent().getStringExtra("NAME"));
     }
     private void initView() {
         //Load info from Task object instead of dummy
@@ -50,37 +53,59 @@ public class TaskView extends AppCompatActivity {
         taskDueDate = (TextView) findViewById(R.id.taskDueDate);
         task_availability = (TextView) findViewById(R.id.task_availability);
         task_creator = (TextView) findViewById(R.id.task_creator);
+        btn_doneTask = (Button) findViewById(R.id.btn_doneTask);
     }
     private void loadTaskInfo() {
+        Bundle extras = getIntent().getExtras();
+        task = databaseHelper.getTask(extras.getInt("TASK", -1));
+        connectedUser = databaseHelper.getUser(extras.getInt("CONNECTEDUSER", -1));
+        User AssignUser = task.getAssignedUser();
+
+        if(connectedUser.getId()==AssignUser.getId()){
+            btn_doneTask.setVisibility(View.VISIBLE);
+        }else {
+            btn_doneTask.setVisibility(View.INVISIBLE);
+        }
         String pts = "Points: " + String.valueOf(task.getPoints());
         String due = "Due: " + task.getDueDate();
-        String creator = "Creator: don't exist.";
-        if (task.getCreator()!=null) {
+        String creator;
+        if(task.getCreator().getId()!=-1) {
             creator = "Creator: " + task.getCreator().getUsername();
+        } else {
+            creator = "Creator: User deleted";
         }
+
 
         taskName.setText(task.getName());
         taskDescription.setText(task.getDescription());
         taskPoints.setText(pts);
         taskDueDate.setText(due);
-        user = task.getAssignedUser();
-        if (user != null) {
-            String avail = "Assign to " + user.getUsername();
-            task_availability.setText(avail);
-        }
         task_creator.setText(creator);
+
+        String avail = "Assign to " + AssignUser.getUsername();
+        task_availability.setText(avail);
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadTaskInfo();
     }
 
     public void editTask(View view){
         Intent intent = new Intent(TaskView.this, TaskEdit.class);
-        intent.putExtra("TASK", task.getName());
+        intent.putExtra("TASK", task.getId());
         startActivity(intent);
     }
     public void doneTask(View view){
-        if (task.getAssignedUser() != null){
-            databaseHelper.doneTask(task);
-            finish();
-        }
+        databaseHelper.doneTask(task);
+        finish();
+    }
+    public void deleteTask(View view){
+        databaseHelper.deleteTask(task);
+        Toast.makeText(getApplicationContext(), "Task deleted", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 }

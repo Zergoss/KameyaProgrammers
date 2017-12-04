@@ -7,6 +7,7 @@
     tools:context="activities.TaskView">
 
     <LinearLayout
+        android:id="@+id/taskView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,9 +20,10 @@
             android:id="@+id/taskName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/task_name"
             android:textSize="35sp"
-            android:layout_marginTop="20dp"/>
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/taskDescription"
@@ -80,9 +82,18 @@
             android:id="@+id/btn_doneTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:onClick="doneTask"
             android:text="@string/task_done" />
+
+        <Button
+            android:id="@+id/btn_deleteTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="deleteTask"
+            android:text="@string/delete_task" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

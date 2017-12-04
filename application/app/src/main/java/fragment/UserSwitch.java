@@ -62,14 +62,14 @@ public class UserSwitch extends Fragment {
         recyclerViewUsers.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity().getApplicationContext(), recyclerViewUsers, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, R.string.longClick, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Long click to change user.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent userView = new Intent (context, UserSwitchLogin.class);
-                userView.putExtra("USERNAME", listUsers.get(position).getUsername());
-                startActivity(userView);
+                Intent userSwitch = new Intent (context, UserSwitchLogin.class);
+                userSwitch.putExtra("USERNAME", listUsers.get(position).getUsername());
+                startActivity(userSwitch);
             }
         }));
     }
@@ -86,7 +86,7 @@ public class UserSwitch extends Fragment {
         databaseHelper = new DatabaseHelper(activity);
 
         Bundle bundle = getArguments();
-        user = databaseHelper.getUser(bundle.getString("USERNAME"));
+        user = databaseHelper.getUser(bundle.getInt("CONNECTEUSER"));
 
         getDataFromSQLite();
     }

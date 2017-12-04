@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
 import helpers.Input;
@@ -60,7 +61,7 @@ public class UserEdit extends AppCompatActivity {
     private void initObjects() {
         inputValidation = new Input(activity);
         db = new DatabaseHelper(activity);
-        user = db.getUser(getIntent().getStringExtra("USERNAME"));
+        user = db.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
     }
     private void loadUserInfo() {
         //Load info from database
@@ -75,7 +76,9 @@ public class UserEdit extends AppCompatActivity {
     public void deleteUser(View view){
         db.deleteUser(user);
         Intent intent = new Intent(view.getContext(), Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        Toast.makeText(getApplicationContext(), "User deleted", Toast.LENGTH_SHORT).show();
         finish();
     }
     public void saveUser(View view){
@@ -109,11 +112,8 @@ public class UserEdit extends AppCompatActivity {
 
             // Snack Bar to show success message that record saved successfully
             Snackbar.make(nestedScrollView, getString(R.string.success_user_edit), Snackbar.LENGTH_LONG).show();
-            Intent intent = new Intent(UserEdit.this, MainActivity.class);
-            intent.putExtra("USERNAME", profile_username_edit.getText().toString().trim());
             emptyInputEditText();
-            startActivity(intent);
-            finish();
+            loadUserInfo();
         } else {
             // Snack Bar to show error message that record already exists
             Snackbar.make(nestedScrollView, getString(R.string.error_username_exists), Snackbar.LENGTH_LONG).show();

@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
 import helpers.Input;
@@ -90,9 +91,12 @@ public class UserSwitchLogin extends AppCompatActivity implements View.OnClickLi
 
         if (aPass.equals(password)) {
             Intent accountsIntent = new Intent(activity, MainActivity.class);
-            accountsIntent.putExtra("USERNAME", user.getUsername());
+            accountsIntent.putExtra("CONNECTEDUSER", user.getId());
+            accountsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             emptyInputEditText();
+            Toast.makeText(getApplicationContext(), "User has been switch", Toast.LENGTH_SHORT).show();
             startActivity(accountsIntent);
+            finish();
         }
         Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
 

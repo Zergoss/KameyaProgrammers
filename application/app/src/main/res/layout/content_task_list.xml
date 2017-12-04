@@ -15,45 +15,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            tools:layout_editor_absoluteY="72dp">
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp">
 
             <Button
                 android:id="@+id/btn_newTask"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="addTask"
-                android:text="@string/new_task" />
+                android:text="@string/new_task"/>
 
-            <Button
-                android:id="@+id/btn_deleteTask"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:onClick="deleteTask"
-                android:text="@string/delete_task" />
-
-            <SearchView
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </SearchView>
 
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewTaskList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="174dp">
+            android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
 

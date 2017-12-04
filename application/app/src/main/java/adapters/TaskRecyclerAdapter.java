@@ -1,5 +1,6 @@
 package adapters;
 
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,8 +39,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         holder.textViewName.setText(listTasks.get(position).getName());
-        holder.textViewPoints.setText(String.valueOf(listTasks.get(position).getPoints()));
         holder.textViewDueDate.setText((listTasks.get(position).getDueDate()));
+        holder.textViewAssign.setText((listTasks.get(position).getAssignedUser().getUsername()));
     }
 
     @Override
@@ -52,16 +53,15 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     protected class TaskViewHolder extends RecyclerView.ViewHolder {
 
         protected AppCompatTextView textViewName;
-        protected AppCompatTextView textViewPoints;
         protected AppCompatTextView textViewDueDate;
+        protected AppCompatTextView textViewAssign;
 
         protected TaskViewHolder(View view, int userType) {
             super(view);
 
             textViewName = (AppCompatTextView) view.findViewById(R.id.textViewName);
-            textViewPoints = (AppCompatTextView) view.findViewById(R.id.textViewPoints);
             textViewDueDate = (AppCompatTextView) view.findViewById(R.id.textViewDueDate);
-
+            textViewAssign = (AppCompatTextView) view.findViewById(R.id.textViewAssign);
         }
     }
 

@@ -8,11 +8,13 @@ public class Recompenses {
     public Recompenses(){
         name = "";
         description = "";
+        owner = new User();
     }
 
-    public Recompenses(String name, String description){
+    public Recompenses(String name, String description, User user){
        this.name = name;
        this.description = description;
+       this.owner = user;
     }
 
     public String getDescription(){
@@ -37,6 +39,3 @@ public class Recompenses {
     }
 
 }
-
-
-

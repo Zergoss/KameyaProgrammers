@@ -57,7 +57,6 @@ public class CreateTask extends AppCompatActivity {
         initObjects();
         initViews();
         initListeners();
-        createButton.setText(connectedUser.getUsername());
     }
 
     private void initListeners() {
@@ -88,11 +87,11 @@ public class CreateTask extends AppCompatActivity {
     private void initObjects() {
         databaseHelper = new DatabaseHelper(this);
         inputValidation = new Input(this);
-        newTask = new Task ();
-        connectedUser = databaseHelper.getUser(getIntent().getStringExtra("CREATOR"));
+        connectedUser = databaseHelper.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
     }
 
    private void postDataToSQLite() {
+       newTask = new Task ();
        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskName, textInputLayoutTaskName, getString(R.string.error_message_username_empty))) {
            return;
        }
@@ -105,9 +104,13 @@ public class CreateTask extends AppCompatActivity {
        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskPoint, textInputLayoutTaskPoint, getString(R.string.error_message_points_empty))) {
            return;
        }
-       /*if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskAssignedUser, textInputLayoutTaskAssignedUser,"")) {
-           textInputEditTextTaskAssignedUser.setText(null);
-       }*/
+       if (!textInputEditTextTaskAssignedUser.getText().toString().trim().isEmpty()) {
+           if (!databaseHelper.checkUser(textInputEditTextTaskAssignedUser.getText().toString().trim())) {
+               Snackbar.make(myScrollView, "User you are trying to assign doesn't exist!", Snackbar.LENGTH_LONG).show();
+               return;
+           }
+           newTask.setAssignedUser(databaseHelper.getUser(textInputEditTextTaskAssignedUser.getText().toString().trim()));
+       }
 
        //NOT Working : to check if the user to assign to has a task starting the same day
       /* if(inputValidation.isInputEditTextFilled(textInputEditTextTaskAssignedUser,textInputLayoutTaskAssignedUser,"") &&

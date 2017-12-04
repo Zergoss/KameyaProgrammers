@@ -37,7 +37,6 @@ public class UserList extends Fragment {
     private UserRecyclerAdapter userRecyclerAdapter;
     private DatabaseHelper databaseHelper;
     private User user;
-    private String username;
 
     @Nullable
     @Override
@@ -68,8 +67,9 @@ public class UserList extends Fragment {
             public void onLongClick(View view, int position) {
                 Intent userView = new Intent (context, UserView.class);
                 Bundle extras = new Bundle();
-                extras.putString("USERNAME", username);
-                extras.putBoolean("PROFILE", false);
+                extras.putInt("VIEWUSER", listUsers.get(position).getId());
+                extras.putBoolean("ISPROFILE", false);
+                extras.putInt("CONNECTEDUSER", user.getId());
                 userView.putExtras(extras);
                 startActivity(userView);
             }
@@ -82,8 +82,7 @@ public class UserList extends Fragment {
         databaseHelper = new DatabaseHelper(context);
 
         Bundle bundle = getArguments();
-        username = bundle.getString("USERNAME");
-        user = databaseHelper.getUser(username);
+        user = databaseHelper.getUser(bundle.getInt("CONNECTEDUSER", -1));
 
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(myView.getContext());
