@@ -95,7 +95,7 @@ public class TaskList extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent myintentCreateTask = new Intent(context, CreateTask.class);
-                myintentCreateTask.putExtra("CREATOR", user.getId());
+                myintentCreateTask.putExtra("CONNECTEDUSER", user.getId());
                 startActivity(myintentCreateTask);
             }
         });
@@ -122,7 +122,10 @@ public class TaskList extends Fragment {
             @Override
             public void onLongClick(View view, int position) {
                 Intent taskView = new Intent (context, TaskView.class);
-                taskView.putExtra("ID",listTask.get(position).getId());
+                Bundle extras = new Bundle();
+                extras.putInt("TASK", listTask.get(position).getId());
+                extras.putInt("CONNECTEDUSER", user.getId());
+                taskView.putExtras(extras);
                 startActivity(taskView);
             }
         }));
@@ -138,7 +141,7 @@ public class TaskList extends Fragment {
         recyclerViewList.setAdapter(taskRecyclerAdapter);
         databaseHelper = new DatabaseHelper(context);
         Bundle bundle = getArguments();
-        user = databaseHelper.getUser(bundle.getInt("ID"));
+        user = databaseHelper.getUser(bundle.getInt("CONNECTEDUSER"));
 
         getDataFromSQLite();
     }

@@ -10,9 +10,10 @@ public class Recompenses {
         description = "";
     }
 
-    public Recompenses(String name, String description){
+    public Recompenses(String name, String description, User user){
        this.name = name;
        this.description = description;
+       this.owner = user;
     }
 
     public String getDescription(){

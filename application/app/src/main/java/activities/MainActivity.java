@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         TextView usernameTextMain = (TextView) header.findViewById(R.id.usernameTextMain);
         DatabaseHelper databaseReference = new DatabaseHelper(getApplicationContext());
 
-        user = databaseReference.getUser(getIntent().getIntExtra("ID", -1));
+        user = databaseReference.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
         usernameTextMain.setText(user.getUsername());
     }
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
         Bundle bundle = new Bundle();
-        bundle.putInt("ID", user.getId());
+        bundle.putInt("CONNECTEDUSER", user.getId());
 
         if (id == R.id.nav_task_list) {
             getSupportActionBar().setTitle("Task list");
@@ -121,11 +121,12 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, userList).commit();
         } else if (id == R.id.nav_profile) {
+            Bundle extras = new Bundle();
+            extras.putInt("VIEWUSER", user.getId());
+            extras.putBoolean("ISPROFILE", true);
+            extras.putInt("CONNECTEDUSER", user.getId());
 
             Intent profileIntent = new Intent (MainActivity.this, UserView.class);
-            Bundle extras = new Bundle();
-            extras.putInt("ID", user.getId());
-            extras.putBoolean("PROFILE", true);
             profileIntent.putExtras(extras);
             startActivity(profileIntent);
         } else if (id == R.id.nav_user_switch) {
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("Task list");
 
         Bundle bundle = new Bundle();
-        bundle.putInt("ID", user.getId());
+        bundle.putInt("CONNECTEDUSER", user.getId());
         TaskList taskList = new TaskList();
         taskList.setArguments(bundle);
 

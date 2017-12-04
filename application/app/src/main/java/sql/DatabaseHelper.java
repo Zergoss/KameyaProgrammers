@@ -136,11 +136,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_TASK, null, values);
         db.close();
-        User user = task.getAssignedUser();
-        if(user.getId() != -1) {
-           user.addPoints(task.getPoints());
-           updateUser(user);
-        }
     }
     public void addReward(Recompenses reward){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -385,7 +380,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query =("SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_TASK_ASSIGNEDUSER + " = '" + id + "'");
+        String query =("SELECT * FROM " + TABLE_REWARD + " WHERE " + COLUMN_REWARD_ID + " = '" + id + "'");
         Cursor cursor = db.rawQuery(query, null);
 
         // Traversing through all rows and adding to list

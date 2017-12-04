@@ -60,7 +60,7 @@ public class UserEdit extends AppCompatActivity {
     private void initObjects() {
         inputValidation = new Input(activity);
         db = new DatabaseHelper(activity);
-        user = db.getUser(getIntent().getIntExtra("ID", -1));
+        user = db.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
     }
     private void loadUserInfo() {
         //Load info from database
@@ -110,13 +110,8 @@ public class UserEdit extends AppCompatActivity {
 
             // Snack Bar to show success message that record saved successfully
             Snackbar.make(nestedScrollView, getString(R.string.success_user_edit), Snackbar.LENGTH_LONG).show();
-            Intent userView = new Intent (UserEdit.this, UserView.class);
-            Bundle extras = new Bundle();
-            extras.putString("USERNAME", profile_username_edit.getText().toString().trim());
-            extras.putBoolean("PROFILE", true);
-            userView.putExtras(extras);
-            startActivity(userView);
-            finish();
+            emptyInputEditText();
+            loadUserInfo();
         } else {
             // Snack Bar to show error message that record already exists
             Snackbar.make(nestedScrollView, getString(R.string.error_username_exists), Snackbar.LENGTH_LONG).show();

@@ -92,7 +92,7 @@
     <string name="task_points">Points</string>
     <string name="task_start">The start date</string>
     <string name="task_end">The end date</string>
-    <string name="task_availability">Task unassigned</string>
+    <string name="task_availability">Assigned to </string>
     <string name="task_createur">The creator</string>
     <string name="task_edit">Edit task</string>
     <string name="task_done">Done</string>

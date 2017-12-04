@@ -74,7 +74,7 @@ public class TaskEdit extends AppCompatActivity {
     }
     private void initObjects() {
         databaseHelper = new DatabaseHelper(this);
-        aTask = databaseHelper.getTask(getIntent().getIntExtra("ID", -1));
+        aTask = databaseHelper.getTask(getIntent().getIntExtra("TASK", -1));
     }
 
     private void postDataToSQLite() {

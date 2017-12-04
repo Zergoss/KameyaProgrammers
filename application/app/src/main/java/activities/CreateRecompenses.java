@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
 import helpers.Input;
+import model.Recompenses;
+import model.User;
 import sql.DatabaseHelper;
 
 
@@ -24,7 +26,7 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
     private TextInputEditText textInputEditTextName;
     private TextInputEditText textInputEditTextDescription;
     private Input inputValidation;
-
+    private User user;
 
     private Button ButtonSave;
 
@@ -54,7 +56,7 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
     private void initObjects() {
         databaseReference = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
-
+        user = databaseReference.getUser(getIntent().getStringExtra("USERVIEW"));
     }
 
     private void initListeners() {
@@ -67,12 +69,13 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
             return;
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextDescription, textInputLayoutDescription,
-                getString(R.string.error_message_description_empty))) { // ajouter database
-            Toast.makeText(getApplicationContext(), "a ete ajoutee", Toast.LENGTH_SHORT).show();
-
+                getString(R.string.error_message_description_empty))) {
             return;
         }
-
+        Recompenses reward = new Recompenses(textInputEditTextName.getText().toString().trim(),
+                textInputEditTextDescription.getText().toString().trim(), user);
+        databaseReference.addReward(reward);
+        Toast.makeText(getApplicationContext(), "A ete ajoutee", Toast.LENGTH_SHORT).show();
 
     }
 

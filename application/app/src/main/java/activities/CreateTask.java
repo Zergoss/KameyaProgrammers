@@ -57,7 +57,6 @@ public class CreateTask extends AppCompatActivity {
         initObjects();
         initViews();
         initListeners();
-        createButton.setText(connectedUser.getUsername());
     }
 
     private void initListeners() {
@@ -88,7 +87,7 @@ public class CreateTask extends AppCompatActivity {
     private void initObjects() {
         databaseHelper = new DatabaseHelper(this);
         inputValidation = new Input(this);
-        connectedUser = databaseHelper.getUser(getIntent().getIntExtra("CREATOR", -1));
+        connectedUser = databaseHelper.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
     }
 
    private void postDataToSQLite() {

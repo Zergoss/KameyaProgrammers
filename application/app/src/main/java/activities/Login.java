@@ -111,7 +111,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
             if (aPass.equals(password)) {
                 Intent accountsIntent = new Intent(activity, MainActivity.class);
-                accountsIntent.putExtra("ID", databaseReference.getUser(textInputEditTextUsername.getText().toString().trim()).getId());
+                accountsIntent.putExtra("CONNECTEDUSER", databaseReference.getUser(textInputEditTextUsername.getText().toString().trim()).getId());
                 emptyInputEditText();
                 startActivity(accountsIntent);
             } else {

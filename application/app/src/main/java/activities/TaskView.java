@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,13 +19,14 @@ public class TaskView extends AppCompatActivity {
     private Task task;
     private Context context;
     private DatabaseHelper databaseHelper;
-    private User user;
+    private User connectedUser;
     private TextView taskPoints;
     private TextView taskName;
     private TextView taskDescription;
     private TextView taskDueDate;
     private TextView task_availability;
     private TextView task_creator;
+    private Button btn_doneTask;
 
 
     @Override
@@ -49,9 +51,19 @@ public class TaskView extends AppCompatActivity {
         taskDueDate = (TextView) findViewById(R.id.taskDueDate);
         task_availability = (TextView) findViewById(R.id.task_availability);
         task_creator = (TextView) findViewById(R.id.task_creator);
+        btn_doneTask = (Button) findViewById(R.id.btn_doneTask);
     }
     private void loadTaskInfo() {
-        task = databaseHelper.getTask(getIntent().getIntExtra("ID", -1));
+        Bundle extras = getIntent().getExtras();
+        task = databaseHelper.getTask(extras.getInt("TASK", -1));
+        connectedUser = databaseHelper.getUser(extras.getInt("CONNECTEDUSER", -1));
+        User AssignUser = task.getAssignedUser();
+
+        if(connectedUser.getId()==AssignUser.getId()){
+            btn_doneTask.setVisibility(View.VISIBLE);
+        }else {
+            btn_doneTask.setVisibility(View.INVISIBLE);
+        }
         String pts = "Points: " + String.valueOf(task.getPoints());
         String due = "Due: " + task.getDueDate();
         String creator;
@@ -68,8 +80,7 @@ public class TaskView extends AppCompatActivity {
         taskDueDate.setText(due);
         task_creator.setText(creator);
 
-        user = task.getAssignedUser();
-        String avail = "Assign to " + user.getUsername();
+        String avail = "Assign to " + AssignUser.getUsername();
         task_availability.setText(avail);
 
     }
@@ -82,15 +93,12 @@ public class TaskView extends AppCompatActivity {
 
     public void editTask(View view){
         Intent intent = new Intent(TaskView.this, TaskEdit.class);
-        intent.putExtra("ID", task.getId());
+        intent.putExtra("TASK", task.getId());
         startActivity(intent);
     }
     public void doneTask(View view){
-        if (task.getAssignedUser().getId() != -1){
-            databaseHelper.doneTask(task);
-            finish();
-        }
-        Toast.makeText(getApplicationContext(), "Task must be assign!", Toast.LENGTH_SHORT).show();
+        databaseHelper.doneTask(task);
+        finish();
     }
 
 }

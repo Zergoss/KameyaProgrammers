@@ -67,9 +67,9 @@ public class UserSwitch extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent userView = new Intent (context, UserSwitchLogin.class);
-                userView.putExtra("USERNAME", listUsers.get(position).getUsername());
-                startActivity(userView);
+                Intent userSwitch = new Intent (context, UserSwitchLogin.class);
+                userSwitch.putExtra("USERNAME", listUsers.get(position).getUsername());
+                startActivity(userSwitch);
             }
         }));
     }
@@ -86,7 +86,7 @@ public class UserSwitch extends Fragment {
         databaseHelper = new DatabaseHelper(activity);
 
         Bundle bundle = getArguments();
-        user = databaseHelper.getUser(bundle.getInt("ID"));
+        user = databaseHelper.getUser(bundle.getInt("CONNECTEUSER"));
 
         getDataFromSQLite();
     }

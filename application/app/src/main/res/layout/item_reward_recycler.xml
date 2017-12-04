@@ -18,22 +18,22 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textRewardName"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/recompenses_name"
             android:textColor="@android:color/darker_gray"
-            android:textSize="40sp" />
+            android:textSize="20sp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textRewardDescription"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/recompenses_description"
             android:textColor="@android:color/darker_gray"
-            android:textSize="40sp" />
+            android:textSize="20sp" />
 
 
     </LinearLayout>
