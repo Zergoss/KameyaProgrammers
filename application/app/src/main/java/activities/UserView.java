@@ -81,7 +81,7 @@ public class UserView extends AppCompatActivity {
                     intent.putExtra("CONNECTEDUSER", connectedUser.getId());
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
+                    Intent intent = new Intent(getApplicationContext(), CreateReward.class);
                     intent.putExtra("VIEWUSER", user.getId());
                     startActivity(intent);
                 }

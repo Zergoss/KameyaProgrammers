@@ -43,7 +43,7 @@
             android:name="activities.UserView"
             android:label="@string/user_view" />
         <activity 
-            android:name="activities.CreateRecompenses"
+            android:name="activities.CreateReward"
             android:label="@string/create_reward" />
         <activity 
             android:name="activities.CreateTask"

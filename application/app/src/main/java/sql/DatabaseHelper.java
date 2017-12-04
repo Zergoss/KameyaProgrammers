@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table name
     private static final String TABLE_USER = "user";
     private static final String TABLE_TASK = "task";
-    private static final String TABLE_REWARD = "recompences";
+    private static final String TABLE_REWARD = "recompenses";
 
     // User Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
@@ -167,6 +167,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setNumberTask(checkNumberTask(user));
             user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
+            user.setListTask(getTaskOf(user.getId()));
+            user.setListReward(getRewardOf(user.getId()));
         }
 
         cursor.close();

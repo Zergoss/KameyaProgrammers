@@ -1,13 +1,11 @@
 package activities;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
@@ -17,9 +15,9 @@ import model.User;
 import sql.DatabaseHelper;
 
 
-public class CreateRecompenses extends AppCompatActivity implements View.OnClickListener {
+public class CreateReward extends AppCompatActivity implements View.OnClickListener {
 
-    private final AppCompatActivity activity = CreateRecompenses.this;
+    private final AppCompatActivity activity = CreateReward.this;
     private DatabaseHelper databaseReference; 
     private TextInputLayout textInputLayoutName;
     private TextInputLayout textInputLayoutDescription;
