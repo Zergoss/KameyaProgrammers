@@ -86,7 +86,7 @@ public class UserSwitch extends Fragment {
         databaseHelper = new DatabaseHelper(activity);
 
         Bundle bundle = getArguments();
-        user = databaseHelper.getUser(bundle.getInt("CONNECTEUSER"));
+        user = databaseHelper.getUser(bundle.getInt("CONNECTEDUSER"));
 
         getDataFromSQLite();
     }

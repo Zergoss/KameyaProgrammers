@@ -162,8 +162,8 @@ public class UserView extends AppCompatActivity {
     private void getDataFromSQLite() {
         if(simpleSwitch.isChecked()) {
             listReward.clear();
-            //listReward.addAll(databaseHelper.getRewardOf(user.getId()));
-            listReward.addAll(databaseHelper.getAllReward());
+            listReward.addAll(databaseHelper.getRewardOf(user.getId()));
+            //listReward.addAll(databaseHelper.getAllReward());
         } else {
             listTask.clear();
             listTask.addAll(databaseHelper.getTaskOf(user.getId()));
