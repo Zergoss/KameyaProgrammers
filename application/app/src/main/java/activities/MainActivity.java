@@ -22,6 +22,7 @@ import ca.uottawa.cohab.R;
 import fragment.TaskList;
 import fragment.UserList;
 import fragment.UserSwitch;
+import model.Resource;
 import model.User;
 import sql.DatabaseHelper;
 
@@ -137,6 +138,12 @@ public class MainActivity extends AppCompatActivity
             userSwitch.setArguments(bundle);
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, userSwitch).commit();
+        } else if (id == R.id.nav_resource) {
+            Bundle extras = new Bundle();
+            extras.putBoolean("ISTASK", false);
+            Intent intent = new Intent (MainActivity.this, ResourceList.class);
+            intent.putExtras(extras);
+            startActivity(intent);
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
             MainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

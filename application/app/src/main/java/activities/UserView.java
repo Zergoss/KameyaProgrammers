@@ -151,6 +151,9 @@ public class UserView extends AppCompatActivity {
 
     private void loadTaskInfo() {
         user = databaseHelper.getUser(user.getId());
+        user.setListTask(databaseHelper.getTaskOf(user));
+        user.setListReward(databaseHelper.getRewardOf(user));
+
         usernameTextView.setText(user.getUsername());
         String pts = "Points: " + String.valueOf(user.getPoints());
         pointsTextView.setText(pts);
@@ -162,11 +165,11 @@ public class UserView extends AppCompatActivity {
     private void getDataFromSQLite() {
         if(simpleSwitch.isChecked()) {
             listReward.clear();
-            listReward.addAll(databaseHelper.getRewardOf(user.getId()));
+            listReward.addAll(user.getListReward());
             //listReward.addAll(databaseHelper.getAllReward());
         } else {
             listTask.clear();
-            listTask.addAll(databaseHelper.getTaskOf(user.getId()));
+            listTask.addAll(user.getListTask());
         }
         taskRecyclerAdapter.notifyDataSetChanged();
     }
@@ -174,7 +177,7 @@ public class UserView extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        getDataFromSQLite();
+        loadTaskInfo();
     }
 
 }

@@ -18,7 +18,7 @@ import model.User;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     // Database Name
     private static final String DATABASE_NAME = "DataManager.db";
@@ -27,6 +27,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER = "user";
     private static final String TABLE_TASK = "task";
     private static final String TABLE_REWARD = "recompenses";
+    private static final String TABLE_RESOURCE = "resource";
+    private static final String TABLE_TASK_RESOURCE = "task_resource";
+
 
     // User Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
@@ -46,6 +49,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_REWARD_NAME = "reward_name";
     private static final String COLUMN_REWARD_DESCRIPTION = "reward_description";
     private static final String COLUMN_REWARD_ASSIGNEDUSER = "reward_assignedUser";
+
+    private static final String COLUMN_RESOURCE_ID = "resource_id";
+    private static final String COLUMN_RESOURCE_NAME = "resource_name";
+    private static final String COLUMN_RESOURCE_DESCRIPTION = "resource_description";
+
+    private static final String COLUMN_REF_TASK_ID = "ref_task_id";
+    private static final String COLUMN_REF_RESOURCE_ID = "ref_resouce_id";
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
@@ -76,13 +86,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_REWARD_DESCRIPTION + " TEXT,"
             + COLUMN_REWARD_ASSIGNEDUSER + " INTEGER,"
             + "CONSTRAINT fk_user "
-            + "FOREIGN KEY (" + COLUMN_REWARD_ASSIGNEDUSER + ") REFERENCES " + TABLE_USER +"(" + COLUMN_USER_ID + ")"
-            + "ON DELETE CASCADE)";
+            + "FOREIGN KEY (" + COLUMN_REWARD_ASSIGNEDUSER + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ") ON DELETE CASCADE)";
+
+    private String CREATE_RESOURCE_TABLE = "CREATE TABLE " + TABLE_RESOURCE + "("
+            + COLUMN_RESOURCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_RESOURCE_NAME + " TEXT,"
+            + COLUMN_RESOURCE_DESCRIPTION + " TEXT)";
+
+    private String CREATE_TASK_RESOURCE_TABLE = "CREATE TABLE " + TABLE_TASK_RESOURCE + "("
+            + COLUMN_REF_TASK_ID + " INTEGER,"
+            + COLUMN_REF_RESOURCE_ID + " INTEGER,"
+            + "FOREIGN KEY (" + COLUMN_REF_TASK_ID + ") REFERENCES " + TABLE_TASK + "(" + COLUMN_TASK_ID + ") ON DELETE CASCADE,"
+            + "FOREIGN KEY (" + COLUMN_REF_RESOURCE_ID + ") REFERENCES " + TABLE_RESOURCE + "(" + COLUMN_RESOURCE_ID + ") ON DELETE CASCADE)";
 
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
     private String DROP_TASK_TABLE = "DROP TABLE IF EXISTS " + TABLE_TASK;
     private String DROP_REWARD_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
+    private String DROP_RESOURCE_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
+    private String DROP_TASK_RESOURCE_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
 
 
     public DatabaseHelper(Context context) {
@@ -94,6 +116,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_TASK_TABLE);
         db.execSQL(CREATE_REWARD_TABLE);
+        db.execSQL(CREATE_RESOURCE_TABLE);
+        db.execSQL(CREATE_TASK_RESOURCE_TABLE);
     }
 
     @Override
@@ -103,6 +127,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_USER_TABLE);
         db.execSQL(DROP_TASK_TABLE);
         db.execSQL(DROP_REWARD_TABLE);
+        db.execSQL(DROP_RESOURCE_TABLE);
+        db.execSQL(DROP_TASK_RESOURCE_TABLE);
 
         // Create tables again
         onCreate(db);
@@ -167,8 +193,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setNumberTask(checkNumberTask(user));
             user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
-            user.setListTask(getTaskOf(user.getId()));
-            user.setListReward(getRewardOf(user.getId()));
+            user.setListTask(getTaskOf(user));
+            user.setListReward(getRewardOf(user));
         }
 
         cursor.close();
@@ -346,11 +372,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // return user list
         return taskList;
     }
-    public List<Task> getTaskOf(int id) {
-
-        List<Task> taskList = new ArrayList<Task>();
+    public List<Task> getTaskOf(User user) {
 
         SQLiteDatabase db = this.getReadableDatabase();
+        List<Task> taskList = new ArrayList<Task>();
+        int id = user.getId();
 
         String query =("SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_TASK_ASSIGNEDUSER + " = '" + id + "'");
         Cursor cursor = db.rawQuery(query, null);
@@ -365,7 +391,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
                 task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
-                task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
+                task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
 
                 taskList.add(task);
             } while (cursor.moveToNext());
@@ -376,13 +402,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // return user list
         return taskList;
     }
-    public List<Recompenses> getRewardOf(int id) {
-
-        List<Recompenses> rewardList = new ArrayList<Recompenses>();
+    public List<Recompenses> getRewardOf(User user) {
 
         SQLiteDatabase db = this.getReadableDatabase();
+        List<Recompenses> rewardList = new ArrayList<Recompenses>();
+        int id = user.getId();
 
-        String query =("SELECT * FROM " + TABLE_REWARD + " WHERE " + COLUMN_REWARD_ID + " = '" + id + "'");
+        String query =("SELECT * FROM " + TABLE_REWARD + " WHERE " + COLUMN_REWARD_ASSIGNEDUSER + " = '" + id + "'");
         Cursor cursor = db.rawQuery(query, null);
 
         // Traversing through all rows and adding to list

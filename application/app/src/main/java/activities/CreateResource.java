@@ -15,16 +15,15 @@ import model.User;
 import sql.DatabaseHelper;
 
 
-public class CreateReward extends AppCompatActivity implements View.OnClickListener {
+public class CreateResource extends AppCompatActivity implements View.OnClickListener {
 
-    private final AppCompatActivity activity = CreateReward.this;
+    private final AppCompatActivity activity = CreateResource.this;
     private DatabaseHelper databaseReference; 
     private TextInputLayout textInputLayoutName;
     private TextInputLayout textInputLayoutDescription;
     private TextInputEditText textInputEditTextName;
     private TextInputEditText textInputEditTextDescription;
     private Input inputValidation;
-    private User user;
 
     private Button ButtonSave;
 
@@ -32,7 +31,7 @@ public class CreateReward extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_reward);
+        setContentView(R.layout.activity_create_resource);
 
         initViews();
         initObjects();
@@ -54,8 +53,6 @@ public class CreateReward extends AppCompatActivity implements View.OnClickListe
     private void initObjects() {
         databaseReference = new DatabaseHelper(activity);
         inputValidation = new Input(activity);
-
-        user = databaseReference.getUser(getIntent().getIntExtra("VIEWUSER", -1));
     }
 
     private void initListeners() {
@@ -64,7 +61,7 @@ public class CreateReward extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Recompenses reward = new Recompenses();
+        Recompenses resource = new Recompenses();
         if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, getString(R.string.error_message_name_empty))) {
             return;
         }
@@ -72,11 +69,10 @@ public class CreateReward extends AppCompatActivity implements View.OnClickListe
                 getString(R.string.error_message_description_empty))) {
             return;
         }
-        reward.setName(textInputEditTextName.getText().toString().trim());
-        reward.setDescription(textInputEditTextDescription.getText().toString().trim());
-        reward.setUser(user);
+        resource.setName(textInputEditTextName.getText().toString().trim());
+        resource.setDescription(textInputEditTextDescription.getText().toString().trim());
 
-        databaseReference.addReward(reward);
+        //databaseReference.addResource(resource);
 
         textInputEditTextName.setText(null);
         textInputEditTextDescription.setText(null);

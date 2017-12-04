@@ -3,18 +3,15 @@ package model;
 public class Resource {
     private String name;
     private String description;
-    private User owner;
 
     public Resource(){
         name = "";
         description = "";
-        owner = new User();
     }
 
-    public Resource(String name, String description, User user){
+    public Resource(String name, String description){
        this.name = name;
        this.description = description;
-       this.owner = user;
     }
 
     public String getDescription(){
@@ -29,13 +26,6 @@ public class Resource {
     }
     public void setName (String nom){
         name = nom;
-    }
-
-    public User getUser(){
-        return this.owner;
-    }
-    public void setUser(User user){
-        this.owner = user;
     }
 
 }

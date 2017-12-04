@@ -107,6 +107,11 @@ public class TaskView extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Task deleted", Toast.LENGTH_SHORT).show();
         finish();
     }
+    public void manageResource(View view) {
+        Intent intent = new Intent(TaskView.this, TaskResource.class);
+        intent.putExtra("TASK", task.getId());
+        startActivity(intent);
+    }
 
 }
 

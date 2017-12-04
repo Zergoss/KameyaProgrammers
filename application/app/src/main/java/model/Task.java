@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Task {
     private int id;
     private int points;
@@ -8,6 +11,8 @@ public class Task {
     private String dueDate;
     private User creator;
     private User assignedUser;
+    private List<Resource> listResource;
+
 
     //Default
     public Task() {
@@ -17,6 +22,7 @@ public class Task {
         this.dueDate = "No due date";
         this.assignedUser = new User();
         this.creator = new User();
+        this.listResource = new ArrayList<>();
     }
 
     //getters & setters
@@ -67,6 +73,20 @@ public class Task {
     }
     public void setAssignedUser(User assignedUser){
         this.assignedUser = assignedUser;
+    }
+
+    public List<Resource> getListResource() {
+        List<Resource> listReturn = new ArrayList<Resource>();
+        for (Resource aResource : this.listResource) {
+            listReturn.add(aResource);
+        }
+
+        return listReturn;
+    }
+    public void setListResource(List<Resource> list) {
+        for (Resource aResource : list) {
+            this.listResource.add(aResource);
+        }
     }
 
     public Boolean isAvailable(){

@@ -19,6 +19,9 @@
     <group android:id="@+id/groupList2"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_resource"
+            android:title="Resource List" />
+        <item
             android:id="@+id/nav_profile"
             android:title="@string/profile" />
         <item
