@@ -1,28 +1,18 @@
 package activities;
 
-import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import ca.uottawa.cohab.R;
@@ -31,22 +21,21 @@ import model.Task;
 import model.User;
 import sql.DatabaseHelper;
 
-public class CreateTask extends AppCompatActivity {
+public class CreateTask extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private TextInputLayout textInputLayoutTaskName, textInputLayoutTaskDescription,
-                            textInputLayoutTaskPoint, textInputLayoutTaskDate,
-                            textInputLayoutTaskAssignedUser;
+                            textInputLayoutTaskPoint, textInputLayoutTaskDate;
     private TextInputEditText textInputEditTextTaskName, textInputEditTextTaskDescription,
-                            textInputEditTextTaskPoint, textInputEditTextTaskDate,
-                            textInputEditTextTaskAssignedUser;
+                            textInputEditTextTaskPoint, textInputEditTextTaskDate;
 
     private DatabaseHelper databaseHelper;
     private Task newTask;
     private Input inputValidation;
     private Button createButton;
-
     private User connectedUser;
+    private List<User> allUser;
     private ScrollView myScrollView;
+    private Spinner spinnerUser, spinnerStatus, spinnerGroup;
 
 
     @Override
@@ -57,6 +46,7 @@ public class CreateTask extends AppCompatActivity {
         initObjects();
         initViews();
         initListeners();
+        addItemsOnSpinnerUser();
     }
 
     private void initListeners() {
@@ -67,20 +57,25 @@ public class CreateTask extends AppCompatActivity {
                 postDataToSQLite();
             }
         });
+
+        spinnerUser.setOnItemSelectedListener(this);
+        spinnerGroup.setOnItemSelectedListener(this);
+        spinnerStatus.setOnItemSelectedListener(this);
     }
     private void initViews(){
-
         textInputLayoutTaskName = (TextInputLayout) findViewById(R.id.textInputLayoutTaskName);
         textInputLayoutTaskDescription = (TextInputLayout) findViewById(R.id.textInputLayoutTaskDescription);
         textInputLayoutTaskPoint = (TextInputLayout) findViewById(R.id.textInputLayoutTaskPoint);
         textInputLayoutTaskDate = (TextInputLayout) findViewById(R.id.textInputLayoutTaskDate);
-        textInputLayoutTaskAssignedUser = (TextInputLayout) findViewById(R.id.textInputLayoutAssignedUser);
 
         textInputEditTextTaskName = (TextInputEditText) findViewById(R.id.textInputEditTaskName);
         textInputEditTextTaskDescription = (TextInputEditText) findViewById(R.id.textInputEditTaskDescription);
         textInputEditTextTaskPoint = (TextInputEditText) findViewById(R.id.textInputEditTaskPoint);
-        textInputEditTextTaskAssignedUser = (TextInputEditText) findViewById(R.id.textInputEditTaskAssignedUser);
         textInputEditTextTaskDate = (TextInputEditText) findViewById(R.id.textInputEditTaskDate);
+
+        spinnerUser = (Spinner) findViewById(R.id.spinner_user);
+        spinnerStatus = (Spinner) findViewById(R.id.spinner_status);
+        spinnerGroup = (Spinner) findViewById(R.id.spinner_group);
 
         myScrollView = (ScrollView) findViewById(R.id.myScrollView);
     }
@@ -88,10 +83,46 @@ public class CreateTask extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         inputValidation = new Input(this);
         connectedUser = databaseHelper.getUser(getIntent().getIntExtra("CONNECTEDUSER", -1));
+        newTask = new Task ();
+    }
+    private void addItemsOnSpinnerUser(){
+        allUser = databaseHelper.getAllUser();
+        List<String> list = new ArrayList<String>();
+        list.add("No user");
+        for (int i = 0; i < allUser.size(); i++) {
+            list.add(allUser.get(i).getUsername());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUser.setAdapter(dataAdapter);
     }
 
-   private void postDataToSQLite() {
-       newTask = new Task ();
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        if(parent.getId() == R.id.spinner_user)
+        {
+            if(pos==0) {
+                newTask.setAssignedUser(new User());
+            } else {
+                newTask.setAssignedUser(allUser.get(pos-1));
+            }
+        } else if(parent.getId() == R.id.spinner_status) {
+            newTask.setStatus(pos);
+        } else {
+            newTask.setGroup(pos);
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Not used
+    }
+
+
+    private void postDataToSQLite() {
        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskName, textInputLayoutTaskName, getString(R.string.error_message_username_empty))) {
            return;
        }
@@ -103,13 +134,6 @@ public class CreateTask extends AppCompatActivity {
        }
        if (!inputValidation.isInputEditTextFilled(textInputEditTextTaskPoint, textInputLayoutTaskPoint, getString(R.string.error_message_points_empty))) {
            return;
-       }
-       if (!textInputEditTextTaskAssignedUser.getText().toString().trim().isEmpty()) {
-           if (!databaseHelper.checkUser(textInputEditTextTaskAssignedUser.getText().toString().trim())) {
-               Snackbar.make(myScrollView, "User you are trying to assign doesn't exist!", Snackbar.LENGTH_LONG).show();
-               return;
-           }
-           newTask.setAssignedUser(databaseHelper.getUser(textInputEditTextTaskAssignedUser.getText().toString().trim()));
        }
 
        //NOT Working : to check if the user to assign to has a task starting the same day
@@ -136,7 +160,6 @@ public class CreateTask extends AppCompatActivity {
 
            databaseHelper.addTask(newTask);
 
-           // Snack Bar to show success message that record saved successfully
            Snackbar.make(myScrollView, "Task Created !", Snackbar.LENGTH_LONG).show();
            emptyInputEditText();
 
@@ -147,10 +170,13 @@ public class CreateTask extends AppCompatActivity {
    }
 
     private void emptyInputEditText() {
+        newTask = new Task ();
         textInputEditTextTaskDate.setText(null);
-        textInputEditTextTaskAssignedUser.setText(null);
         textInputEditTextTaskDescription.setText(null);
         textInputEditTextTaskName.setText(null);
         textInputEditTextTaskPoint.setText(null);
+        spinnerUser.setSelection(0);
+        spinnerGroup.setSelection(0);
+        spinnerStatus.setSelection(0);
     }
 }

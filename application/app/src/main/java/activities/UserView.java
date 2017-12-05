@@ -90,14 +90,7 @@ public class UserView extends AppCompatActivity {
 
         simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    listTextView.setText("Reward List");
-                    recyclerViewList.setAdapter(rewardRecyclerAdapter);
-                } else {
-                    listTextView.setText("Task List");
-                    recyclerViewList.setAdapter(taskRecyclerAdapter);
-                }
-                getDataFromSQLite();
+                loadTaskInfo();
             }
         });
 
@@ -115,7 +108,6 @@ public class UserView extends AppCompatActivity {
             public void onLongClick(View view, int position) {
                 if(simpleSwitch.isChecked()) {
                     databaseHelper.deleteReward(listReward.get(position));
-                    recyclerViewList.setAdapter(rewardRecyclerAdapter);
                     Toast.makeText(context, "Reward deleted", Toast.LENGTH_SHORT).show();
                     loadTaskInfo();
                 } else {
@@ -152,7 +144,13 @@ public class UserView extends AppCompatActivity {
     private void loadTaskInfo() {
         user = databaseHelper.getUser(user.getId());
         user.setListTask(databaseHelper.getTaskOf(user));
-        user.setListReward(databaseHelper.getRewardOf(user));
+        if (simpleSwitch.isChecked()) {
+            listTextView.setText("Reward List");
+            recyclerViewList.setAdapter(rewardRecyclerAdapter);
+        } else {
+            listTextView.setText("Task List");
+            recyclerViewList.setAdapter(taskRecyclerAdapter);
+        }
 
         usernameTextView.setText(user.getUsername());
         String pts = "Points: " + String.valueOf(user.getPoints());
@@ -166,7 +164,6 @@ public class UserView extends AppCompatActivity {
         if(simpleSwitch.isChecked()) {
             listReward.clear();
             listReward.addAll(user.getListReward());
-            //listReward.addAll(databaseHelper.getAllReward());
         } else {
             listTask.clear();
             listTask.addAll(user.getListTask());

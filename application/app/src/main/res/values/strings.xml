@@ -76,11 +76,27 @@
     <string name="head_list">Due date</string>
     <string name="new_task">Add task</string>
     <string name="longClick">Long click to view.</string>
-    <string-array name="dropDownTask">
+
+
+    <!-- spinner stuff -->
+    <string-array name="drop_status_all">
         <item>All</item>
-        <item>Personal</item>
-        <item>Unassign</item>
+        <item>Waiting</item>
+        <item>In process</item>
+        <item>Reported</item>
+        <item>Done</item>
     </string-array>
+    <string-array name="drop_status">
+        <item>Waiting</item>
+        <item>In process</item>
+        <item>Reported</item>
+    </string-array>
+    <string-array name="drop_group">
+        <item>No group</item>
+        <item>Inside</item>
+        <item>Outside</item>
+    </string-array>
+
 
     <!-- User -->
     <string name="user_edit_password">Change password</string>

@@ -6,6 +6,8 @@ import java.util.List;
 public class Task {
     private int id;
     private int points;
+    private int status;
+    private int group;
     private String name;
     private String description;
     private String dueDate;
@@ -16,13 +18,15 @@ public class Task {
 
     //Default
     public Task() {
-        this.points = 0;
-        this.name = "No name";
-        this.description = "No description";
-        this.dueDate = "No due date";
-        this.assignedUser = new User();
-        this.creator = new User();
-        this.listResource = new ArrayList<>();
+        points = 0;
+        status = 0;
+        group = 0;
+        name = "No name";
+        description = "No description";
+        dueDate = "No due date";
+        assignedUser = new User();
+        creator = new User();
+        listResource = new ArrayList<>();
     }
 
     //getters & setters
@@ -88,6 +92,21 @@ public class Task {
             this.listResource.add(aResource);
         }
     }
+
+    public int getStatus() {
+        return status;
+    }
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
 
     public Boolean isAvailable(){
         Boolean dispo = true;

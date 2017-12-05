@@ -12,13 +12,14 @@ import java.util.Date;
 import java.util.List;
 
 import model.Recompenses;
+import model.Resource;
 import model.Task;
 import model.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
 
     // Database Name
     private static final String DATABASE_NAME = "DataManager.db";
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table name
     private static final String TABLE_USER = "user";
     private static final String TABLE_TASK = "task";
-    private static final String TABLE_REWARD = "recompenses";
+    private static final String TABLE_REWARD = "reward";
     private static final String TABLE_RESOURCE = "resource";
     private static final String TABLE_TASK_RESOURCE = "task_resource";
 
@@ -44,6 +45,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TASK_DUEDATE = "task_dueDate";
     private static final String COLUMN_TASK_CREATOR = "task_creator";
     private static final String COLUMN_TASK_ASSIGNEDUSER = "task_assignedUser";
+    private static final String COLUMN_TASK_STATUS = "task_status";
+    private static final String COLUMN_TASK_GROUP = "task_group";
+
 
     private static final String COLUMN_REWARD_ID = "reward_id";
     private static final String COLUMN_REWARD_NAME = "reward_name";
@@ -53,9 +57,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_RESOURCE_ID = "resource_id";
     private static final String COLUMN_RESOURCE_NAME = "resource_name";
     private static final String COLUMN_RESOURCE_DESCRIPTION = "resource_description";
+    private static final String COLUMN_RESOURCE_GROUP = "resource_group";
 
+    private static final String COLUMN_TASK_RESOURCE_ID = "task_resource_id";
     private static final String COLUMN_REF_TASK_ID = "ref_task_id";
-    private static final String COLUMN_REF_RESOURCE_ID = "ref_resouce_id";
+    private static final String COLUMN_REF_RESOURCE_ID = "ref_resource_id";
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
@@ -71,6 +77,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TASK_NAME + " TEXT,"
             + COLUMN_TASK_DESCRIPTION + " TEXT,"
             + COLUMN_TASK_DUEDATE + " TEXT,"
+            + COLUMN_TASK_STATUS + " INTEGER,"
+            + COLUMN_TASK_GROUP + " INTEGER,"
             + COLUMN_TASK_CREATOR + " INTEGER,"
             + COLUMN_TASK_ASSIGNEDUSER + " INTEGER,"
             + "CONSTRAINT fk_creator "
@@ -91,9 +99,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CREATE_RESOURCE_TABLE = "CREATE TABLE " + TABLE_RESOURCE + "("
             + COLUMN_RESOURCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_RESOURCE_NAME + " TEXT,"
-            + COLUMN_RESOURCE_DESCRIPTION + " TEXT)";
+            + COLUMN_RESOURCE_DESCRIPTION + " TEXT,"
+            + COLUMN_RESOURCE_GROUP + " INTEGER)";
 
     private String CREATE_TASK_RESOURCE_TABLE = "CREATE TABLE " + TABLE_TASK_RESOURCE + "("
+            + COLUMN_TASK_RESOURCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_REF_TASK_ID + " INTEGER,"
             + COLUMN_REF_RESOURCE_ID + " INTEGER,"
             + "FOREIGN KEY (" + COLUMN_REF_TASK_ID + ") REFERENCES " + TABLE_TASK + "(" + COLUMN_TASK_ID + ") ON DELETE CASCADE,"
@@ -103,14 +113,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
     private String DROP_TASK_TABLE = "DROP TABLE IF EXISTS " + TABLE_TASK;
     private String DROP_REWARD_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
-    private String DROP_RESOURCE_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
-    private String DROP_TASK_RESOURCE_TABLE = "DROP TABLE IF EXISTS " + TABLE_REWARD;
+    private String DROP_RESOURCE_TABLE = "DROP TABLE IF EXISTS " + TABLE_RESOURCE;
+    private String DROP_TASK_RESOURCE_TABLE = "DROP TABLE IF EXISTS " + TABLE_TASK_RESOURCE;
 
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_TABLE);
@@ -119,7 +128,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_RESOURCE_TABLE);
         db.execSQL(CREATE_TASK_RESOURCE_TABLE);
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -158,6 +166,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_DUEDATE, task.getDueDate());
         values.put(COLUMN_TASK_CREATOR, task.getCreator().getId());
         values.put(COLUMN_TASK_ASSIGNEDUSER, task.getAssignedUser().getId());
+        values.put(COLUMN_TASK_STATUS, task.getStatus());
+        values.put(COLUMN_TASK_GROUP, task.getGroup());
 
         // Inserting Row
         db.insert(TABLE_TASK, null, values);
@@ -173,6 +183,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_REWARD, null, values);
+        db.close();
+    }
+    public void addResource(Resource resource){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_RESOURCE_NAME, resource.getName());
+        values.put(COLUMN_RESOURCE_DESCRIPTION, resource.getDescription());
+        values.put(COLUMN_RESOURCE_GROUP, resource.getGroup());
+
+        // Inserting Row
+        db.insert(TABLE_RESOURCE, null, values);
+        db.close();
+    }
+    public void addTaskResource(Task task, Resource res){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_REF_TASK_ID, task.getId());
+        values.put(COLUMN_REF_RESOURCE_ID, res.getId());
+
+        // Inserting Row
+        db.insert(TABLE_TASK_RESOURCE, null, values);
         db.close();
     }
 
@@ -193,7 +226,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setNumberTask(checkNumberTask(user));
             user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
-            user.setListTask(getTaskOf(user));
             user.setListReward(getRewardOf(user));
         }
 
@@ -217,6 +249,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setNumberTask(checkNumberTask(user));
             user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
+            user.setListReward(getRewardOf(user));
         }
 
         cursor.close();
@@ -241,6 +274,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
             task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
             task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+            task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STATUS)));
+            task.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_GROUP)));
         }
         cursor.close();
         db.close();
@@ -264,6 +299,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
             task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
             task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+            task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STATUS)));
+            task.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_GROUP)));
         }
         cursor.close();
         db.close();
@@ -275,7 +312,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Recompenses reward = new Recompenses();
 
-        String query =("SELECT * FROM " + TABLE_REWARD + " WHERE " + COLUMN_USER_ID + " = '" + id + "'");
+        String query =("SELECT * FROM " + TABLE_REWARD + " WHERE " + COLUMN_REWARD_ID + " = '" + id + "'");
         Cursor cursor = db.rawQuery(query, null);
 
         // Traversing through a column and all rows adding to user
@@ -289,9 +326,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return reward;
     }
+    public Resource getResource(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Resource resource = new Resource();
+
+        String query =("SELECT * FROM " + TABLE_RESOURCE + " WHERE " + COLUMN_RESOURCE_ID + " = '" + id + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through a column and all rows adding to user
+        if (cursor.moveToFirst()) {
+            resource.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_RESOURCE_ID)));
+            resource.setName(cursor.getString(cursor.getColumnIndex(COLUMN_RESOURCE_NAME)));
+            resource.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_RESOURCE_DESCRIPTION)));
+            resource.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_RESOURCE_GROUP)));
+        }
+        cursor.close();
+        db.close();
+
+        return resource;
+    }
 
 
     //Return list of all user
+    public List<User> getAllUser() {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_USER_ID,
+                COLUMN_USER_POINTS,
+                COLUMN_USER_USERNAME,
+                COLUMN_USER_PASSWORD
+        };
+
+        String sortOrder =
+                COLUMN_USER_USERNAME + " ASC";
+        List<User> userList = new ArrayList<User>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_USER, columns, null, null, null, null, sortOrder);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
+                user.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_POINTS)));
+                user.setNumberTask(checkNumberTask(user));
+                user.setUsername(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USERNAME)));
+                user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return userList;
+    }
     public List<User> getAllUser(User profile) {
         // array of columns to fetch
         String[] columns = {
@@ -417,7 +508,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Recompenses reward = new Recompenses();
                 reward.setName(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_NAME)));
                 reward.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_REWARD_DESCRIPTION)));
-                reward.setUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_REWARD_ASSIGNEDUSER))));
+                reward.setUser(user);
 
                 rewardList.add(reward);
             } while (cursor.moveToNext());
@@ -452,6 +543,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return rewardList;
     }
+    public List<Resource> getResourceOf(int group) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Resource> resourceList = new ArrayList<Resource>();
+
+        String query =("SELECT * FROM " + TABLE_RESOURCE + " WHERE " + COLUMN_RESOURCE_GROUP + " = '" + group + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Resource resource = new Resource();
+                resource.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_RESOURCE_ID)));
+                resource.setName(cursor.getString(cursor.getColumnIndex(COLUMN_RESOURCE_NAME)));
+                resource.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_RESOURCE_DESCRIPTION)));
+                resource.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_RESOURCE_GROUP)));
+
+                resourceList.add(resource);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return resourceList;
+    }
+    public List<Resource> getResourceOf(Task task) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Resource> resourceList = new ArrayList<Resource>();
+
+        String query =("SELECT * FROM " + TABLE_TASK_RESOURCE + " WHERE " + COLUMN_REF_TASK_ID + " = '" + task.getId() + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Resource resource = getResource(cursor.getInt(cursor.getColumnIndex(COLUMN_REF_RESOURCE_ID)));
+                resourceList.add(resource);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return resourceList;
+    }
+    public List<Resource> getAllResource() {
+
+        List<Resource> resourceList = new ArrayList<Resource>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query =("SELECT * FROM " + TABLE_RESOURCE);
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Resource resource = new Resource();
+                resource.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_RESOURCE_ID)));
+                resource.setName(cursor.getString(cursor.getColumnIndex(COLUMN_RESOURCE_NAME)));
+                resource.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_RESOURCE_DESCRIPTION)));
+                resource.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_RESOURCE_GROUP)));
+
+                resourceList.add(resource);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return resourceList;
+    }
 
     //Update user records
     public void updateUser(User user) {
@@ -468,8 +630,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
     public void updateTask(Task task) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_TASK_POINTS, task.getPoints());
         values.put(COLUMN_TASK_NAME, task.getName());
@@ -477,11 +637,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TASK_DUEDATE, task.getDueDate());
         values.put(COLUMN_TASK_CREATOR , task.getCreator().getId());
         values.put(COLUMN_TASK_ASSIGNEDUSER , task.getAssignedUser().getId());
+        values.put(COLUMN_TASK_STATUS, task.getStatus());
+        values.put(COLUMN_TASK_GROUP, task.getGroup());
 
+        updateAllResourceOfTask(task, task.getGroup());
+
+        SQLiteDatabase db = this.getWritableDatabase();
         // updating row
         db.update(TABLE_TASK, values, COLUMN_TASK_ID + " = ?",
                 new String[]{String.valueOf(task.getId())});
         db.close();
+    }
+    public void updateResource(Resource resource) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_RESOURCE_NAME, resource.getName());
+        values.put(COLUMN_RESOURCE_DESCRIPTION, resource.getDescription());
+        values.put(COLUMN_RESOURCE_GROUP, resource.getGroup());
+
+        // updating row
+        db.update(TABLE_RESOURCE, values, COLUMN_RESOURCE_ID + " = ?",
+                new String[]{String.valueOf(resource.getId())});
+        db.close();
+    }
+    public void updateAllResourceOfTask(Task task, int newGroup) {
+
+        List<Resource> listResource = getResourceOf(task);
+
+        for (int i = 0; i < listResource.size(); i++) {
+            listResource.get(i).setGroup(newGroup);
+            updateResource(listResource.get(i));
+        }
+
     }
 
     //Delete user or task
@@ -492,9 +680,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
     public void deleteTask(Task task) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        updateAllResourceOfTask(task, 0);
 
+        SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TASK, COLUMN_TASK_ID + " = ?", new String[]{String.valueOf(task.getId())});
+        db.delete(TABLE_TASK_RESOURCE, COLUMN_REF_TASK_ID + " = ?", new String[]{String.valueOf(task.getId())});
         db.close();
     }
     public void deleteReward(Recompenses reward) {
@@ -503,6 +693,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_REWARD, COLUMN_REWARD_NAME + " = ?", new String[]{String.valueOf(reward.getName())});
         db.close();
     }
+    public void deleteResource(Resource resource) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_RESOURCE, COLUMN_RESOURCE_ID + " = ?", new String[]{String.valueOf(resource.getId())});
+        db.delete(TABLE_TASK_RESOURCE, COLUMN_REF_RESOURCE_ID + " = ?", new String[]{String.valueOf(resource.getId())});
+        db.close();
+    }
+    public void deleteTaskResource(Task task, Resource resource) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query =("SELECT * FROM " + TABLE_TASK_RESOURCE + " WHERE " + COLUMN_REF_TASK_ID + " = '" + task.getId() + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                if(resource.getId() == cursor.getInt(cursor.getColumnIndex(COLUMN_REF_RESOURCE_ID))) {
+                    db.delete(TABLE_TASK_RESOURCE, COLUMN_TASK_RESOURCE_ID + " = ?",
+                            new String[]{String.valueOf(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_RESOURCE_ID)))});
+                }
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+    }
+
 
 
     //User or task return 1 if exist & password if it's good
@@ -611,7 +827,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         User user = task.getAssignedUser();
         user.addPoints(task.getPoints());
         updateUser(user);
-        deleteTask(task);
+        task.setStatus(3);
+        updateTask(task);
     }
+    public String checkNameValue(int value, int statusGroup) {
+        String str = "";
+        if(statusGroup == 0){
+            switch (value) {
+                case 0:
+                    str = "Waiting";
+                    break;
+                case 1:
+                    str = "In process";
+                    break;
+                case 2:
+                    str = "Reported";
+                    break;
+                case 3:
+                    str = "Finish";
+                    break;
+                default:
+                    str = "Nothing";
+            }
+        } else {
+            switch (value) {
+                case 0:
+                    str = "No group";
+                    break;
+                case 1:
+                    str = "Inside";
+                    break;
+                case 2:
+                    str = "Outside";
+                    break;
+                default:
+                    str = "No group";
+            }
+        }
+        return str;
+    }
+
 
 }

@@ -35,7 +35,6 @@ public class ResourceList extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private Context context;
     private Boolean isTask;
-    private TextView TextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,8 @@ public class ResourceList extends AppCompatActivity {
 
         initObjects();
         initViews();
-        initListeners();
         loadTaskInfo();
+        initListeners();
     }
 
     public void initViews() {
@@ -74,11 +73,10 @@ public class ResourceList extends AppCompatActivity {
             @Override
             public void onLongClick(View view, int position) {
                 if(isTask) {
-                    //databaseHelper.assgin resource (list.get(position));
+                    databaseHelper.addTaskResource(currentTask, list.get(position));
                     Toast.makeText(context, "Resource assign", Toast.LENGTH_SHORT).show();
                 } else {
-                    //database delete resource from junction
-                    recyclerViewList.setAdapter(resourceRecyclerAdapter);
+                    databaseHelper.deleteResource(list.get(position));
                     Toast.makeText(context, "Resource deleted", Toast.LENGTH_SHORT).show();
                     loadTaskInfo();
                 }
@@ -88,8 +86,8 @@ public class ResourceList extends AppCompatActivity {
     public void initObjects() {
         list = new ArrayList<>();
         databaseHelper = new DatabaseHelper(context);
-        resourceRecyclerAdapter = new ResourceRecyclerAdapter(list, 1);
-        recyclerViewList = (RecyclerView) findViewById(R.id.recyclerViewUserList);
+        resourceRecyclerAdapter = new ResourceRecyclerAdapter(list);
+        recyclerViewList = (RecyclerView) findViewById(R.id.recyclerViewList);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         recyclerViewList.setLayoutManager(mLayoutManager);
@@ -104,13 +102,12 @@ public class ResourceList extends AppCompatActivity {
 
     private void loadTaskInfo() {
         currentTask = databaseHelper.getTask(currentTask.getId());
-        //user.setListReward(databaseHelper.getRewardOf(user));
         getDataFromSQLite();
     }
 
     private void getDataFromSQLite() {
         list.clear();
-        //list.addAll();
+        list.addAll(databaseHelper.getAllResource());
         resourceRecyclerAdapter.notifyDataSetChanged();
     }
 

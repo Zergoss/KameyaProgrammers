@@ -23,8 +23,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayoutTaskName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_height="match_parent">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/textInputEditTaskName"
@@ -42,7 +41,7 @@
                 android:id="@+id/textInputLayoutTaskDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/textInputEditTaskDescription"
@@ -60,7 +59,7 @@
                 android:id="@+id/textInputLayoutTaskPoint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/textInputEditTaskPoint"
@@ -78,7 +77,7 @@
                 android:id="@+id/textInputLayoutTaskDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/textInputEditTaskDate"
@@ -92,23 +91,65 @@
             </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayoutAssignedUser"
+            <TextView
+                android:id="@+id/textViewUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Assign User"
+                tools:text="Assign User"
+                android:layout_marginTop="10dp" />
+
+            <Spinner
+                android:id="@+id/spinner_user"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"/>
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/textInputEditTaskAssignedUser"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewStatus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Assign to"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@android:color/white" />
+                    android:text="Status"
+                    tools:text="Status" />
 
-            </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:id="@+id/textViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Group"
+                    tools:text="Group" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:entries="@array/drop_status"/>
+
+                <Spinner
+                    android:id="@+id/spinner_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:entries="@array/drop_group"/>
+            </LinearLayout>
 
 
             <Button

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import ca.uottawa.cohab.R;
 import helpers.Input;
 import model.Recompenses;
+import model.Resource;
 import model.User;
 import sql.DatabaseHelper;
 
@@ -61,7 +62,7 @@ public class CreateResource extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        Recompenses resource = new Recompenses();
+        Resource resource = new Resource();
         if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, getString(R.string.error_message_name_empty))) {
             return;
         }
@@ -71,8 +72,9 @@ public class CreateResource extends AppCompatActivity implements View.OnClickLis
         }
         resource.setName(textInputEditTextName.getText().toString().trim());
         resource.setDescription(textInputEditTextDescription.getText().toString().trim());
+        resource.setGroup(0);
 
-        //databaseReference.addResource(resource);
+        databaseReference.addResource(resource);
 
         textInputEditTextName.setText(null);
         textInputEditTextDescription.setText(null);

@@ -27,7 +27,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/task_name"
-                android:textSize="35sp" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/taskDescription"
@@ -38,23 +38,52 @@
                 android:textSize="25sp" />
 
 
-            <TextView
-                android:id="@+id/taskPoints"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="@string/task_points"
-                android:textSize="25sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/taskPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/task_points"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/taskDueDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/task_due"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/taskDueDate"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/task_due"
-                android:textSize="25sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
 
+                <TextView
+                    android:id="@+id/task_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Status"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/task_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Group"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/task_creator"
@@ -62,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/task_createur"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
 
             <TextView
@@ -71,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/task_availability"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
@@ -91,14 +120,16 @@
                     android:background="@color/colorTextHint" />
 
                 <Button
-                    android:id="@+id/btn_editTask"
+                    android:id="@+id/btn_deleteTask"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:onClick="editTask"
-                    android:text="@string/task_edit"
+                    android:onClick="deleteTask"
+                    android:text="@string/delete_task"
                     android:background="@color/colorTextHint" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -107,13 +138,13 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_deleteTask"
+                    android:id="@+id/btn_editTask"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:onClick="deleteTask"
-                    android:text="@string/delete_task"
+                    android:onClick="editTask"
+                    android:text="@string/task_edit"
                     android:background="@color/colorTextHint" />
 
                 <Button

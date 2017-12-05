@@ -52,7 +52,7 @@ public class TaskResource extends AppCompatActivity {
         btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent taskView = new Intent (context, TaskView.class);
+                Intent taskView = new Intent (context, ResourceList.class);
                 Bundle extras = new Bundle();
                 extras.putInt("TASK", currentTask.getId());
                 extras.putBoolean("ISTASK", true);
@@ -69,7 +69,7 @@ public class TaskResource extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-                //databaseHelper.deleteResource(listReward.get(position));
+                databaseHelper.deleteTaskResource(currentTask, listResource.get(position));
                 Toast.makeText(context, "Resource as been unassign", Toast.LENGTH_SHORT).show();
                 loadTaskInfo();
             }
@@ -78,7 +78,7 @@ public class TaskResource extends AppCompatActivity {
     public void initObjects() {
         listResource = new ArrayList<>();
         databaseHelper = new DatabaseHelper(context);
-        resourceRecyclerAdapter = new ResourceRecyclerAdapter(listResource, 1);
+        resourceRecyclerAdapter = new ResourceRecyclerAdapter(listResource);
         recyclerViewList = (RecyclerView) findViewById(R.id.recyclerViewList);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
@@ -92,6 +92,7 @@ public class TaskResource extends AppCompatActivity {
 
     private void loadTaskInfo() {
         currentTask = databaseHelper.getTask(currentTask.getId());
+        currentTask.setListResource(databaseHelper.getResourceOf(currentTask));
         getDataFromSQLite();
     }
 

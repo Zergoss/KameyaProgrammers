@@ -16,22 +16,19 @@ import model.Resource;
 public class ResourceRecyclerAdapter extends RecyclerView.Adapter<ResourceRecyclerAdapter.ResourceViewHolder> {
 
     private List<Resource> listResource;
-    private int resourceType;
 
-    public ResourceRecyclerAdapter(List<Resource> listResource, int resourceType) {
+    public ResourceRecyclerAdapter(List<Resource> listResource) {
         this.listResource = listResource;
-        this.resourceType = resourceType;
     }
 
     @Override
     public ResourceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        ResourceViewHolder resourceViewHolder = null;
 
         itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_resource_recycler, parent, false);
 
-        resourceViewHolder =  new ResourceViewHolder(itemView, resourceType);
+        ResourceViewHolder resourceViewHolder =  new ResourceViewHolder(itemView);
 
         return resourceViewHolder;
     }
@@ -54,7 +51,7 @@ public class ResourceRecyclerAdapter extends RecyclerView.Adapter<ResourceRecycl
         protected AppCompatTextView textResourceName;
         protected AppCompatTextView textResourceDescription;
 
-        protected ResourceViewHolder(View view, int userType) {
+        protected ResourceViewHolder(View view) {
             super(view);
 
             textResourceName = (AppCompatTextView) view.findViewById(R.id.textResourceName);
