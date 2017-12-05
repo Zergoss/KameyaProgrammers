@@ -86,8 +86,8 @@ public class TaskView extends AppCompatActivity {
         taskPoints.setText(pts);
         taskDueDate.setText(due);
         task_creator.setText(creator);
-        task_status.setText(databaseHelper.checkNameValue(task.getStatus(), 0));
-        task_group.setText(databaseHelper.checkNameValue(task.getGroup(), 1));
+        task_status.setText(task.checkNameValue(task.getStatus(), 0));
+        task_group.setText(task.checkNameValue(task.getGroup(), 1));
 
         String avail = "Assign to " + AssignUser.getUsername();
         task_availability.setText(avail);

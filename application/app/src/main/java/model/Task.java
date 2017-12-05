@@ -107,7 +107,42 @@ public class Task {
         this.group = group;
     }
 
-
+    public String checkNameValue(int value, int statusGroup) {
+        String str = "";
+        if(statusGroup == 0){
+            switch (value) {
+                case 0:
+                    str = "Waiting";
+                    break;
+                case 1:
+                    str = "In process";
+                    break;
+                case 2:
+                    str = "Reported";
+                    break;
+                case 3:
+                    str = "Finish";
+                    break;
+                default:
+                    str = "Nothing";
+            }
+        } else {
+            switch (value) {
+                case 0:
+                    str = "No group";
+                    break;
+                case 1:
+                    str = "Inside";
+                    break;
+                case 2:
+                    str = "Outside";
+                    break;
+                default:
+                    str = "No group";
+            }
+        }
+        return str;
+    }
     public Boolean isAvailable(){
         Boolean dispo = true;
         if (this.assignedUser!=null) {

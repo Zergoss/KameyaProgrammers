@@ -429,7 +429,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TASK_DESCRIPTION,
                 COLUMN_TASK_DUEDATE,
                 COLUMN_TASK_CREATOR,
-                COLUMN_TASK_ASSIGNEDUSER
+                COLUMN_TASK_ASSIGNEDUSER,
+                COLUMN_TASK_STATUS,
+                COLUMN_TASK_GROUP
         };
         // sorting orders
         String sortOrder =
@@ -453,6 +455,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
                 task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ASSIGNEDUSER))));
+                task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STATUS)));
+                task.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_GROUP)));
 
                 taskList.add(task);
             } while (cursor.moveToNext());
@@ -483,6 +487,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
                 task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
                 task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+                task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STATUS)));
+                task.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_GROUP)));
+
+                taskList.add(task);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        // return user list
+        return taskList;
+    }
+    public List<Task> getTaskOf(int group) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Task> taskList = new ArrayList<Task>();
+
+        String query =("SELECT * FROM " + TABLE_TASK + " WHERE " + COLUMN_TASK_GROUP + " = '" + group + "'");
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ID)));
+                task.setPoints(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_POINTS)));
+                task.setName(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME)));
+                task.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION)));
+                task.setDueDate(cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DUEDATE)));
+                task.setCreator(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+                task.setAssignedUser(getUser(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CREATOR))));
+                task.setStatus(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_STATUS)));
+                task.setGroup(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_GROUP)));
 
                 taskList.add(task);
             } while (cursor.moveToNext());
@@ -712,6 +749,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if(resource.getId() == cursor.getInt(cursor.getColumnIndex(COLUMN_REF_RESOURCE_ID))) {
                     db.delete(TABLE_TASK_RESOURCE, COLUMN_TASK_RESOURCE_ID + " = ?",
                             new String[]{String.valueOf(cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_RESOURCE_ID)))});
+                    break;
                 }
             } while(cursor.moveToNext());
         }
@@ -829,42 +867,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         updateUser(user);
         task.setStatus(3);
         updateTask(task);
-    }
-    public String checkNameValue(int value, int statusGroup) {
-        String str = "";
-        if(statusGroup == 0){
-            switch (value) {
-                case 0:
-                    str = "Waiting";
-                    break;
-                case 1:
-                    str = "In process";
-                    break;
-                case 2:
-                    str = "Reported";
-                    break;
-                case 3:
-                    str = "Finish";
-                    break;
-                default:
-                    str = "Nothing";
-            }
-        } else {
-            switch (value) {
-                case 0:
-                    str = "No group";
-                    break;
-                case 1:
-                    str = "Inside";
-                    break;
-                case 2:
-                    str = "Outside";
-                    break;
-                default:
-                    str = "No group";
-            }
-        }
-        return str;
     }
 
 

@@ -41,6 +41,8 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         holder.textViewName.setText(listTasks.get(position).getName());
         holder.textViewDueDate.setText((listTasks.get(position).getDueDate()));
         holder.textViewAssign.setText((listTasks.get(position).getAssignedUser().getUsername()));
+        String str = listTasks.get(position).checkNameValue(listTasks.get(position).getStatus(), 0);
+        holder.textViewStatus.setText(str);
     }
 
     @Override
@@ -55,6 +57,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         protected AppCompatTextView textViewName;
         protected AppCompatTextView textViewDueDate;
         protected AppCompatTextView textViewAssign;
+        protected AppCompatTextView textViewStatus;
 
         protected TaskViewHolder(View view, int userType) {
             super(view);
@@ -62,6 +65,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             textViewName = (AppCompatTextView) view.findViewById(R.id.textViewName);
             textViewDueDate = (AppCompatTextView) view.findViewById(R.id.textViewDueDate);
             textViewAssign = (AppCompatTextView) view.findViewById(R.id.textViewAssign);
+            textViewStatus = (AppCompatTextView) view.findViewById(R.id.textViewStatus);
         }
     }
 

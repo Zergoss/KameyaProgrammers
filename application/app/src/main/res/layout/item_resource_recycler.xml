@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="Resource name"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/colorTextHint"
             android:textSize="20sp" />
 
         <android.support.v7.widget.AppCompatTextView
