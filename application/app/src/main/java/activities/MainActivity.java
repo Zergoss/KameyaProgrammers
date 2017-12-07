@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import ca.uottawa.cohab.R;
 import fragment.TaskList;
 import fragment.UserList;
 import fragment.UserSwitch;
+import model.Resource;
 import model.User;
 import sql.DatabaseHelper;
 
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -137,6 +141,12 @@ public class MainActivity extends AppCompatActivity
             userSwitch.setArguments(bundle);
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, userSwitch).commit();
+        } else if (id == R.id.nav_resource) {
+            Bundle extras = new Bundle();
+            extras.putBoolean("ISTASK", false);
+            Intent intent = new Intent (MainActivity.this, ResourceList.class);
+            intent.putExtras(extras);
+            startActivity(intent);
         } else if (id == R.id.nav_log_off) {
             Intent MainIntent = new Intent (MainActivity.this, Login.class);
             MainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

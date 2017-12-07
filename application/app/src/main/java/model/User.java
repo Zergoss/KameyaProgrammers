@@ -10,7 +10,7 @@ public class User {
     private String userName;
     private String password;
     private List<Recompenses> listReward;
-    private List<Task> listTask; //Picture???
+    private List<Task> listTask;
 
     //Default constructor
     public User() {

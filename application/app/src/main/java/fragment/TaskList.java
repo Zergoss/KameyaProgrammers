@@ -46,6 +46,8 @@ public class TaskList extends Fragment {
     private DatabaseHelper databaseHelper;
     private Button btn_newTask;
     private User user;
+    private Spinner spinnerStatus;
+    private int group;
 
     @Nullable
     @Override
@@ -62,6 +64,8 @@ public class TaskList extends Fragment {
     private void initViews() {
         recyclerViewList = (RecyclerView) myView.findViewById(R.id.recyclerViewTaskList);
         context = (Context) myView.getContext();
+        spinnerStatus = (Spinner) myView.findViewById(R.id.spinner_task);
+        group = 0;
     }
     private void initListeners() {
         btn_newTask = (Button) myView.findViewById(R.id.btn_newTask);
@@ -91,6 +95,19 @@ public class TaskList extends Fragment {
                 startActivity(taskView);
             }
         }));
+
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                group = position;
+                getDataFromSQLite();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // not used
+            }
+        });
     }
     private void initObjects() {
         listTask = new ArrayList<>();
@@ -108,9 +125,18 @@ public class TaskList extends Fragment {
         getDataFromSQLite();
     }
 
+
     private void getDataFromSQLite() {
         listTask.clear();
-        listTask.addAll(databaseHelper.getAllTask());
+        if(group==0) {
+            listTask.addAll(databaseHelper.getAllTask());
+        } else if(group==1) {
+            listTask.addAll(databaseHelper.getTaskOf(0));
+        } else if(group==2) {
+            listTask.addAll(databaseHelper.getTaskOf(1));
+        } else if(group==3) {
+            listTask.addAll(databaseHelper.getTaskOf(2));
+        }
         taskRecyclerAdapter.notifyDataSetChanged();
     }
 

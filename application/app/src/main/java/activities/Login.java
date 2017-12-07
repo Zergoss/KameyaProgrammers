@@ -116,7 +116,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 emptyInputEditText();
                 startActivity(accountsIntent);
             } else {
-                Snackbar.make(nestedScrollView, ("The password is " + password), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(nestedScrollView, ("Wrong password"), Snackbar.LENGTH_LONG).show();
             }
             return;
         }

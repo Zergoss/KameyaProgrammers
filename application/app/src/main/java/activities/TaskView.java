@@ -22,13 +22,9 @@ public class TaskView extends AppCompatActivity {
     private Context context;
     private DatabaseHelper databaseHelper;
     private User connectedUser;
-    private TextView taskPoints;
-    private TextView taskName;
-    private TextView taskDescription;
-    private TextView taskDueDate;
-    private TextView task_availability;
-    private TextView task_creator;
-    private Button btn_doneTask;
+    private TextView taskPoints, taskName, taskDescription, taskDueDate,
+            task_availability, task_creator, task_status, task_group;
+    private Button btn_doneTask, btn_editTask;
 
 
     @Override
@@ -54,6 +50,9 @@ public class TaskView extends AppCompatActivity {
         task_availability = (TextView) findViewById(R.id.task_availability);
         task_creator = (TextView) findViewById(R.id.task_creator);
         btn_doneTask = (Button) findViewById(R.id.btn_doneTask);
+        btn_editTask = (Button) findViewById(R.id.btn_editTask);
+        task_status = (TextView) findViewById(R.id.task_status);
+        task_group = (TextView) findViewById(R.id.task_group);
     }
     private void loadTaskInfo() {
         Bundle extras = getIntent().getExtras();
@@ -61,10 +60,15 @@ public class TaskView extends AppCompatActivity {
         connectedUser = databaseHelper.getUser(extras.getInt("CONNECTEDUSER", -1));
         User AssignUser = task.getAssignedUser();
 
+
         if(connectedUser.getId()==AssignUser.getId()){
             btn_doneTask.setVisibility(View.VISIBLE);
         }else {
             btn_doneTask.setVisibility(View.INVISIBLE);
+        }
+        if(task.getStatus() == 3){
+            btn_doneTask.setVisibility(View.INVISIBLE);
+            btn_editTask.setVisibility(View.INVISIBLE);
         }
         String pts = "Points: " + String.valueOf(task.getPoints());
         String due = "Due: " + task.getDueDate();
@@ -76,11 +80,14 @@ public class TaskView extends AppCompatActivity {
         }
 
 
+
         taskName.setText(task.getName());
         taskDescription.setText(task.getDescription());
         taskPoints.setText(pts);
         taskDueDate.setText(due);
         task_creator.setText(creator);
+        task_status.setText(task.checkNameValue(task.getStatus(), 0));
+        task_group.setText(task.checkNameValue(task.getGroup(), 1));
 
         String avail = "Assign to " + AssignUser.getUsername();
         task_availability.setText(avail);
@@ -100,12 +107,18 @@ public class TaskView extends AppCompatActivity {
     }
     public void doneTask(View view){
         databaseHelper.doneTask(task);
+        Toast.makeText(getApplicationContext(), "Task now done. Points added!", Toast.LENGTH_SHORT).show();
         finish();
     }
     public void deleteTask(View view){
         databaseHelper.deleteTask(task);
         Toast.makeText(getApplicationContext(), "Task deleted", Toast.LENGTH_SHORT).show();
         finish();
+    }
+    public void manageResource(View view) {
+        Intent intent = new Intent(TaskView.this, TaskResource.class);
+        intent.putExtra("TASK", task.getId());
+        startActivity(intent);
     }
 
 }

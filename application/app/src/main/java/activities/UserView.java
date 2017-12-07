@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class UserView extends AppCompatActivity {
         numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
         listTextView = (TextView) findViewById(R.id.taskListTextView);
 
+
         btn = (Button) findViewById(R.id.btn_editProfile);
         simpleSwitch = (Switch) findViewById(R.id.switchList);
 
@@ -81,7 +83,7 @@ public class UserView extends AppCompatActivity {
                     intent.putExtra("CONNECTEDUSER", connectedUser.getId());
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), CreateRecompenses.class);
+                    Intent intent = new Intent(getApplicationContext(), CreateReward.class);
                     intent.putExtra("VIEWUSER", user.getId());
                     startActivity(intent);
                 }
@@ -90,14 +92,7 @@ public class UserView extends AppCompatActivity {
 
         simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    listTextView.setText("Reward List");
-                    recyclerViewList.setAdapter(rewardRecyclerAdapter);
-                } else {
-                    listTextView.setText("Task List");
-                    recyclerViewList.setAdapter(taskRecyclerAdapter);
-                }
-                getDataFromSQLite();
+                loadTaskInfo();
             }
         });
 
@@ -115,7 +110,6 @@ public class UserView extends AppCompatActivity {
             public void onLongClick(View view, int position) {
                 if(simpleSwitch.isChecked()) {
                     databaseHelper.deleteReward(listReward.get(position));
-                    recyclerViewList.setAdapter(rewardRecyclerAdapter);
                     Toast.makeText(context, "Reward deleted", Toast.LENGTH_SHORT).show();
                     loadTaskInfo();
                 } else {
@@ -151,6 +145,15 @@ public class UserView extends AppCompatActivity {
 
     private void loadTaskInfo() {
         user = databaseHelper.getUser(user.getId());
+        user.setListTask(databaseHelper.getTaskOf(user));
+        if (simpleSwitch.isChecked()) {
+            listTextView.setText("Reward List");
+            recyclerViewList.setAdapter(rewardRecyclerAdapter);
+        } else {
+            listTextView.setText("Task List");
+            recyclerViewList.setAdapter(taskRecyclerAdapter);
+        }
+
         usernameTextView.setText(user.getUsername());
         String pts = "Points: " + String.valueOf(user.getPoints());
         pointsTextView.setText(pts);
@@ -162,11 +165,10 @@ public class UserView extends AppCompatActivity {
     private void getDataFromSQLite() {
         if(simpleSwitch.isChecked()) {
             listReward.clear();
-            //listReward.addAll(databaseHelper.getRewardOf(user.getId()));
-            listReward.addAll(databaseHelper.getAllReward());
+            listReward.addAll(user.getListReward());
         } else {
             listTask.clear();
-            listTask.addAll(databaseHelper.getTaskOf(user.getId()));
+            listTask.addAll(user.getListTask());
         }
         taskRecyclerAdapter.notifyDataSetChanged();
     }
@@ -174,7 +176,7 @@ public class UserView extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        getDataFromSQLite();
+        loadTaskInfo();
     }
 
 }

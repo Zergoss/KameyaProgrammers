@@ -43,13 +43,23 @@
             android:name="activities.UserView"
             android:label="@string/user_view" />
         <activity 
-            android:name="activities.CreateRecompenses"
+            android:name="activities.CreateReward"
             android:label="@string/create_reward" />
         <activity 
             android:name="activities.CreateTask"
             android:label="@string/create_task" />
-        <activity android:name="activities.UserSwitchLogin"
+        <activity
+            android:name="activities.UserSwitchLogin"
             android:label="@string/switch_login" />
+        <activity
+            android:name="activities.CreateResource"
+            android:label="Create Resource" />
+        <activity
+            android:name="activities.TaskResource"
+            android:label="Task Resource" />
+        <activity
+            android:name="activities.ResourceList"
+            android:label="Resource List" />
 
     </application>
 

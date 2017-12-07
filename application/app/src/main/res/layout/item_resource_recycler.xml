@@ -9,29 +9,29 @@
     app:ignore="NamespaceTypo">
 
     <LinearLayout
-        android:id="@+id/rewardList"
+        android:id="@+id/resourceList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="1dp">
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/textRewardName"
+            android:id="@+id/textResourceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/recompenses_name"
+            android:text="Resource name"
             android:textColor="@color/colorTextHint"
             android:textSize="20sp" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/textRewardDescription"
+            android:id="@+id/textResourceDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/recompenses_description"
+            android:text="Resource description"
             android:textColor="@android:color/darker_gray"
             android:textSize="20sp" />
 

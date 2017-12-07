@@ -1,22 +1,32 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Task {
     private int id;
     private int points;
+    private int status;
+    private int group;
     private String name;
     private String description;
     private String dueDate;
     private User creator;
     private User assignedUser;
+    private List<Resource> listResource;
+
 
     //Default
     public Task() {
-        this.points = 0;
-        this.name = "No name";
-        this.description = "No description";
-        this.dueDate = "No due date";
-        this.assignedUser = new User();
-        this.creator = new User();
+        points = 0;
+        status = 0;
+        group = 0;
+        name = "No name";
+        description = "No description";
+        dueDate = "No due date";
+        assignedUser = new User();
+        creator = new User();
+        listResource = new ArrayList<>();
     }
 
     //getters & setters
@@ -69,6 +79,70 @@ public class Task {
         this.assignedUser = assignedUser;
     }
 
+    public List<Resource> getListResource() {
+        List<Resource> listReturn = new ArrayList<Resource>();
+        for (Resource aResource : this.listResource) {
+            listReturn.add(aResource);
+        }
+
+        return listReturn;
+    }
+    public void setListResource(List<Resource> list) {
+        for (Resource aResource : list) {
+            this.listResource.add(aResource);
+        }
+    }
+
+    public int getStatus() {
+        return status;
+    }
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    public String checkNameValue(int value, int statusGroup) {
+        String str = "";
+        if(statusGroup == 0){
+            switch (value) {
+                case 0:
+                    str = "Waiting";
+                    break;
+                case 1:
+                    str = "In process";
+                    break;
+                case 2:
+                    str = "Reported";
+                    break;
+                case 3:
+                    str = "Finish";
+                    break;
+                default:
+                    str = "Nothing";
+            }
+        } else {
+            switch (value) {
+                case 0:
+                    str = "No group";
+                    break;
+                case 1:
+                    str = "Inside";
+                    break;
+                case 2:
+                    str = "Outside";
+                    break;
+                default:
+                    str = "No group";
+            }
+        }
+        return str;
+    }
     public Boolean isAvailable(){
         Boolean dispo = true;
         if (this.assignedUser!=null) {

@@ -34,7 +34,6 @@ public class UserSwitch extends Fragment {
     private View myView;
     private Context context;
     private AppCompatActivity activity;
-    private AppCompatTextView textViewUsername;
     private RecyclerView recyclerViewUsers;
     private List<User> listUsers;
     private UserRecyclerAdapter userRecyclerAdapter;
@@ -54,7 +53,6 @@ public class UserSwitch extends Fragment {
 
 
     private void initViews() {
-        textViewUsername = (AppCompatTextView) myView.findViewById(R.id.textViewUsername);
         recyclerViewUsers = (RecyclerView) myView.findViewById(R.id.recyclerViewUserSwitch);
         context = (Context) myView.getContext();
     }
@@ -86,7 +84,7 @@ public class UserSwitch extends Fragment {
         databaseHelper = new DatabaseHelper(activity);
 
         Bundle bundle = getArguments();
-        user = databaseHelper.getUser(bundle.getInt("CONNECTEUSER"));
+        user = databaseHelper.getUser(bundle.getInt("CONNECTEDUSER"));
 
         getDataFromSQLite();
     }

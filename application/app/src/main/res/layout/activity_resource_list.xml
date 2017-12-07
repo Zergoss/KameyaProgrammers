@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/head_list">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,31 +13,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp">
 
             <Button
-                android:id="@+id/btn_newTask"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorTextHint"
-                android:onClick="addTask"
-                android:text="@string/new_task"
-                android:layout_margin="10dp"/>
-
-            <Spinner
-                android:id="@+id/spinner_task"
+                android:id="@+id/btn_new"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:entries="@array/drop_group_all" />
+                android:background="@color/colorTextHint"
+                android:text="Add resource"
+                android:layout_marginBottom="10dp"/>
 
+            <Spinner
+                android:id="@+id/spinner_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:entries="@array/drop_group_all" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:text="All resources" />
+
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewTaskList"
+            android:id="@+id/recyclerViewList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

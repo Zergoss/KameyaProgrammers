@@ -1,13 +1,11 @@
 package activities;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.uottawa.cohab.R;
@@ -17,9 +15,9 @@ import model.User;
 import sql.DatabaseHelper;
 
 
-public class CreateRecompenses extends AppCompatActivity implements View.OnClickListener {
+public class CreateReward extends AppCompatActivity implements View.OnClickListener {
 
-    private final AppCompatActivity activity = CreateRecompenses.this;
+    private final AppCompatActivity activity = CreateReward.this;
     private DatabaseHelper databaseReference; 
     private TextInputLayout textInputLayoutName;
     private TextInputLayout textInputLayoutDescription;
@@ -34,7 +32,7 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_recompenses);
+        setContentView(R.layout.activity_create_reward);
 
         initViews();
         initObjects();
@@ -44,11 +42,11 @@ public class CreateRecompenses extends AppCompatActivity implements View.OnClick
 
     private void initViews() {
 
-        textInputLayoutName = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
-        textInputLayoutDescription = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
+        textInputLayoutName = (TextInputLayout) findViewById(R.id.textInputLayoutName);
+        textInputLayoutDescription = (TextInputLayout) findViewById(R.id.textInputLayoutDescription);
 
-        textInputEditTextName = (TextInputEditText) findViewById(R.id.textInputEditTextUsername);
-        textInputEditTextDescription = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
+        textInputEditTextName = (TextInputEditText) findViewById(R.id.textInputEditTextName);
+        textInputEditTextDescription = (TextInputEditText) findViewById(R.id.textInputEditTextDescription);
 
         ButtonSave = (Button) findViewById(R.id.button);
     }

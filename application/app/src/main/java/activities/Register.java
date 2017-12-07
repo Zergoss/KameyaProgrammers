@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -125,13 +126,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
             databaseHelper.addUser(user);
 
-            // Snack Bar to show success message that record saved successfully
-            Snackbar.make(nestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show();
+            // Toast to show success message that record saved successfully
+            Toast.makeText(getApplicationContext(), getString(R.string.success_message), Toast.LENGTH_LONG).show();
             emptyInputEditText();
 
         } else {
-            // Snack Bar to show error message that record already exists
-            Snackbar.make(nestedScrollView, getString(R.string.error_username_exists), Snackbar.LENGTH_LONG).show();
+            // Toastto show error message that record already exists
+            Toast.makeText(getApplicationContext(), getString(R.string.error_username_exists), Toast.LENGTH_LONG).show();
             emptyInputEditText();
         }
 
