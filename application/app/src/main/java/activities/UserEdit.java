@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,11 +69,6 @@ public class UserEdit extends AppCompatActivity {
         profile_username_layout.setHint("Username: " + user.getUsername());
     }
 
-
-    public void picChange(View view){
-        //Intent intent = new Intent(myView.getContext(), CAMERA.class);
-        //startActivity(intent);
-    }
     public void deleteUser(View view){
         db.deleteUser(user);
         Intent intent = new Intent(view.getContext(), Login.class);

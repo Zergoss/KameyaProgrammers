@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class UserView extends AppCompatActivity {
         pointsTextView = (TextView) findViewById(R.id.pointsTextView);
         numberTaskTextView = (TextView) findViewById(R.id.numberTaskTextView);
         listTextView = (TextView) findViewById(R.id.taskListTextView);
+
 
         btn = (Button) findViewById(R.id.btn_editProfile);
         simpleSwitch = (Switch) findViewById(R.id.switchList);
